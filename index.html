@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,91 +7,141 @@
 <link rel="apple-touch-icon" href="./Mindfocus.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MindCheck - ADHD Screening</title>
+<title>MindFocus | Mental Wellness & Self-Discovery</title>
+<link rel="icon" href="./Mindfocus.png" type="image/png">
+<link rel="shortcut icon" href="./Mindfocus.png" type="image/png">
+<link rel="apple-touch-icon" href="./Mindfocus.png">
+
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;font-family:Arial,sans-serif;
- background:#0b1020;color:white;
- min-height:100vh;
-}
-header{
- padding:22px 7%;display:flex;
- justify-content:space-between;align-items:center;
- border-bottom:1px solid #252e49;
-}
-.logo{font-size:25px;font-weight:900;color:#9d8cff}
+body{margin:0;background:#0b1020;color:#fff;font-family:Arial,sans-serif}
+header{padding:20px 5%;display:flex;justify-content:space-between;align-items:center;background:#111a30;border-bottom:1px solid #293653;flex-wrap:wrap;gap:15px}
+.logo{font-size:27px;font-weight:900;color:#a994ff}
 .logo span{color:white}
-nav a{color:#b9c2dc;text-decoration:none;margin-left:20px}
-.container{max-width:850px;margin:45px auto;padding:20px}
-.hero{text-align:center;margin-bottom:35px}
-.hero h1{font-size:42px;margin:10px}
-.hero h1 span{color:#a18cff}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+nav button{background:transparent;color:#c3cbe0;border:1px solid #34415e;padding:11px 15px;border-radius:9px;cursor:pointer}
+nav button.active,nav button:hover{background:#8068e9;color:white}
+.container{max-width:1000px;margin:35px auto;padding:15px}
+.hero{text-align:center;padding:45px 15px}
+.hero h1{font-size:45px;margin:10px}
+.hero h1 span{color:#a994ff}
 .hero p{color:#aab5d0;line-height:1.7}
-.card{
- background:#151d33;border:1px solid #293653;
- border-radius:18px;padding:28px;margin-bottom:20px;
-}
-.tag{color:#a994ff;font-size:12px;font-weight:bold;letter-spacing:2px}
-.progress{height:9px;background:#293653;border-radius:20px;margin:18px 0;overflow:hidden}
-.progress div{height:100%;width:0;background:linear-gradient(90deg,#7764ff,#b18cff);transition:.3s}
-.question{font-size:23px;font-weight:bold;line-height:1.5;margin:25px 0}
+.card{background:#151e34;border:1px solid #293653;border-radius:18px;padding:25px;margin-bottom:20px}
+.tag{font-size:12px;color:#a994ff;font-weight:bold;letter-spacing:2px}
+button{cursor:pointer}
+.primary{background:#927cff;color:white;border:0;padding:14px 23px;border-radius:10px;font-weight:bold}
+.secondary{background:#293653;color:white;border:0;padding:14px 23px;border-radius:10px}
+.progress{height:9px;background:#293653;border-radius:20px;overflow:hidden;margin:18px 0}
+.progress div{height:100%;background:linear-gradient(90deg,#7764ff,#b18cff);width:0}
+.question{font-size:23px;line-height:1.5;margin:28px 0}
 .answers{display:grid;gap:12px}
-.answer{
- padding:17px;border:1px solid #35415f;border-radius:12px;
- cursor:pointer;color:#dce3f8;background:#1b2640;
- transition:.2s;
-}
-.answer:hover{border-color:#a18cff}
-.answer.selected{background:#493a83;border-color:#ad9aff}
-.buttons{display:flex;justify-content:space-between;gap:12px;margin-top:25px}
-button{
- border:0;padding:14px 23px;border-radius:10px;
- font-weight:bold;cursor:pointer;font-size:15px;
-}
-.primary{background:#927cff;color:white}
-.secondary{background:#293653;color:white}
-button:disabled{opacity:.3;cursor:not-allowed}
+.answer{padding:16px;background:#1e2944;border:1px solid #394766;border-radius:12px;cursor:pointer;color:white}
+.answer:hover,.answer.selected{background:#51418a;border-color:#b19bff}
+.buttons{display:flex;justify-content:space-between;margin-top:25px;gap:10px}
 .hidden{display:none!important}
 .center{text-align:center}
-.score{font-size:76px;font-weight:900;color:#a994ff;margin:20px}
-.resultbar{height:14px;background:#293653;border-radius:20px;overflow:hidden;margin:15px 0}
-.resultbar div{height:100%;background:#9b83ff}
-.tip{padding:15px;background:#202c48;border-radius:12px;margin:12px 0;color:#dce3f8;line-height:1.6}
-.small{color:#9eabc7;font-size:13px;line-height:1.6}
-footer{text-align:center;color:#7785a5;padding:30px}
-select{background:#202c48;color:white;border:1px solid #394866;padding:10px;border-radius:8px}
+.score{font-size:75px;color:#a994ff;font-weight:bold;margin:20px}
+.resultbar{height:12px;background:#293653;border-radius:20px;overflow:hidden;margin:12px 0}
+.resultbar div{height:100%;background:#a18aff}
+.tip{background:#202d49;padding:16px;border-radius:12px;margin:12px 0;line-height:1.6}
+.small{font-size:13px;color:#9eabc7;line-height:1.7}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.testcard{background:#202b46;padding:22px;border:1px solid #394766;border-radius:15px}
+.testcard h3{color:#b8a7ff}
+.testcard p{color:#aab5d0;line-height:1.6}
+.testcard button{margin-top:12px}
+footer{text-align:center;padding:30px;color:#74819f}
+#home,#test,#results{scroll-margin-top:20px}
 </style>
 </head>
+
 <body>
 
 <header>
-<div class="logo">MIND<span>CHECK</span> ✦</div>
-<nav><a href="#about">About</a><a href="#test">Test</a></nav>
+<div class="logo">MIND<span>FOCUS</span> ✦</div>
+<nav id="navigation">
+<button class="active" onclick="showTab('home',this)">Home</button>
+<button onclick="showTab('adhd',this)">ADHD</button>
+<button onclick="showTab('autism',this)">Autism</button>
+<button onclick="showTab('anxiety',this)">Anxiety</button>
+<button onclick="showTab('depression',this)">Depression</button>
+<button onclick="showTab('dyslexia',this)">Dyslexia</button>
+</nav>
 </header>
 
 <div class="container">
 
-<section class="hero" id="about">
-<div class="tag">UNDERSTAND YOUR MIND</div>
-<h1>Discover your <span>mind.</span></h1>
-<p>A 30-question ADHD self-reflection screening.<br>
-Explore your attention, organisation, activity and impulsivity.</p>
-</section>
-
-<div class="card center" id="intro">
-<h2>ADHD Screening Test</h2>
-<p class="small">30 questions · Approximately 5–8 minutes</p>
-<div class="tip">Answer based on how you have generally felt and behaved over the past 6 months.</div>
-<p class="small">Choose the answer that best describes how often each experience happens.</p>
-<button class="primary" onclick="startTest()">Start the test →</button>
+<section id="home">
+<div class="hero">
+<div class="tag">UNDERSTAND YOURSELF</div>
+<h1>Your mind. Your <span>journey.</span></h1>
+<p>Explore your mind with self-reflection tests, learn about yourself and discover helpful strategies.</p>
+<button class="primary" onclick="showTab('adhd',document.querySelectorAll('nav button')[1])">Explore tests →</button>
 </div>
 
-<div class="card hidden" id="test">
-<div class="tag" id="category">ATTENTION</div>
+<div class="card">
+<h2>🧠 Welcome to MindFocus</h2>
+<p class="small">Choose an area below to explore. Each screening questionnaire is separate, and you can complete whichever ones interest you.</p>
+<div class="grid" id="homecards"></div>
+</div>
+
+<div class="card">
+<h2>⚠️ Important information</h2>
+<p class="small">These questionnaires are educational self-reflection tools, not validated diagnostic assessments. Their scores do not establish whether you have a condition. If you are concerned about your experiences, speak with a qualified healthcare professional.</p>
+</div>
+</section>
+
+<section id="adhd" class="hidden">
+<div class="hero">
+<div class="tag">ATTENTION & ACTIVITY</div>
+<h1>ADHD <span>Screening</span></h1>
+<p>Explore attention, organisation, hyperactivity and impulsivity.</p>
+</div>
+<div class="grid" id="adhdInfo"></div>
+</section>
+
+<section id="autism" class="hidden">
+<div class="hero">
+<div class="tag">SOCIAL COMMUNICATION & SENSORY EXPERIENCES</div>
+<h1>Autism <span>Screening</span></h1>
+<p>Reflect on social communication, routines, sensory experiences and interests.</p>
+</div>
+<div class="grid" id="autismInfo"></div>
+</section>
+
+<section id="anxiety" class="hidden">
+<div class="hero">
+<div class="tag">WORRY & STRESS</div>
+<h1>Anxiety <span>Screening</span></h1>
+<p>Reflect on worry, tension and everyday stress.</p>
+</div>
+<div class="grid" id="anxietyInfo"></div>
+</section>
+
+<section id="depression" class="hidden">
+<div class="hero">
+<div class="tag">MOOD & EMOTIONS</div>
+<h1>Depression <span>Screening</span></h1>
+<p>Reflect on mood, energy, motivation and everyday experiences.</p>
+</div>
+<div class="grid" id="depressionInfo"></div>
+</section>
+
+<section id="dyslexia" class="hidden">
+<div class="hero">
+<div class="tag">READING & LEARNING</div>
+<h1>Dyslexia <span>Screening</span></h1>
+<p>Explore reading, spelling, writing and learning experiences.</p>
+</div>
+<div class="grid" id="dyslexiaInfo"></div>
+</section>
+
+<section id="test" class="hidden">
+<div class="card">
+<div class="tag" id="testtype">SCREENING</div>
 <div style="display:flex;justify-content:space-between">
-<span class="small" id="number">Question 1 of 30</span>
-<span class="small" id="percent">0%</span>
+<span class="small" id="number"></span>
+<span class="small" id="percent"></span>
 </div>
 <div class="progress"><div id="progress"></div></div>
 <div class="question" id="question"></div>
@@ -100,207 +151,326 @@ Explore your attention, organisation, activity and impulsivity.</p>
 <button class="primary" onclick="next()" id="next" disabled>Next →</button>
 </div>
 </div>
+</section>
 
-<div class="hidden" id="results">
+<section id="results" class="hidden">
 <div class="card center">
 <div class="tag">YOUR RESULTS</div>
-<h1>Your screening summary</h1>
+<h1 id="resultTitle">Your results</h1>
 <div class="score" id="score">0%</div>
 <h2 id="level"></h2>
-<p id="description" class="small"></p>
+<p class="small" id="description"></p>
 <div class="resultbar"><div id="resultfill"></div></div>
-<p class="small">This percentage represents your answers on this questionnaire. It is NOT the probability that you have ADHD.</p>
+<p class="small" id="scoremeaning"></p>
 </div>
-
 <div class="card">
-<h2>📊 Your results by category</h2>
+<h2>📊 Your category breakdown</h2>
 <div id="categories"></div>
 </div>
-
 <div class="card">
 <h2>💡 Helpful strategies</h2>
 <div id="tips"></div>
 </div>
-
 <div class="card">
-<h2>What should you do next?</h2>
-<p class="small">If these experiences are affecting your everyday life, school, work or relationships, consider speaking to a qualified healthcare professional. They can assess whether ADHD or something else may explain your experiences.</p>
-<div class="tip">Remember: ADHD is not a measure of intelligence, ability or worth. A screening test cannot diagnose ADHD, and a low score does not rule it out.</div>
+<h2>What next?</h2>
+<p class="small">If these experiences affect your everyday life, consider discussing them with a healthcare professional. This screening cannot diagnose a condition.</p>
 <button class="primary" onclick="restart()">↻ Retake test</button>
+<button class="secondary" onclick="goHome()">Home</button>
 </div>
-</div>
+</section>
 
 </div>
 
-<footer>MindCheck © 2026 · Educational self-reflection tool · Not a diagnosis</footer>
+<footer>
+MindFocus © 2026 · Explore. Understand. Grow.<br>
+Educational tools only · Not a substitute for professional assessment.
+</footer>
 
 <script>
-const questions = [
-["Attention","How often do you make careless mistakes when doing tasks?"],
-["Attention","How often do you find it difficult to keep your attention on boring tasks?"],
-["Attention","How often do you lose track of what someone is saying to you?"],
-["Attention","How often do you start tasks but struggle to finish them?"],
-["Attention","How often do you get distracted by noises or things around you?"],
-["Attention","How often do you avoid tasks that require sustained concentration?"],
-["Attention","How often do you find yourself daydreaming when you should be focusing?"],
-["Attention","How often do you have to reread things because your mind wandered?"],
-["Attention","How often do you forget instructions shortly after hearing them?"],
-["Attention","How often do you struggle to concentrate even when you want to?"],
+const tests = {
+adhd:{
+name:"ADHD",
+count:30,
+options:["Never","Rarely","Sometimes","Often","Very often"],
+groups:[
+["Attention",10],["Organisation",10],["Hyperactivity",5],["Impulsivity",5]
+],
+questions:[
+"How often do you make careless mistakes?",
+"How often do you struggle to concentrate on boring tasks?",
+"How often do you lose track of conversations?",
+"How often do you start tasks but struggle to finish them?",
+"How often are you distracted by noises or things around you?",
+"How often do you avoid tasks requiring concentration?",
+"How often do you daydream when you should be focusing?",
+"How often do you have to reread things because your mind wandered?",
+"How often do you forget instructions?",
+"How often do you struggle to concentrate even when you want to?",
+"How often do you struggle to organise tasks?",
+"How often do you forget appointments or important dates?",
+"How often do you lose things you need?",
+"How often do you leave tasks until the last minute?",
+"How often do you underestimate how long something takes?",
+"How often does your workspace become disorganised?",
+"How often do you forget what you were about to do?",
+"How often do you struggle to decide which task to do first?",
+"How often do you leave projects unfinished?",
+"How often do you need reminders to complete everyday tasks?",
+"How often do you feel restless when sitting down?",
+"How often do you move your hands or feet without noticing?",
+"How often do you struggle to sit still?",
+"How often do you feel like you have too much energy?",
+"How often do you talk more than you intended?",
+"How often do you interrupt people?",
+"How often do you answer before someone finishes asking?",
+"How often do you struggle to wait your turn?",
+"How often do you make quick decisions without thinking?",
+"How often do you say things before considering them?"
+],
+tips:[
+"Use short work sessions with regular breaks.",
+"Write reminders and appointments down.",
+"Break large tasks into smaller steps.",
+"Reduce distractions in your workspace.",
+"Create consistent daily routines.",
+"Ask teachers, family or professionals for support."
+]
+},
+autism:{
+name:"Autism",
+count:20,
+options:["Never","Rarely","Sometimes","Often","Very often"],
+groups:[["Social communication",5],["Routines",5],["Sensory experiences",5],["Interests and patterns",5]],
+questions:[
+"Do you find social situations difficult to understand?",
+"Do you struggle to know when it is your turn to speak?",
+"Do you find small talk uncomfortable?",
+"Do you sometimes misunderstand indirect language?",
+"Do you find it tiring to socialise?",
+"Do unexpected changes to plans upset you?",
+"Do you prefer having predictable routines?",
+"Do you find transitions between activities difficult?",
+"Do you like doing things in a particular order?",
+"Do you become uncomfortable when routines change?",
+"Are certain sounds overwhelming to you?",
+"Are you sensitive to bright lights?",
+"Do certain textures or clothing feel uncomfortable?",
+"Are strong smells difficult for you?",
+"Do busy environments overwhelm you?",
+"Do you develop very strong interests in particular subjects?",
+"Do you enjoy learning detailed information about topics?",
+"Do you repeat movements or actions when excited or stressed?",
+"Do you prefer direct and clear communication?",
+"Do you sometimes feel you have to act differently around others?"
+],
+tips:[
+"Allow yourself time to recover after social situations.",
+"Use calendars and visual schedules.",
+"Identify sensory triggers and make adjustments.",
+"Explore your interests without feeling guilty.",
+"Communicate your needs clearly.",
+"Seek an assessment if you want to understand your experiences."
+]
+},
+anxiety:{
+name:"Anxiety",
+count:15,
+options:["Never","Rarely","Sometimes","Often","Very often"],
+groups:[["Worry",5],["Physical tension",5],["Avoidance",5]],
+questions:[
+"Do you worry about things that might happen?",
+"Do you find it difficult to stop worrying?",
+"Do you imagine the worst possible outcomes?",
+"Do you worry about what other people think of you?",
+"Do you feel nervous about everyday situations?",
+"Do you experience muscle tension when stressed?",
+"Do you feel restless or on edge?",
+"Does stress affect your sleep?",
+"Do you experience a racing heartbeat when worried?",
+"Do you find it difficult to relax?",
+"Do you avoid situations because they make you anxious?",
+"Do you overthink conversations afterwards?",
+"Do you fear making mistakes?",
+"Do you struggle to make decisions because of worry?",
+"Does anxiety interfere with everyday activities?"
+],
+tips:[
+"Try slow, steady breathing.",
+"Break stressful situations into manageable steps.",
+"Keep a regular sleep routine.",
+"Write down worries and possible solutions.",
+"Talk to someone you trust.",
+"Consider professional support if anxiety affects your life."
+]
+},
+depression:{
+name:"Depression",
+count:15,
+options:["Never","Rarely","Sometimes","Often","Very often"],
+groups:[["Mood",5],["Energy",5],["Daily life",5]],
+questions:[
+"Have you felt sad or low in mood?",
+"Have you lost interest in activities you usually enjoy?",
+"Have you felt hopeless about the future?",
+"Have you felt unusually emotional?",
+"Have you struggled to feel positive?",
+"Have you felt tired even after sleeping?",
+"Have you struggled to find motivation?",
+"Have you experienced changes in your sleep?",
+"Have you found everyday tasks exhausting?",
+"Have you struggled to concentrate?",
+"Have you withdrawn from friends or family?",
+"Have you struggled to take care of everyday responsibilities?",
+"Have you been unusually critical of yourself?",
+"Have you felt disconnected from things around you?",
+"Have these experiences affected your everyday life?"
+],
+tips:[
+"Try to maintain a gentle daily routine.",
+"Break everyday tasks into small steps.",
+"Stay connected with people you trust.",
+"Make time for activities you usually enjoy.",
+"Prioritise rest and regular meals.",
+"Speak to a healthcare professional if you are struggling."
+]
+},
+dyslexia:{
+name:"Dyslexia",
+count:15,
+options:["Never","Rarely","Sometimes","Often","Very often"],
+groups:[["Reading",5],["Writing and spelling",5],["Learning",5]],
+questions:[
+"Do you find reading slower than you would like?",
+"Do you sometimes lose your place when reading?",
+"Do you find reading long passages tiring?",
+"Do you need to reread sentences to understand them?",
+"Do you sometimes mix up similar-looking words?",
+"Do you find spelling difficult?",
+"Do you struggle to remember how to spell familiar words?",
+"Do you find writing down your thoughts difficult?",
+"Do you make spelling mistakes even when you know the word?",
+"Do you find copying text accurately difficult?",
+"Do you struggle to remember sequences of information?",
+"Do you find following several written instructions difficult?",
+"Do you find learning new written vocabulary challenging?",
+"Do you remember information better when hearing it?",
+"Do reading and writing tasks take you longer than expected?"
+],
+tips:[
+"Try audiobooks and text-to-speech tools.",
+"Use spellcheck and speech-to-text.",
+"Break reading into shorter sections.",
+"Use coloured overlays or different backgrounds if helpful.",
+"Ask for extra time when appropriate.",
+"Consider a professional educational assessment."
+]
+}
+};
 
-["Organisation","How often do you struggle to organise tasks and activities?"],
-["Organisation","How often do you forget appointments or important dates?"],
-["Organisation","How often do you lose things you need, like keys or school supplies?"],
-["Organisation","How often do you put off tasks until the last minute?"],
-["Organisation","How often do you underestimate how long something will take?"],
-["Organisation","How often does your room, desk or workspace become disorganised?"],
-["Organisation","How often do you forget what you were about to do?"],
-["Organisation","How often do you struggle to decide which task to do first?"],
-["Organisation","How often do you leave projects unfinished?"],
-["Organisation","How often do you need reminders to complete everyday tasks?"],
+let activeTest=null,answers=[],index=0;
 
-["Hyperactivity","How often do you feel restless, even when sitting down?"],
-["Hyperactivity","How often do you move your hands, feet or legs without noticing?"],
-["Hyperactivity","How often do you find it difficult to sit still for a long time?"],
-["Hyperactivity","How often do you feel like you have too much energy?"],
-["Hyperactivity","How often do you talk more than you intended?"],
+function showTab(id,btn){
+ document.querySelectorAll(".container>section").forEach(s=>s.classList.add("hidden"));
+ document.getElementById(id).classList.remove("hidden");
+ document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+ if(btn)btn.classList.add("active");
+ window.scrollTo(0,0);
+}
 
-["Impulsivity","How often do you interrupt people during conversations?"],
-["Impulsivity","How often do you answer questions before someone finishes asking?"],
-["Impulsivity","How often do you struggle to wait your turn?"],
-["Impulsivity","How often do you make quick decisions without thinking them through?"],
-["Impulsivity","How often do you find yourself saying things before considering them?"]
-];
+function goHome(){
+ showTab("home",document.querySelector("nav button"));
+}
 
-const options = [
-"Never",
-"Rarely",
-"Sometimes",
-"Often",
-"Very often"
-];
+function createCard(id){
+ let t=tests[id];
+ return `<div class="testcard">
+ <div class="tag">${t.count} QUESTIONS</div>
+ <h3>${t.name} screening</h3>
+ <p>Explore your experiences and receive a personal screening summary with helpful strategies.</p>
+ <button class="primary" onclick="startTest('${id}')">Start test →</button>
+ </div>`;
+}
 
-let answers = Array(30).fill(null);
-let current = 0;
+function setup(){
+ document.getElementById("homecards").innerHTML=Object.keys(tests).map(createCard).join("");
+ document.getElementById("adhdInfo").innerHTML=createCard("adhd");
+ document.getElementById("autismInfo").innerHTML=createCard("autism");
+ document.getElementById("anxietyInfo").innerHTML=createCard("anxiety");
+ document.getElementById("depressionInfo").innerHTML=createCard("depression");
+ document.getElementById("dyslexiaInfo").innerHTML=createCard("dyslexia");
+}
+setup();
 
-function startTest(){
- document.getElementById("intro").classList.add("hidden");
- document.getElementById("test").classList.remove("hidden");
+function startTest(id){
+ activeTest=tests[id];
+ answers=Array(activeTest.count).fill(null);
+ index=0;
+ showTab("test",null);
  showQuestion();
 }
 
 function showQuestion(){
- const q=questions[current];
- document.getElementById("category").textContent=q[0].toUpperCase();
- document.getElementById("number").textContent=`Question ${current+1} of 30`;
- document.getElementById("percent").textContent=Math.round((current+1)/30*100)+"%";
- document.getElementById("progress").style.width=((current+1)/30*100)+"%";
- document.getElementById("question").textContent=q[1];
-
- const area=document.getElementById("answers");
- area.innerHTML="";
-
- options.forEach((option,i)=>{
-  const div=document.createElement("div");
-  div.className="answer"+(answers[current]===i?" selected":"");
-  div.textContent=option;
-  div.onclick=()=>{
-   answers[current]=i;
-   showQuestion();
-  };
-  area.appendChild(div);
+ let t=activeTest;
+ let group=t.groups.find(g=>{
+  let start=t.groups.slice(0,t.groups.indexOf(g)).reduce((a,x)=>a+x[1],0);
+  return index>=start&&index<start+g[1];
  });
+ document.getElementById("testtype").textContent=t.name.toUpperCase()+" · "+group[0].toUpperCase();
+ document.getElementById("number").textContent=`Question ${index+1} of ${t.count}`;
+ document.getElementById("percent").textContent=Math.round((index+1)/t.count*100)+"%";
+ document.getElementById("progress").style.width=(index+1)/t.count*100+"%";
+ document.getElementById("question").textContent=t.questions[index];
 
- document.getElementById("prev").disabled=current===0;
- document.getElementById("next").disabled=answers[current]===null;
- document.getElementById("next").textContent=current===29?"See my results →":"Next →";
+ let area=document.getElementById("answers");
+ area.innerHTML="";
+ t.options.forEach((o,i)=>{
+  let d=document.createElement("div");
+  d.className="answer"+(answers[index]===i?" selected":"");
+  d.textContent=o;
+  d.onclick=()=>{answers[index]=i;showQuestion()};
+  area.appendChild(d);
+ });
+ document.getElementById("prev").disabled=index===0;
+ document.getElementById("next").disabled=answers[index]===null;
+ document.getElementById("next").textContent=index===t.count-1?"View results →":"Next →";
 }
 
 function next(){
- if(answers[current]===null)return;
- if(current===29){showResults();return;}
- current++;
+ if(answers[index]===null)return;
+ if(index===activeTest.count-1){showResults();return;}
+ index++;
  showQuestion();
 }
-
 function previous(){
- if(current>0){current--;showQuestion();}
+ if(index>0){index--;showQuestion()}
 }
 
 function showResults(){
- document.getElementById("test").classList.add("hidden");
- document.getElementById("results").classList.remove("hidden");
-
- const total=answers.reduce((a,b)=>a+b,0);
- const percentage=Math.round(total/120*100);
-
- document.getElementById("score").textContent=percentage+"%";
- document.getElementById("resultfill").style.width=percentage+"%";
-
- let level,description;
- if(percentage<20){
-  level="Few experiences reported";
-  description="Your answers indicate relatively few of the experiences covered by this questionnaire. This does not rule out ADHD.";
- }else if(percentage<40){
-  level="Some experiences reported";
-  description="You reported some attention, organisation or activity-related difficulties.";
- }else if(percentage<60){
-  level="Several experiences reported";
-  description="You reported a number of experiences commonly associated with ADHD.";
- }else if(percentage<80){
-  level="Many experiences reported";
-  description="You reported frequent experiences across several areas that can be associated with ADHD.";
- }else{
-  level="Very many experiences reported";
-  description="You reported very frequent experiences across the areas covered. Consider discussing these difficulties with a qualified professional.";
- }
+ let t=activeTest;
+ let max=t.count*4;
+ let total=answers.reduce((a,b)=>a+b,0);
+ let score=Math.round(total/max*100);
+ showTab("results",null);
+ document.getElementById("resultTitle").textContent=t.name+" screening results";
+ document.getElementById("score").textContent=score+"%";
+ document.getElementById("resultfill").style.width=score+"%";
+ document.getElementById("scoremeaning").textContent="Percentage of the maximum possible score on this questionnaire. This is not the probability of having "+t.name+".";
+ let level=score<20?"Few experiences reported":score<40?"Some experiences reported":score<60?"Several experiences reported":score<80?"Many experiences reported":"Very many experiences reported";
  document.getElementById("level").textContent=level;
- document.getElementById("description").textContent=description;
-
- const groups=["Attention","Organisation","Hyperactivity","Impulsivity"];
- const counts=[10,10,5,5];
- let offset=0;
- const categories=document.getElementById("categories");
- categories.innerHTML="";
-
- groups.forEach((group,index)=>{
-  let sum=0;
-  for(let i=offset;i<offset+counts[index];i++)sum+=answers[i];
-  const max=counts[index]*4;
-  const pct=Math.round(sum/max*100);
-  const div=document.createElement("div");
-  div.innerHTML=`
-   <p><b>${group}</b> <span style="float:right;color:#a994ff">${pct}%</span></p>
-   <div class="resultbar"><div style="width:${pct}%"></div></div>
-  `;
-  categories.appendChild(div);
-  offset+=counts[index];
+ document.getElementById("description").textContent="Your answers describe the frequency of experiences covered in this questionnaire. This result cannot confirm or rule out "+t.name+".";
+ let html="",offset=0;
+ t.groups.forEach(g=>{
+  let sum=answers.slice(offset,offset+g[1]).reduce((a,b)=>a+b,0);
+  let pct=Math.round(sum/(g[1]*4)*100);
+  html+=`<p><b>${g[0]}</b><span style="float:right;color:#a994ff">${pct}%</span></p><div class="resultbar"><div style="width:${pct}%"></div></div>`;
+  offset+=g[1];
  });
-
- let advice=[
-  ["Use short work sessions","Try working for 15–20 minutes, then take a short break."],
-  ["Write everything down","Use reminders, calendars and checklists instead of relying on memory."],
-  ["Break tasks into steps","Turn large tasks into small, achievable actions."],
-  ["Reduce distractions","Try a quiet workspace and put unnecessary notifications away."],
-  ["Create routines","Keep important objects in the same place and use regular daily routines."],
-  ["Ask for support","A teacher, family member, counsellor or healthcare professional may be able to help."]
- ];
- const tips=document.getElementById("tips");
- tips.innerHTML="";
- advice.forEach(a=>{
-  const div=document.createElement("div");
-  div.className="tip";
-  div.innerHTML="<b>"+a[0]+"</b><br>"+a[1];
-  tips.appendChild(div);
- });
- window.scrollTo(0,0);
+ document.getElementById("categories").innerHTML=html;
+ document.getElementById("tips").innerHTML=t.tips.map(x=>`<div class="tip">💡 ${x}</div>`).join("");
 }
 
 function restart(){
- answers=Array(30).fill(null);
- current=0;
- document.getElementById("results").classList.add("hidden");
- document.getElementById("intro").classList.remove("hidden");
- window.scrollTo(0,0);
+ startTest(Object.keys(tests).find(k=>tests[k]===activeTest));
 }
 </script>
 </body>
