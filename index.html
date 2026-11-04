@@ -1,477 +1,532 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" href="./Mindfocus.png" type="image/png">
+<link rel="icon" href="./Mindfocus.png" type="image/png">
 <link rel="shortcut icon" href="./Mindfocus.png" type="image/png">
 <link rel="apple-touch-icon" href="./Mindfocus.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MindFocus | Mental Wellness & Self-Discovery</title>
-<link rel="icon" href="./Mindfocus.png" type="image/png">
-<link rel="shortcut icon" href="./Mindfocus.png" type="image/png">
-<link rel="apple-touch-icon" href="./Mindfocus.png">
-
+<title>MindFocus Ultimate</title>
 <style>
+:root{
+--bg:#0b1020;--panel:#151e34;--panel2:#202b46;
+--text:#fff;--muted:#aab5d0;--border:#34415e;
+--accent:#927cff;--accent2:#b6a5ff;
+}
+body.light{
+--bg:#eef0fa;--panel:#fff;--panel2:#e6e8f5;
+--text:#20243a;--muted:#626b84;--border:#d5d9ea;
+--accent:#7058d9;--accent2:#7058d9;
+}
 *{box-sizing:border-box}
-body{margin:0;background:#0b1020;color:#fff;font-family:Arial,sans-serif}
-header{padding:20px 5%;display:flex;justify-content:space-between;align-items:center;background:#111a30;border-bottom:1px solid #293653;flex-wrap:wrap;gap:15px}
-.logo{font-size:27px;font-weight:900;color:#a994ff}
-.logo span{color:white}
-nav{display:flex;gap:8px;flex-wrap:wrap}
-nav button{background:transparent;color:#c3cbe0;border:1px solid #34415e;padding:11px 15px;border-radius:9px;cursor:pointer}
-nav button.active,nav button:hover{background:#8068e9;color:white}
-.container{max-width:1000px;margin:35px auto;padding:15px}
-.hero{text-align:center;padding:45px 15px}
-.hero h1{font-size:45px;margin:10px}
-.hero h1 span{color:#a994ff}
-.hero p{color:#aab5d0;line-height:1.7}
-.card{background:#151e34;border:1px solid #293653;border-radius:18px;padding:25px;margin-bottom:20px}
-.tag{font-size:12px;color:#a994ff;font-weight:bold;letter-spacing:2px}
-button{cursor:pointer}
-.primary{background:#927cff;color:white;border:0;padding:14px 23px;border-radius:10px;font-weight:bold}
-.secondary{background:#293653;color:white;border:0;padding:14px 23px;border-radius:10px}
-.progress{height:9px;background:#293653;border-radius:20px;overflow:hidden;margin:18px 0}
-.progress div{height:100%;background:linear-gradient(90deg,#7764ff,#b18cff);width:0}
-.question{font-size:23px;line-height:1.5;margin:28px 0}
-.answers{display:grid;gap:12px}
-.answer{padding:16px;background:#1e2944;border:1px solid #394766;border-radius:12px;cursor:pointer;color:white}
-.answer:hover,.answer.selected{background:#51418a;border-color:#b19bff}
-.buttons{display:flex;justify-content:space-between;margin-top:25px;gap:10px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;transition:.2s}
+header{background:var(--panel);border-bottom:1px solid var(--border);padding:17px 4%;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.logo{font-size:26px;font-weight:900;color:var(--accent2)}
+.logo span{color:var(--text)}
+nav{display:flex;flex-wrap:wrap;gap:6px}
+nav button,.navbtn{padding:10px 12px;border-radius:9px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer}
+nav button.active,nav button:hover{background:var(--accent);color:white}
+.container{max-width:1150px;margin:25px auto;padding:15px}
+.hero{text-align:center;padding:35px 10px}
+.hero h1{font-size:43px;margin:12px}
+.hero h1 span{color:var(--accent2)}
+.hero p,.muted{color:var(--muted);line-height:1.7}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:23px;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.tile{background:var(--panel2);border:1px solid var(--border);padding:20px;border-radius:14px}
+.tile h3{margin-top:8px}
+.tile p{font-size:13px;color:var(--muted);line-height:1.6}
+.tag{font-size:11px;letter-spacing:2px;color:var(--accent2);font-weight:bold}
+button{cursor:pointer;font-weight:bold}
+.primary{background:var(--accent);color:white;border:0;padding:13px 19px;border-radius:9px}
+.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--border);padding:12px 17px;border-radius:9px}
+.danger{background:#a63855;color:white;border:0;padding:12px;border-radius:9px}
+input,textarea,select{width:100%;padding:12px;background:var(--panel2);border:1px solid var(--border);color:var(--text);border-radius:9px;margin:8px 0}
 .hidden{display:none!important}
 .center{text-align:center}
-.score{font-size:75px;color:#a994ff;font-weight:bold;margin:20px}
-.resultbar{height:12px;background:#293653;border-radius:20px;overflow:hidden;margin:12px 0}
-.resultbar div{height:100%;background:#a18aff}
-.tip{background:#202d49;padding:16px;border-radius:12px;margin:12px 0;line-height:1.6}
-.small{font-size:13px;color:#9eabc7;line-height:1.7}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
-.testcard{background:#202b46;padding:22px;border:1px solid #394766;border-radius:15px}
-.testcard h3{color:#b8a7ff}
-.testcard p{color:#aab5d0;line-height:1.6}
-.testcard button{margin-top:12px}
-footer{text-align:center;padding:30px;color:#74819f}
-#home,#test,#results{scroll-margin-top:20px}
+.big{font-size:65px;color:var(--accent2);font-weight:900;margin:15px}
+.progress{height:9px;background:var(--panel2);border-radius:20px;overflow:hidden;margin:15px 0}
+.progress div{height:100%;background:var(--accent);width:0}
+.answer{padding:16px;border-radius:10px;background:var(--panel2);border:1px solid var(--border);margin:9px 0;cursor:pointer}
+.answer:hover,.answer.selected{border-color:var(--accent);background:var(--accent);color:white}
+.question{font-size:22px;line-height:1.5;margin:25px 0}
+.buttons{display:flex;justify-content:space-between;gap:10px;margin-top:20px}
+.resultbar{height:12px;background:var(--panel2);border-radius:20px;overflow:hidden}
+.resultbar div{height:100%;background:var(--accent)}
+.tip{padding:14px;background:var(--panel2);border-radius:10px;margin:10px 0;line-height:1.6}
+.stat{font-size:32px;color:var(--accent2);font-weight:bold}
+footer{text-align:center;padding:30px;color:var(--muted)}
+a{color:var(--accent2)}
 </style>
 </head>
-
 <body>
 
 <header>
 <div class="logo">MIND<span>FOCUS</span> ✦</div>
-<nav id="navigation">
-<button class="active" onclick="showTab('home',this)">Home</button>
-<button onclick="showTab('adhd',this)">ADHD</button>
-<button onclick="showTab('autism',this)">Autism</button>
-<button onclick="showTab('anxiety',this)">Anxiety</button>
-<button onclick="showTab('depression',this)">Depression</button>
-<button onclick="showTab('dyslexia',this)">Dyslexia</button>
+<nav id="nav">
+<button class="active" onclick="page('dashboard',this)">Dashboard</button>
+<button onclick="page('tests',this)">Tests</button>
+<button onclick="page('history',this)">History</button>
+<button onclick="page('mood',this)">Mood</button>
+<button onclick="page('focus',this)">Focus</button>
+<button onclick="page('learn',this)">Learn</button>
+<button onclick="page('profile',this)">Profile</button>
 </nav>
+<button class="secondary" onclick="toggleTheme()">☀ / ☾</button>
 </header>
 
 <div class="container">
 
-<section id="home">
+<!-- DASHBOARD -->
+<section id="dashboard">
 <div class="hero">
-<div class="tag">UNDERSTAND YOURSELF</div>
-<h1>Your mind. Your <span>journey.</span></h1>
-<p>Explore your mind with self-reflection tests, learn about yourself and discover helpful strategies.</p>
-<button class="primary" onclick="showTab('adhd',document.querySelectorAll('nav button')[1])">Explore tests →</button>
+<div class="tag">YOUR PERSONAL WELLNESS SPACE</div>
+<h1>Welcome to <span>MindFocus.</span></h1>
+<p>Understand your experiences. Discover helpful strategies. Take things one step at a time.</p>
+<button class="primary" onclick="page('tests')">Explore screening tests →</button>
 </div>
-
+<div class="grid">
+<div class="tile"><div class="tag">COMPLETED TESTS</div><div class="stat" id="statTests">0</div><p>Your completed questionnaires</p></div>
+<div class="tile"><div class="tag">MOOD CHECK-INS</div><div class="stat" id="statMood">0</div><p>Your saved mood entries</p></div>
+<div class="tile"><div class="tag">FOCUS SESSIONS</div><div class="stat" id="statFocus">0</div><p>Your completed focus sessions</p></div>
+</div>
 <div class="card">
-<h2>🧠 Welcome to MindFocus</h2>
-<p class="small">Choose an area below to explore. Each screening questionnaire is separate, and you can complete whichever ones interest you.</p>
-<div class="grid" id="homecards"></div>
+<h2>🚀 Quick access</h2>
+<div class="grid">
+<div class="tile"><h3>🧠 Screening tests</h3><p>Explore different self-reflection questionnaires.</p><button class="primary" onclick="page('tests')">Explore</button></div>
+<div class="tile"><h3>⏱ Focus timer</h3><p>Work in short, manageable sessions.</p><button class="primary" onclick="page('focus')">Start focus</button></div>
+<div class="tile"><h3>💜 Daily check-in</h3><p>Record how you are feeling today.</p><button class="primary" onclick="page('mood')">Check in</button></div>
+<div class="tile"><h3>📚 Learning centre</h3><p>Read helpful educational guides.</p><button class="primary" onclick="page('learn')">Learn</button></div>
 </div>
-
+</div>
 <div class="card">
-<h2>⚠️ Important information</h2>
-<p class="small">These questionnaires are educational self-reflection tools, not validated diagnostic assessments. Their scores do not establish whether you have a condition. If you are concerned about your experiences, speak with a qualified healthcare professional.</p>
+<h2>📌 A little reminder</h2>
+<p class="muted">You don't have to be productive every minute. Rest is important, progress takes time, and your worth is not measured by your achievements.</p>
 </div>
 </section>
 
-<section id="adhd" class="hidden">
+<!-- TEST LIBRARY -->
+<section id="tests" class="hidden">
 <div class="hero">
-<div class="tag">ATTENTION & ACTIVITY</div>
-<h1>ADHD <span>Screening</span></h1>
-<p>Explore attention, organisation, hyperactivity and impulsivity.</p>
+<div class="tag">SCREENING LIBRARY</div>
+<h1>Explore your <span>mind.</span></h1>
+<p>Choose a questionnaire to begin.</p>
 </div>
-<div class="grid" id="adhdInfo"></div>
+<div class="grid" id="testLibrary"></div>
 </section>
 
-<section id="autism" class="hidden">
-<div class="hero">
-<div class="tag">SOCIAL COMMUNICATION & SENSORY EXPERIENCES</div>
-<h1>Autism <span>Screening</span></h1>
-<p>Reflect on social communication, routines, sensory experiences and interests.</p>
-</div>
-<div class="grid" id="autismInfo"></div>
-</section>
-
-<section id="anxiety" class="hidden">
-<div class="hero">
-<div class="tag">WORRY & STRESS</div>
-<h1>Anxiety <span>Screening</span></h1>
-<p>Reflect on worry, tension and everyday stress.</p>
-</div>
-<div class="grid" id="anxietyInfo"></div>
-</section>
-
-<section id="depression" class="hidden">
-<div class="hero">
-<div class="tag">MOOD & EMOTIONS</div>
-<h1>Depression <span>Screening</span></h1>
-<p>Reflect on mood, energy, motivation and everyday experiences.</p>
-</div>
-<div class="grid" id="depressionInfo"></div>
-</section>
-
-<section id="dyslexia" class="hidden">
-<div class="hero">
-<div class="tag">READING & LEARNING</div>
-<h1>Dyslexia <span>Screening</span></h1>
-<p>Explore reading, spelling, writing and learning experiences.</p>
-</div>
-<div class="grid" id="dyslexiaInfo"></div>
-</section>
-
+<!-- TEST -->
 <section id="test" class="hidden">
 <div class="card">
-<div class="tag" id="testtype">SCREENING</div>
-<div style="display:flex;justify-content:space-between">
-<span class="small" id="number"></span>
-<span class="small" id="percent"></span>
-</div>
-<div class="progress"><div id="progress"></div></div>
+<div class="tag" id="testCategory"></div>
+<p class="muted" id="questionNumber"></p>
+<div class="progress"><div id="testProgress"></div></div>
 <div class="question" id="question"></div>
-<div class="answers" id="answers"></div>
+<div id="answers"></div>
 <div class="buttons">
-<button class="secondary" onclick="previous()" id="prev">← Previous</button>
-<button class="primary" onclick="next()" id="next" disabled>Next →</button>
+<button class="secondary" onclick="previousQuestion()" id="prev">← Previous</button>
+<button class="primary" onclick="nextQuestion()" id="next" disabled>Next →</button>
 </div>
 </div>
 </section>
 
+<!-- RESULTS -->
 <section id="results" class="hidden">
 <div class="card center">
-<div class="tag">YOUR RESULTS</div>
-<h1 id="resultTitle">Your results</h1>
-<div class="score" id="score">0%</div>
-<h2 id="level"></h2>
-<p class="small" id="description"></p>
-<div class="resultbar"><div id="resultfill"></div></div>
-<p class="small" id="scoremeaning"></p>
+<div class="tag">YOUR SELF-REFLECTION SUMMARY</div>
+<h1 id="resultTitle"></h1>
+<div class="big" id="resultScore"></div>
+<h2 id="resultLevel"></h2>
+<p class="muted" id="resultDescription"></p>
+<div class="resultbar"><div id="resultFill"></div></div>
+<p class="muted" id="scoreExplanation"></p>
 </div>
 <div class="card">
-<h2>📊 Your category breakdown</h2>
-<div id="categories"></div>
+<h2>📊 Category breakdown</h2>
+<div id="breakdown"></div>
 </div>
 <div class="card">
 <h2>💡 Helpful strategies</h2>
-<div id="tips"></div>
+<div id="recommendations"></div>
 </div>
 <div class="card">
-<h2>What next?</h2>
-<p class="small">If these experiences affect your everyday life, consider discussing them with a healthcare professional. This screening cannot diagnose a condition.</p>
-<button class="primary" onclick="restart()">↻ Retake test</button>
-<button class="secondary" onclick="goHome()">Home</button>
+<button class="primary" onclick="exportReport()">⬇ Export report</button>
+<button class="secondary" onclick="page('tests')">More tests</button>
+<button class="secondary" onclick="page('history')">View history</button>
+</div>
+</section>
+
+<!-- HISTORY -->
+<section id="history" class="hidden">
+<div class="hero"><h1>Test <span>History</span></h1><p>Your saved screening summaries.</p></div>
+<div class="card">
+<div id="historyList"></div>
+<button class="secondary" onclick="exportAll()">Export all history</button>
+</div>
+</section>
+
+<!-- MOOD -->
+<section id="mood" class="hidden">
+<div class="hero"><h1>Daily <span>Check-in</span></h1><p>How are you feeling today?</p></div>
+<div class="card">
+<h2>Choose your mood</h2>
+<div class="grid" id="moodChoices">
+<button class="secondary" onclick="selectMood('😊 Happy')">😊 Happy</button>
+<button class="secondary" onclick="selectMood('😌 Calm')">😌 Calm</button>
+<button class="secondary" onclick="selectMood('😐 Okay')">😐 Okay</button>
+<button class="secondary" onclick="selectMood('😟 Anxious')">😟 Anxious</button>
+<button class="secondary" onclick="selectMood('😢 Sad')">😢 Sad</button>
+<button class="secondary" onclick="selectMood('😴 Tired')">😴 Tired</button>
+</div>
+<p id="selectedMood" class="muted">No mood selected.</p>
+<label>Anything you want to write about? (Optional)</label>
+<textarea id="moodNote" rows="4" placeholder="Write your thoughts here..."></textarea>
+<button class="primary" onclick="saveMood()">Save check-in</button>
+</div>
+<div class="card"><h2>Your mood history</h2><div id="moodHistory"></div></div>
+</section>
+
+<!-- FOCUS TIMER -->
+<section id="focus" class="hidden">
+<div class="hero"><h1>Focus <span>Zone</span></h1><p>One task at a time. You've got this.</p></div>
+<div class="card center">
+<div class="tag">POMODORO TIMER</div>
+<div class="big" id="clock">25:00</div>
+<p id="timerStatus" class="muted">Ready when you are.</p>
+<div class="grid">
+<button class="primary" onclick="startTimer()">▶ Start</button>
+<button class="secondary" onclick="pauseTimer()">Ⅱ Pause</button>
+<button class="secondary" onclick="resetTimer()">↻ Reset</button>
+</div>
+</div>
+<div class="card">
+<h2>Choose duration</h2>
+<div class="grid">
+<button class="secondary" onclick="setTimer(15)">15 minutes</button>
+<button class="secondary" onclick="setTimer(25)">25 minutes</button>
+<button class="secondary" onclick="setTimer(45)">45 minutes</button>
+<button class="secondary" onclick="setTimer(60)">60 minutes</button>
+</div>
+<p class="muted">Completed sessions: <b id="focusCount">0</b></p>
+</div>
+</section>
+
+<!-- LEARNING -->
+<section id="learn" class="hidden">
+<div class="hero"><h1>Learning <span>Centre</span></h1><p>Explore information and practical strategies.</p></div>
+<input id="searchLearn" placeholder="Search articles..." oninput="filterArticles()">
+<div class="grid" id="articles"></div>
+</section>
+
+<!-- PROFILE -->
+<section id="profile" class="hidden">
+<div class="hero"><h1>Your <span>Profile</span></h1><p>Customise your MindFocus experience.</p></div>
+<div class="card">
+<h2>Personal settings</h2>
+<label>Display name</label>
+<input id="nickname" placeholder="Enter your nickname">
+<button class="primary" onclick="saveProfile()">Save profile</button>
+<p id="profileMessage" class="muted"></p>
+</div>
+<div class="card">
+<h2>Privacy and data</h2>
+<p class="muted">Your information is stored locally in this browser using localStorage. It is not automatically sent to a server. Other people using the same browser profile may be able to see it.</p>
+<button class="secondary" onclick="exportAll()">Export my data</button>
+<button class="danger" onclick="clearData()">Delete all saved data</button>
 </div>
 </section>
 
 </div>
 
-<footer>
-MindFocus © 2026 · Explore. Understand. Grow.<br>
-Educational tools only · Not a substitute for professional assessment.
-</footer>
+<footer>MindFocus Ultimate © 2026 · Educational self-reflection only · Not a diagnostic service.</footer>
 
 <script>
-const tests = {
-adhd:{
-name:"ADHD",
-count:30,
-options:["Never","Rarely","Sometimes","Often","Very often"],
-groups:[
-["Attention",10],["Organisation",10],["Hyperactivity",5],["Impulsivity",5]
-],
+const database={
+ADHD:{
+groups:[["Attention",10],["Organisation",10],["Hyperactivity",5],["Impulsivity",5]],
 questions:[
 "How often do you make careless mistakes?",
 "How often do you struggle to concentrate on boring tasks?",
 "How often do you lose track of conversations?",
 "How often do you start tasks but struggle to finish them?",
-"How often are you distracted by noises or things around you?",
+"How often are you distracted by things around you?",
 "How often do you avoid tasks requiring concentration?",
-"How often do you daydream when you should be focusing?",
-"How often do you have to reread things because your mind wandered?",
+"How often do you daydream when focusing?",
+"How often do you reread things because your mind wandered?",
 "How often do you forget instructions?",
-"How often do you struggle to concentrate even when you want to?",
+"How often do you struggle to concentrate?",
 "How often do you struggle to organise tasks?",
-"How often do you forget appointments or important dates?",
+"How often do you forget appointments?",
 "How often do you lose things you need?",
 "How often do you leave tasks until the last minute?",
-"How often do you underestimate how long something takes?",
+"How often do you underestimate how long tasks take?",
 "How often does your workspace become disorganised?",
 "How often do you forget what you were about to do?",
-"How often do you struggle to decide which task to do first?",
+"How often do you struggle to choose which task to do first?",
 "How often do you leave projects unfinished?",
-"How often do you need reminders to complete everyday tasks?",
-"How often do you feel restless when sitting down?",
+"How often do you need reminders for everyday tasks?",
+"How often do you feel restless when sitting?",
 "How often do you move your hands or feet without noticing?",
 "How often do you struggle to sit still?",
 "How often do you feel like you have too much energy?",
 "How often do you talk more than you intended?",
 "How often do you interrupt people?",
-"How often do you answer before someone finishes asking?",
+"How often do you answer before someone finishes?",
 "How often do you struggle to wait your turn?",
 "How often do you make quick decisions without thinking?",
 "How often do you say things before considering them?"
 ],
-tips:[
-"Use short work sessions with regular breaks.",
-"Write reminders and appointments down.",
-"Break large tasks into smaller steps.",
-"Reduce distractions in your workspace.",
-"Create consistent daily routines.",
-"Ask teachers, family or professionals for support."
-]
+tips:["Try short work sessions with breaks.","Use reminders and checklists.","Break big tasks into small steps.","Reduce distractions.","Create simple routines.","Consider professional assessment if difficulties affect daily life."]
 },
-autism:{
-name:"Autism",
-count:20,
-options:["Never","Rarely","Sometimes","Often","Very often"],
-groups:[["Social communication",5],["Routines",5],["Sensory experiences",5],["Interests and patterns",5]],
+Autism:{
+groups:[["Social communication",5],["Routines",5],["Sensory experiences",5],["Interests",5]],
 questions:[
-"Do you find social situations difficult to understand?",
-"Do you struggle to know when it is your turn to speak?",
-"Do you find small talk uncomfortable?",
-"Do you sometimes misunderstand indirect language?",
-"Do you find it tiring to socialise?",
-"Do unexpected changes to plans upset you?",
-"Do you prefer having predictable routines?",
-"Do you find transitions between activities difficult?",
-"Do you like doing things in a particular order?",
-"Do you become uncomfortable when routines change?",
-"Are certain sounds overwhelming to you?",
-"Are you sensitive to bright lights?",
-"Do certain textures or clothing feel uncomfortable?",
-"Are strong smells difficult for you?",
-"Do busy environments overwhelm you?",
-"Do you develop very strong interests in particular subjects?",
-"Do you enjoy learning detailed information about topics?",
-"Do you repeat movements or actions when excited or stressed?",
-"Do you prefer direct and clear communication?",
-"Do you sometimes feel you have to act differently around others?"
+"Do you find social situations difficult to understand?","Do you struggle to know when it is your turn to speak?","Do you find small talk uncomfortable?","Do you misunderstand indirect language?","Do you find socialising tiring?","Do unexpected changes upset you?","Do you prefer predictable routines?","Are transitions between activities difficult?","Do you prefer doing things in a particular order?","Do changed routines make you uncomfortable?","Are certain sounds overwhelming?","Are bright lights uncomfortable?","Are certain textures difficult to tolerate?","Are strong smells overwhelming?","Do busy environments overwhelm you?","Do you develop strong interests in specific subjects?","Do you enjoy learning detailed information?","Do you repeat movements when excited or stressed?","Do you prefer direct communication?","Do you feel you have to act differently around others?"
 ],
-tips:[
-"Allow yourself time to recover after social situations.",
-"Use calendars and visual schedules.",
-"Identify sensory triggers and make adjustments.",
-"Explore your interests without feeling guilty.",
-"Communicate your needs clearly.",
-"Seek an assessment if you want to understand your experiences."
-]
+tips:["Allow yourself recovery time after socialising.","Use visual schedules.","Identify sensory triggers.","Explore your interests.","Communicate your needs.","Seek a professional assessment if wanted."]
 },
-anxiety:{
-name:"Anxiety",
-count:15,
-options:["Never","Rarely","Sometimes","Often","Very often"],
+Anxiety:{
 groups:[["Worry",5],["Physical tension",5],["Avoidance",5]],
 questions:[
-"Do you worry about things that might happen?",
-"Do you find it difficult to stop worrying?",
-"Do you imagine the worst possible outcomes?",
-"Do you worry about what other people think of you?",
-"Do you feel nervous about everyday situations?",
-"Do you experience muscle tension when stressed?",
-"Do you feel restless or on edge?",
-"Does stress affect your sleep?",
-"Do you experience a racing heartbeat when worried?",
-"Do you find it difficult to relax?",
-"Do you avoid situations because they make you anxious?",
-"Do you overthink conversations afterwards?",
-"Do you fear making mistakes?",
-"Do you struggle to make decisions because of worry?",
-"Does anxiety interfere with everyday activities?"
+"Do you worry about things that might happen?","Is it difficult to stop worrying?","Do you imagine the worst outcomes?","Do you worry about what people think?","Do you feel nervous in everyday situations?","Do you experience muscle tension?","Do you feel restless or on edge?","Does stress affect your sleep?","Does worry cause a racing heartbeat?","Do you struggle to relax?","Do you avoid situations because of anxiety?","Do you overthink conversations?","Do you fear making mistakes?","Does worry make decisions difficult?","Does anxiety interfere with daily life?"
 ],
-tips:[
-"Try slow, steady breathing.",
-"Break stressful situations into manageable steps.",
-"Keep a regular sleep routine.",
-"Write down worries and possible solutions.",
-"Talk to someone you trust.",
-"Consider professional support if anxiety affects your life."
-]
+tips:["Try slow breathing.","Break stressful tasks into steps.","Maintain a sleep routine.","Write down worries.","Talk to someone you trust.","Consider professional support."]
 },
-depression:{
-name:"Depression",
-count:15,
-options:["Never","Rarely","Sometimes","Often","Very often"],
+Depression:{
 groups:[["Mood",5],["Energy",5],["Daily life",5]],
 questions:[
-"Have you felt sad or low in mood?",
-"Have you lost interest in activities you usually enjoy?",
-"Have you felt hopeless about the future?",
-"Have you felt unusually emotional?",
-"Have you struggled to feel positive?",
-"Have you felt tired even after sleeping?",
-"Have you struggled to find motivation?",
-"Have you experienced changes in your sleep?",
-"Have you found everyday tasks exhausting?",
-"Have you struggled to concentrate?",
-"Have you withdrawn from friends or family?",
-"Have you struggled to take care of everyday responsibilities?",
-"Have you been unusually critical of yourself?",
-"Have you felt disconnected from things around you?",
-"Have these experiences affected your everyday life?"
+"Have you felt sad or low?","Have you lost interest in activities you enjoy?","Have you felt hopeless?","Have you felt unusually emotional?","Have you struggled to feel positive?","Have you felt tired after sleeping?","Have you struggled with motivation?","Have you experienced sleep changes?","Have everyday tasks felt exhausting?","Have you struggled to concentrate?","Have you withdrawn from others?","Have you struggled with responsibilities?","Have you been very critical of yourself?","Have you felt disconnected?","Have these experiences affected your daily life?"
 ],
-tips:[
-"Try to maintain a gentle daily routine.",
-"Break everyday tasks into small steps.",
-"Stay connected with people you trust.",
-"Make time for activities you usually enjoy.",
-"Prioritise rest and regular meals.",
-"Speak to a healthcare professional if you are struggling."
-]
+tips:["Maintain a gentle daily routine.","Break tasks into smaller steps.","Stay connected to people you trust.","Make time for enjoyable activities.","Prioritise rest and meals.","Speak with a professional if struggling."]
 },
-dyslexia:{
-name:"Dyslexia",
-count:15,
-options:["Never","Rarely","Sometimes","Often","Very often"],
-groups:[["Reading",5],["Writing and spelling",5],["Learning",5]],
+Dyslexia:{
+groups:[["Reading",5],["Writing",5],["Learning",5]],
 questions:[
-"Do you find reading slower than you would like?",
-"Do you sometimes lose your place when reading?",
-"Do you find reading long passages tiring?",
-"Do you need to reread sentences to understand them?",
-"Do you sometimes mix up similar-looking words?",
-"Do you find spelling difficult?",
-"Do you struggle to remember how to spell familiar words?",
-"Do you find writing down your thoughts difficult?",
-"Do you make spelling mistakes even when you know the word?",
-"Do you find copying text accurately difficult?",
-"Do you struggle to remember sequences of information?",
-"Do you find following several written instructions difficult?",
-"Do you find learning new written vocabulary challenging?",
-"Do you remember information better when hearing it?",
-"Do reading and writing tasks take you longer than expected?"
+"Do you find reading slower than you would like?","Do you lose your place when reading?","Do long passages feel tiring?","Do you reread sentences to understand them?","Do you mix up similar-looking words?","Do you find spelling difficult?","Do you forget how to spell familiar words?","Is writing your thoughts difficult?","Do you make spelling mistakes?","Do you find copying text difficult?","Do you struggle to remember sequences?","Are written instructions difficult?","Is learning written vocabulary challenging?","Do you remember information better when hearing it?","Do reading tasks take longer than expected?"
 ],
-tips:[
-"Try audiobooks and text-to-speech tools.",
-"Use spellcheck and speech-to-text.",
-"Break reading into shorter sections.",
-"Use coloured overlays or different backgrounds if helpful.",
-"Ask for extra time when appropriate.",
-"Consider a professional educational assessment."
-]
+tips:["Try audiobooks.","Use spellcheck and speech-to-text.","Break reading into smaller sections.","Try different text backgrounds.","Ask about learning support.","Consider an educational assessment."]
+},
+OCD:{
+groups:[["Intrusive thoughts",5],["Repetitive behaviours",5],["Daily impact",5]],
+questions:[
+"Do unwanted thoughts repeatedly enter your mind?","Do you find certain worries difficult to dismiss?","Do you feel distressed by unwanted thoughts?","Do you seek certainty about things?","Do thoughts sometimes feel difficult to control?","Do you repeat actions to feel reassured?","Do you repeatedly check things?","Do you feel driven to arrange things in a particular way?","Do you repeat routines even when you do not want to?","Do you feel distressed if a routine is interrupted?","Do these experiences take up time?","Do they interfere with concentration?","Do they affect your everyday activities?","Do you hide these experiences from others?","Would you like support with these experiences?"
+],
+tips:["OCD is treatable; professional support can help.","Avoid judging yourself for intrusive thoughts.","Speak to a qualified mental health professional.","Learn about evidence-based treatments such as CBT with ERP."]
+},
+Dyscalculia:{
+groups:[["Number understanding",5],["Calculations",5],["Everyday maths",5]],
+questions:[
+"Do you find understanding numbers difficult?","Do you struggle to compare quantities?","Do you find mental arithmetic challenging?","Do you mix up numbers?","Do you struggle to remember number facts?","Do calculations take you longer than expected?","Do you find multiplication tables difficult to remember?","Do you struggle to follow mathematical steps?","Do you make mistakes when calculating?","Do you find estimating quantities difficult?","Do you struggle with reading clocks?","Do you find handling money challenging?","Do you struggle with measurements?","Do directions involving numbers confuse you?","Does maths affect your confidence?"
+],
+tips:["Use visual number aids.","Break calculations into steps.","Use calculators when appropriate.","Practise with real-life examples.","Consider educational assessment."]
+},
+Sensory:{
+groups:[["Sound and light",5],["Touch and texture",5],["Sensory regulation",5]],
+questions:[
+"Are loud sounds uncomfortable?","Are sudden noises upsetting?","Do bright lights bother you?","Do busy places feel overwhelming?","Do multiple conversations distract you?","Do clothing labels bother you?","Are certain food textures unpleasant?","Do you dislike certain physical sensations?","Are strong smells overwhelming?","Do temperature changes bother you?","Do you seek quiet spaces?","Do you need movement to feel comfortable?","Do sensory experiences affect concentration?","Do you become overwhelmed by too much stimulation?","Do you use activities to calm your senses?"
+],
+tips:["Identify your sensory preferences.","Use headphones when appropriate.","Adjust lighting and clothing.","Take breaks from busy environments.","Create a comfortable space."]
+},
+Sleep:{
+groups:[["Falling asleep",5],["Sleep quality",5],["Daytime effects",5]],
+questions:[
+"Do you struggle to fall asleep?","Do you stay awake later than intended?","Does your mind become active at bedtime?","Do you find it difficult to maintain a sleep schedule?","Do you worry when trying to sleep?","Do you wake up during the night?","Do you wake feeling unrefreshed?","Does noise disturb your sleep?","Do you have inconsistent sleep times?","Do you find it difficult to get back to sleep?","Do you feel sleepy during the day?","Does tiredness affect concentration?","Do you struggle to wake up?","Does poor sleep affect your mood?","Does sleep difficulty affect daily life?"
+],
+tips:["Keep a consistent sleep routine.","Reduce bright screens before bedtime.","Make your bedroom comfortable.","Limit caffeine late in the day.","Seek medical advice for persistent sleep problems."]
+},
+Stress:{
+groups:[["Emotional stress",5],["Physical stress",5],["Burnout experiences",5]],
+questions:[
+"Do you feel overwhelmed by responsibilities?","Do you find it hard to switch off?","Do small problems feel unusually difficult?","Do you feel under constant pressure?","Do you struggle to relax?","Do you experience tension when stressed?","Does stress affect your sleep?","Do you experience stress-related headaches?","Do you feel physically exhausted?","Do you struggle to recover after busy days?","Do you feel emotionally drained?","Have you lost motivation?","Do you feel disconnected from activities?","Do you struggle to keep up with responsibilities?","Do you feel you need more rest?"
+],
+tips:["Set realistic priorities.","Take regular breaks.","Ask for help when needed.","Protect time for rest.","Try gentle physical activity.","Speak with a professional if stress becomes overwhelming."]
 }
 };
 
-let activeTest=null,answers=[],index=0;
+const genericOptions=["Never","Rarely","Sometimes","Often","Very often"];
+let activeName="",answers=[],questionIndex=0,lastReport=null;
 
-function showTab(id,btn){
+function getData(key){
+ try{return JSON.parse(localStorage.getItem(key))||[]}catch(e){return []}
+}
+function putData(key,value){localStorage.setItem(key,JSON.stringify(value))}
+function page(id,btn){
  document.querySelectorAll(".container>section").forEach(s=>s.classList.add("hidden"));
  document.getElementById(id).classList.remove("hidden");
  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
  if(btn)btn.classList.add("active");
+ if(id==="history")renderHistory();
+ if(id==="mood")renderMood();
+ if(id==="dashboard")updateStats();
+ if(id==="profile")loadProfile();
  window.scrollTo(0,0);
 }
-
-function goHome(){
- showTab("home",document.querySelector("nav button"));
-}
-
-function createCard(id){
- let t=tests[id];
- return `<div class="testcard">
- <div class="tag">${t.count} QUESTIONS</div>
- <h3>${t.name} screening</h3>
- <p>Explore your experiences and receive a personal screening summary with helpful strategies.</p>
- <button class="primary" onclick="startTest('${id}')">Start test →</button>
- </div>`;
-}
-
-function setup(){
- document.getElementById("homecards").innerHTML=Object.keys(tests).map(createCard).join("");
- document.getElementById("adhdInfo").innerHTML=createCard("adhd");
- document.getElementById("autismInfo").innerHTML=createCard("autism");
- document.getElementById("anxietyInfo").innerHTML=createCard("anxiety");
- document.getElementById("depressionInfo").innerHTML=createCard("depression");
- document.getElementById("dyslexiaInfo").innerHTML=createCard("dyslexia");
-}
-setup();
-
-function startTest(id){
- activeTest=tests[id];
- answers=Array(activeTest.count).fill(null);
- index=0;
- showTab("test",null);
- showQuestion();
-}
-
-function showQuestion(){
- let t=activeTest;
- let group=t.groups.find(g=>{
-  let start=t.groups.slice(0,t.groups.indexOf(g)).reduce((a,x)=>a+x[1],0);
-  return index>=start&&index<start+g[1];
+function renderLibrary(){
+ let html="";
+ Object.keys(database).forEach(name=>{
+ html+=`<div class="tile"><div class="tag">${database[name].questions.length} QUESTIONS</div><h3>🧠 ${name}</h3><p>Educational self-reflection questionnaire with a summary and practical strategies.</p><button class="primary" onclick="startTest('${name}')">Start test →</button></div>`;
  });
- document.getElementById("testtype").textContent=t.name.toUpperCase()+" · "+group[0].toUpperCase();
- document.getElementById("number").textContent=`Question ${index+1} of ${t.count}`;
- document.getElementById("percent").textContent=Math.round((index+1)/t.count*100)+"%";
- document.getElementById("progress").style.width=(index+1)/t.count*100+"%";
- document.getElementById("question").textContent=t.questions[index];
-
- let area=document.getElementById("answers");
- area.innerHTML="";
- t.options.forEach((o,i)=>{
-  let d=document.createElement("div");
-  d.className="answer"+(answers[index]===i?" selected":"");
-  d.textContent=o;
-  d.onclick=()=>{answers[index]=i;showQuestion()};
-  area.appendChild(d);
- });
- document.getElementById("prev").disabled=index===0;
- document.getElementById("next").disabled=answers[index]===null;
- document.getElementById("next").textContent=index===t.count-1?"View results →":"Next →";
+ document.getElementById("testLibrary").innerHTML=html;
 }
+renderLibrary();
 
-function next(){
- if(answers[index]===null)return;
- if(index===activeTest.count-1){showResults();return;}
- index++;
- showQuestion();
+function startTest(name){
+ activeName=name;answers=Array(database[name].questions.length).fill(null);questionIndex=0;
+ page("test");renderQuestion();
 }
-function previous(){
- if(index>0){index--;showQuestion()}
+function groupAt(i){
+ let groups=database[activeName].groups,offset=0;
+ for(let g of groups){if(i<offset+g[1])return g[0];offset+=g[1]}
+ return "";
 }
-
-function showResults(){
- let t=activeTest;
- let max=t.count*4;
- let total=answers.reduce((a,b)=>a+b,0);
- let score=Math.round(total/max*100);
- showTab("results",null);
- document.getElementById("resultTitle").textContent=t.name+" screening results";
- document.getElementById("score").textContent=score+"%";
- document.getElementById("resultfill").style.width=score+"%";
- document.getElementById("scoremeaning").textContent="Percentage of the maximum possible score on this questionnaire. This is not the probability of having "+t.name+".";
- let level=score<20?"Few experiences reported":score<40?"Some experiences reported":score<60?"Several experiences reported":score<80?"Many experiences reported":"Very many experiences reported";
- document.getElementById("level").textContent=level;
- document.getElementById("description").textContent="Your answers describe the frequency of experiences covered in this questionnaire. This result cannot confirm or rule out "+t.name+".";
+function renderQuestion(){
+ let t=database[activeName],n=t.questions.length;
+ document.getElementById("testCategory").textContent=activeName.toUpperCase()+" · "+groupAt(questionIndex).toUpperCase();
+ document.getElementById("questionNumber").textContent=`Question ${questionIndex+1} of ${n}`;
+ document.getElementById("testProgress").style.width=(questionIndex+1)/n*100+"%";
+ document.getElementById("question").textContent=t.questions[questionIndex];
+ document.getElementById("answers").innerHTML=genericOptions.map((o,i)=>`<div class="answer ${answers[questionIndex]===i?"selected":""}" onclick="chooseAnswer(${i})">${o}</div>`).join("");
+ document.getElementById("prev").disabled=questionIndex===0;
+ document.getElementById("next").disabled=answers[questionIndex]===null;
+ document.getElementById("next").textContent=questionIndex===n-1?"Finish →":"Next →";
+}
+function chooseAnswer(i){answers[questionIndex]=i;renderQuestion()}
+function nextQuestion(){
+ if(answers[questionIndex]===null)return;
+ if(questionIndex===answers.length-1){finishTest();return}
+ questionIndex++;renderQuestion();
+}
+function previousQuestion(){if(questionIndex>0){questionIndex--;renderQuestion()}}
+function finishTest(){
+ let t=database[activeName],score=Math.round(answers.reduce((a,b)=>a+b,0)/(answers.length*4)*100);
+ let report={name:activeName,score,date:new Date().toLocaleString(),answers:[...answers]};
+ let history=getData("mf_history");history.unshift(report);putData("mf_history",history.slice(0,100));
+ lastReport=report;
+ page("results");
+ document.getElementById("resultTitle").textContent=activeName+" reflection summary";
+ document.getElementById("resultScore").textContent=score+"%";
+ document.getElementById("resultLevel").textContent=score<20?"Few experiences reported":score<40?"Some experiences reported":score<60?"Several experiences reported":score<80?"Many experiences reported":"Very many experiences reported";
+ document.getElementById("resultDescription").textContent="This score reflects the frequency of experiences reported in this questionnaire. It cannot establish whether you have "+activeName+".";
+ document.getElementById("scoreExplanation").textContent="Percentage of the maximum possible questionnaire score, not the probability of a diagnosis.";
+ document.getElementById("resultFill").style.width=score+"%";
  let html="",offset=0;
  t.groups.forEach(g=>{
-  let sum=answers.slice(offset,offset+g[1]).reduce((a,b)=>a+b,0);
-  let pct=Math.round(sum/(g[1]*4)*100);
-  html+=`<p><b>${g[0]}</b><span style="float:right;color:#a994ff">${pct}%</span></p><div class="resultbar"><div style="width:${pct}%"></div></div>`;
-  offset+=g[1];
+ let sum=answers.slice(offset,offset+g[1]).reduce((a,b)=>a+b,0),p=Math.round(sum/(g[1]*4)*100);
+ html+=`<p>${g[0]} <b style="float:right">${p}%</b></p><div class="progress"><div style="width:${p}%"></div></div>`;
+ offset+=g[1];
  });
- document.getElementById("categories").innerHTML=html;
- document.getElementById("tips").innerHTML=t.tips.map(x=>`<div class="tip">💡 ${x}</div>`).join("");
+ document.getElementById("breakdown").innerHTML=html;
+ document.getElementById("recommendations").innerHTML=t.tips.map(x=>`<div class="tip">💡 ${x}</div>`).join("");
+ updateStats();
 }
-
-function restart(){
- startTest(Object.keys(tests).find(k=>tests[k]===activeTest));
+function renderHistory(){
+ let h=getData("mf_history");
+ document.getElementById("historyList").innerHTML=h.length?h.map((r,i)=>`<div class="tip"><b>${r.name}</b> · ${r.score}%<br><span class="muted">${r.date}</span><br><button class="secondary" onclick="viewReport(${i})">View summary</button></div>`).join(""):"<p class='muted'>No completed tests yet.</p>";
 }
+function viewReport(i){
+ let r=getData("mf_history")[i];
+ lastReport=r;
+ alert(r.name+" reflection summary\nScore: "+r.score+"%\nDate: "+r.date+"\n\nThis is not a diagnosis.");
+}
+function exportReport(){
+ if(!lastReport)return;
+ download("mindfocus-"+lastReport.name+".txt",reportText(lastReport));
+}
+function reportText(r){
+ return "MINDFOCUS SELF-REFLECTION REPORT\n\nQuestionnaire: "+r.name+"\nScore: "+r.score+"%\nDate: "+r.date+"\n\nThis percentage is not a diagnosis or the probability of a condition.\n\nAnswers:\n"+r.answers.map((a,i)=>"Question "+(i+1)+": "+genericOptions[a]).join("\n");
+}
+function exportAll(){
+ let h=getData("mf_history");
+ download("mindfocus-history.txt",h.map(reportText).join("\n\n----------------\n\n")||"No saved history");
+}
+function download(name,content){
+ let blob=new Blob([content],{type:"text/plain"});
+ let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;a.click();URL.revokeObjectURL(a.href);
+}
+let selectedMood="";
+function selectMood(m){
+ selectedMood=m;document.getElementById("selectedMood").textContent="Selected: "+m;
+}
+function saveMood(){
+ if(!selectedMood){alert("Please select a mood first.");return}
+ let moods=getData("mf_moods");
+ moods.unshift({mood:selectedMood,note:document.getElementById("moodNote").value,date:new Date().toLocaleString()});
+ putData("mf_moods",moods.slice(0,100));
+ selectedMood="";document.getElementById("moodNote").value="";
+ document.getElementById("selectedMood").textContent="Saved! Thank you for checking in.";
+ renderMood();updateStats();
+}
+function renderMood(){
+ let m=getData("mf_moods");
+ document.getElementById("moodHistory").innerHTML=m.length?m.map(x=>`<div class="tip">${x.mood}<br><span class="muted">${x.date}</span><p>${escapeHTML(x.note)}</p></div>`).join(""):"<p class='muted'>No check-ins saved yet.</p>";
+}
+function escapeHTML(s){
+ return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+let seconds=1500,interval=null,focusDuration=25;
+function clockDisplay(){
+ let m=Math.floor(seconds/60),s=seconds%60;
+ document.getElementById("clock").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+}
+function setTimer(m){
+ pauseTimer();focusDuration=m;seconds=m*60;clockDisplay();
+ document.getElementById("timerStatus").textContent=m+" minute session selected.";
+}
+function startTimer(){
+ if(interval)return;
+ document.getElementById("timerStatus").textContent="Focus time. One step at a time.";
+ interval=setInterval(()=>{
+ seconds--;clockDisplay();
+ if(seconds<=0){
+ pauseTimer();putData("mf_focus",getData("mf_focus").concat([new Date().toLocaleString()]));
+ document.getElementById("timerStatus").textContent="🎉 Session complete! Great work.";
+ updateStats();alert("Focus session complete! Take a break.");
+ }
+ },1000);
+}
+function pauseTimer(){clearInterval(interval);interval=null}
+function resetTimer(){pauseTimer();seconds=focusDuration*60;clockDisplay();document.getElementById("timerStatus").textContent="Timer reset."}
+const articles=[
+["Understanding ADHD","ADHD can involve differences in attention, activity and impulse regulation. Experiences vary from person to person.","ADHD"],
+["Understanding Autism","Autism is a neurodevelopmental difference involving social communication, sensory experiences and patterns of interests or behaviour.","Autism"],
+["Managing Anxiety","Grounding exercises, support and practical coping strategies can help with anxious feelings.","Anxiety"],
+["Understanding Dyslexia","Dyslexia can affect reading, spelling and written language. Support can make learning more accessible.","Dyslexia"],
+["Understanding OCD","OCD can involve intrusive thoughts and repetitive behaviours. Evidence-based treatment is available.","OCD"],
+["Understanding Dyscalculia","Dyscalculia affects the understanding and use of numbers and mathematical concepts.","Dyscalculia"],
+["Sensory differences","People experience sound, light, touch and other sensations differently. Adjusting environments may help.","Sensory"],
+["Healthy sleep routines","Consistent sleep habits and a comfortable sleeping environment can support rest.","Sleep"],
+["Stress and burnout","Long-lasting stress can affect energy, mood and concentration. Rest and support matter.","Stress"],
+["Depression and support","Depression can affect mood, motivation, energy and daily activities. Effective help is available.","Depression"]
+];
+function renderArticles(filter=""){
+ document.getElementById("articles").innerHTML=articles.filter(a=>a.join(" ").toLowerCase().includes(filter.toLowerCase())).map(a=>`<div class="tile"><div class="tag">LEARNING GUIDE</div><h3>${a[0]}</h3><p>${a[1]}</p><button class="secondary" onclick="openArticle('${a[2]}')">Explore related test</button></div>`).join("")||"<p>No articles found.</p>";
+}
+function filterArticles(){renderArticles(document.getElementById("searchLearn").value)}
+function openArticle(name){if(database[name])startTest(name);else page("tests")}
+renderArticles();
+function toggleTheme(){
+ document.body.classList.toggle("light");
+ localStorage.setItem("mf_theme",document.body.classList.contains("light")?"light":"dark");
+}
+if(localStorage.getItem("mf_theme")==="light")document.body.classList.add("light");
+function saveProfile(){
+ localStorage.setItem("mf_name",document.getElementById("nickname").value);
+ document.getElementById("profileMessage").textContent="Profile saved!";
+}
+function loadProfile(){document.getElementById("nickname").value=localStorage.getItem("mf_name")||""}
+function clearData(){
+ if(!confirm("Delete ALL MindFocus saved data in this browser? This cannot be undone."))return;
+ ["mf_history","mf_moods","mf_focus","mf_name"].forEach(k=>localStorage.removeItem(k));
+ updateStats();renderHistory();renderMood();loadProfile();
+ alert("Saved data cleared.");
+}
+function updateStats(){
+ document.getElementById("statTests").textContent=getData("mf_history").length;
+ document.getElementById("statMood").textContent=getData("mf_moods").length;
+ document.getElementById("statFocus").textContent=getData("mf_focus").length;
+ document.getElementById("focusCount").textContent=getData("mf_focus").length;
+}
+updateStats();clockDisplay();
 </script>
 </body>
 </html>
