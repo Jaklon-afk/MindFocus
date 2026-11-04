@@ -1,0 +1,430 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindFocus — Understand Yourself</title>
+<style>
+:root {
+  --bg:#090d19; --panel:#111a2c; --panel2:#17243b;
+  --text:#eef3ff; --muted:#9eacc5; --accent:#8b7cff;
+  --accent2:#41d9c2; --border:#293752; --danger:#ff8585;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#1a2850 0%,var(--bg) 55%);color:var(--text);font-family:Inter,Arial,sans-serif;min-height:100vh}
+button,select{font:inherit}
+header{position:sticky;top:0;z-index:10;background:#0c1221ed;backdrop-filter:blur(15px);border-bottom:1px solid var(--border)}
+.header{max-width:1200px;margin:auto;padding:17px 22px;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.logo{font-size:25px;font-weight:900;letter-spacing:-1px}
+.logo span{color:var(--accent2)}
+.header-right{display:flex;align-items:center;gap:10px}
+select{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:10px}
+nav{max-width:1200px;margin:auto;padding:0 15px 13px;display:flex;gap:8px;overflow-x:auto}
+nav button{white-space:nowrap;border:1px solid var(--border);background:var(--panel);color:var(--muted);padding:10px 15px;border-radius:10px;cursor:pointer}
+nav button.active,nav button:hover{background:var(--accent);border-color:var(--accent);color:white}
+main{max-width:1050px;margin:35px auto;padding:0 20px 60px}
+.hero{padding:40px 35px;border:1px solid var(--border);border-radius:23px;background:linear-gradient(120deg,#1b2850,#17233a 65%,#183c48);margin-bottom:25px}
+.hero h1{font-size:clamp(32px,6vw,53px);margin:0 0 12px;letter-spacing:-2px}
+.hero p{color:#c0cce2;max-width:680px;line-height:1.7}
+.eyebrow{color:var(--accent2);font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:17px;padding:21px;transition:.2s}
+.card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.card h3{margin:8px 0}
+.card p{color:var(--muted);line-height:1.5;font-size:14px}
+.card .emoji{font-size:28px}
+.btn{border:0;border-radius:11px;padding:12px 17px;background:var(--accent);color:white;font-weight:bold;cursor:pointer}
+.btn:hover{filter:brightness(1.13)}
+.btn.secondary{background:var(--panel2);border:1px solid var(--border)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:19px;padding:25px}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.muted{color:var(--muted)}
+.progress{height:9px;background:#26334c;border-radius:20px;overflow:hidden;margin:17px 0 25px}
+.progress div{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:.3s}
+.question{font-size:21px;font-weight:750;line-height:1.45;margin:25px 0}
+.answers{display:grid;gap:10px}
+.answer{display:flex;align-items:center;gap:12px;text-align:left;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:15px;color:var(--text);cursor:pointer}
+.answer:hover{border-color:var(--accent)}
+.answer.selected{background:#342d68;border-color:var(--accent)}
+.answer .dot{height:17px;width:17px;border:2px solid #8795b0;border-radius:50%;flex-shrink:0}
+.answer.selected .dot{background:var(--accent);border-color:var(--accent);box-shadow:inset 0 0 0 3px #342d68}
+.actions{display:flex;justify-content:space-between;gap:10px;margin-top:25px;flex-wrap:wrap}
+.hidden{display:none!important}
+.score{font-size:48px;font-weight:900;color:var(--accent2)}
+.scorebar{height:12px;border-radius:20px;background:#26334c;overflow:hidden;margin:10px 0 20px}
+.scorebar div{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.notice{border-left:3px solid var(--accent2);background:#142a32;padding:14px;border-radius:8px;color:#c8e9e5;line-height:1.6;margin:20px 0}
+.result-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:25px;border-top:1px solid var(--border)}
+@media(max-width:600px){.hero{padding:25px 20px}.panel{padding:18px}.header{padding:13px}.logo{font-size:21px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="header">
+  <div class="logo">Mind<span>Focus</span> ✦</div>
+  <div class="header-right">
+   <label for="language" id="languageLabel">Language</label>
+   <select id="language" onchange="setLanguage(this.value)">
+    <option value="en">🇬🇧 English</option>
+    <option value="pl">🇵🇱 Polski</option>
+    <option value="es">🇪🇸 Español</option>
+    <option value="fr">🇫🇷 Français</option>
+    <option value="de">🇩🇪 Deutsch</option>
+    <option value="it">🇮🇹 Italiano</option>
+    <option value="pt">🇵🇹 Português</option>
+    <option value="nl">🇳🇱 Nederlands</option>
+   </select>
+  </div>
+ </div>
+ <nav id="nav"></nav>
+</header>
+
+<main>
+ <section id="home">
+  <div class="hero">
+   <div class="eyebrow">YOUR PERSONAL SELF-REFLECTION SPACE</div>
+   <h1 id="heroTitle">Understand your mind.<br>Discover your strengths.</h1>
+   <p id="heroText">Explore different aspects of how you think, feel, learn and experience the world. Take a self-reflection questionnaire and receive a summary with practical ideas.</p>
+   <button class="btn" onclick="showTab('adhd')" id="startBtn">Explore assessments →</button>
+  </div>
+  <h2 id="chooseTitle">Explore the assessments</h2>
+  <div class="grid" id="cards"></div>
+  <div class="notice" id="homeNotice">These questionnaires are informal self-reflection tools. They are not clinically validated tests and cannot diagnose any condition.</div>
+ </section>
+
+ <section id="assessment" class="hidden">
+  <div class="panel">
+   <div class="topline">
+    <div><div class="eyebrow" id="testCategory">ASSESSMENT</div><h2 id="testTitle">Assessment</h2></div>
+    <span class="muted" id="questionCount">1 / 3</span>
+   </div>
+   <div class="progress"><div id="progressFill"></div></div>
+   <div class="muted" id="frequencyLabel">How often does this describe you?</div>
+   <div class="question" id="questionText"></div>
+   <div class="answers" id="answers"></div>
+   <div class="actions">
+    <button class="btn secondary" onclick="previousQuestion()" id="backBtn">← Back</button>
+    <button class="btn" onclick="nextQuestion()" id="nextBtn">Next →</button>
+   </div>
+  </div>
+ </section>
+
+ <section id="results" class="hidden">
+  <div class="panel">
+   <div class="eyebrow" id="resultEyebrow">YOUR REFLECTION SUMMARY</div>
+   <h1 id="resultTitle">Your results</h1>
+   <div class="score" id="scoreNumber">0%</div>
+   <p class="muted" id="scoreDescription"></p>
+   <div class="scorebar"><div id="scoreFill"></div></div>
+   <h3 id="meaningTitle">What this means</h3>
+   <p id="meaningText"></p>
+   <h3 id="tipsTitle">Ideas that may help</h3>
+   <div id="tips"></div>
+   <div class="notice" id="resultNotice"></div>
+   <div class="result-actions">
+    <button class="btn" onclick="downloadReport()" id="downloadBtn">Download report</button>
+    <button class="btn secondary" onclick="window.print()" id="printBtn">Print</button>
+    <button class="btn secondary" onclick="restartTest()" id="retryBtn">Try again</button>
+    <button class="btn secondary" onclick="showTab('home')" id="homeBtn">Home</button>
+   </div>
+  </div>
+ </section>
+</main>
+<footer id="footerText">MindFocus • A space for understanding yourself • Not a diagnostic service</footer>
+
+<script>
+const categories = ["adhd","autism","anxiety","mood","ocd","dyslexia","sensory"];
+const icons = {adhd:"⚡",autism:"🌈",anxiety:"🌧️",mood:"💜",ocd:"🔁",dyslexia:"📖",sensory:"🎧"};
+
+const translations = {
+en:{
+ language:"Language",home:"Home",adhd:"ADHD",autism:"Autism",anxiety:"Anxiety",mood:"Mood",ocd:"OCD",dyslexia:"Dyslexia",sensory:"Sensory",
+ heroTitle:"Understand your mind.<br>Discover your strengths.",heroText:"Explore different aspects of how you think, feel, learn and experience the world. Take a self-reflection questionnaire and receive a summary with practical ideas.",
+ start:"Explore assessments →",choose:"Explore the assessments",notice:"These questionnaires are informal self-reflection tools. They are not clinically validated tests and cannot diagnose any condition.",
+ descriptions:["Attention, organisation and activity patterns.","Social communication, routines and sensory experiences.","Worry, tension and anxious feelings.","Emotions, motivation and changes in mood.","Repetitive thoughts, urges and behaviours.","Reading, spelling and language experiences.","Sensitivity to sounds, light, touch and other sensations."],
+ frequency:"How often does this describe you?",never:"Never",rarely:"Rarely",sometimes:"Sometimes",often:"Often",very:"Very often",
+ back:"← Back",next:"Next →",finish:"See my results →",summary:"YOUR REFLECTION SUMMARY",results:"Your results",meaning:"What this means",tips:"Ideas that may help",download:"Download report",print:"Print",retry:"Try again",homeBtn:"Home",
+ resultNotice:"This score shows how frequently you selected these experiences. It is not a probability, diagnosis or clinical screening result. If these experiences affect your daily life, consider speaking with a qualified professional.",
+ low:"You selected these experiences less frequently.",mid:"You selected a mixture of frequencies.",high:"You selected these experiences frequently.",help:"A result cannot tell you whether you have a condition. Consider which experiences feel important in your everyday life and discuss them with a qualified professional if you need support.",
+ tipList:["Break bigger tasks into smaller steps.","Use reminders, routines or visual checklists.","Notice which environments help you feel comfortable.","Take breaks and give yourself time to reset.","Ask someone you trust for support when needed."],
+ footer:"MindFocus • A space for understanding yourself • Not a diagnostic service"
+},
+pl:{
+ language:"Język",home:"Start",adhd:"ADHD",autism:"Autyzm",anxiety:"Lęk",mood:"Nastrój",ocd:"OCD",dyslexia:"Dysleksja",sensory:"Sensoryka",
+ heroTitle:"Poznaj swój umysł.<br>Odkryj swoje mocne strony.",heroText:"Przyjrzyj się temu, jak myślisz, czujesz, uczysz się i odbierasz świat. Wypełnij kwestionariusz i otrzymaj podsumowanie z praktycznymi wskazówkami.",
+ start:"Zobacz testy →",choose:"Wybierz kwestionariusz",notice:"To nieformalne narzędzia do autorefleksji. Nie są zatwierdzonymi testami klinicznymi i nie diagnozują żadnych zaburzeń.",
+ descriptions:["Uwaga, organizacja i poziom aktywności.","Komunikacja społeczna, rutyna i bodźce sensoryczne.","Zmartwienia, napięcie i uczucie niepokoju.","Emocje, motywacja i zmiany nastroju.","Powtarzające się myśli, impulsy i zachowania.","Czytanie, pisownia i przetwarzanie języka.","Wrażliwość na dźwięki, światło, dotyk i inne bodźce."],
+ frequency:"Jak często to stwierdzenie Cię opisuje?",never:"Nigdy",rarely:"Rzadko",sometimes:"Czasami",often:"Często",very:"Bardzo często",
+ back:"← Wstecz",next:"Dalej →",finish:"Zobacz wyniki →",summary:"TWOJE PODSUMOWANIE",results:"Twoje wyniki",meaning:"Co to oznacza",tips:"Co może pomóc",download:"Pobierz raport",print:"Drukuj",retry:"Spróbuj ponownie",homeBtn:"Start",
+ resultNotice:"Wynik pokazuje, jak często wybierano dane odpowiedzi. Nie jest prawdopodobieństwem, diagnozą ani wynikiem badania klinicznego. Jeśli te doświadczenia utrudniają codzienne życie, porozmawiaj ze specjalistą.",
+ low:"Rzadziej wybierano te doświadczenia.",mid:"Wybierano różne częstotliwości.",high:"Często wybierano te doświadczenia.",help:"Wynik nie określa, czy masz dane zaburzenie. Jeśli potrzebujesz wsparcia, omów swoje doświadczenia z wykwalifikowanym specjalistą.",
+ tipList:["Dziel większe zadania na mniejsze kroki.","Korzystaj z przypomnień, rutyn i list kontrolnych.","Zwracaj uwagę na otoczenie, w którym czujesz się dobrze.","Rób przerwy i daj sobie czas na odpoczynek.","W razie potrzeby poproś zaufaną osobę o wsparcie."],
+ footer:"MindFocus • Przestrzeń do lepszego poznania siebie • To nie jest narzędzie diagnostyczne"
+},
+es:{
+ language:"Idioma",home:"Inicio",adhd:"TDAH",autism:"Autismo",anxiety:"Ansiedad",mood:"Ánimo",ocd:"TOC",dyslexia:"Dislexia",sensory:"Sensorial",
+ heroTitle:"Comprende tu mente.<br>Descubre tus fortalezas.",heroText:"Explora cómo piensas, sientes, aprendes y experimentas el mundo. Completa un cuestionario de reflexión y recibe ideas prácticas.",
+ start:"Explorar cuestionarios →",choose:"Explora los cuestionarios",notice:"Son herramientas informales de reflexión. No son pruebas clínicas validadas ni diagnostican ninguna condición.",
+ descriptions:["Atención, organización y actividad.","Comunicación social, rutinas y experiencias sensoriales.","Preocupación, tensión y ansiedad.","Emociones, motivación y cambios de ánimo.","Pensamientos, impulsos y comportamientos repetitivos.","Lectura, ortografía y lenguaje.","Sensibilidad al sonido, luz, tacto y otras sensaciones."],
+ frequency:"¿Con qué frecuencia te describe esto?",never:"Nunca",rarely:"Rara vez",sometimes:"A veces",often:"A menudo",very:"Muy a menudo",
+ back:"← Atrás",next:"Siguiente →",finish:"Ver resultados →",summary:"TU RESUMEN",results:"Tus resultados",meaning:"Qué significa",tips:"Ideas que pueden ayudar",download:"Descargar informe",print:"Imprimir",retry:"Repetir",homeBtn:"Inicio",
+ resultNotice:"La puntuación refleja la frecuencia de tus respuestas. No es una probabilidad ni un diagnóstico. Si estas experiencias afectan tu vida diaria, consulta con un profesional cualificado.",
+ low:"Seleccionaste estas experiencias con poca frecuencia.",mid:"Seleccionaste distintas frecuencias.",high:"Seleccionaste estas experiencias con frecuencia.",help:"Este resultado no puede determinar si tienes una condición. Habla con un profesional si necesitas apoyo.",
+ tipList:["Divide las tareas grandes en pasos pequeños.","Utiliza recordatorios y listas visuales.","Observa qué entornos te hacen sentir cómodo.","Haz pausas para descansar.","Pide apoyo a alguien de confianza."],
+ footer:"MindFocus • Un espacio para conocerte mejor • No es un servicio de diagnóstico"
+},
+fr:{
+ language:"Langue",home:"Accueil",adhd:"TDAH",autism:"Autisme",anxiety:"Anxiété",mood:"Humeur",ocd:"TOC",dyslexia:"Dyslexie",sensory:"Sensoriel",
+ heroTitle:"Comprenez votre esprit.<br>Découvrez vos forces.",heroText:"Explorez votre façon de penser, de ressentir, d'apprendre et de vivre le monde. Répondez au questionnaire et recevez des idées pratiques.",
+ start:"Explorer les questionnaires →",choose:"Explorer les questionnaires",notice:"Ces questionnaires sont des outils informels de réflexion. Ils ne sont pas validés cliniquement et ne permettent aucun diagnostic.",
+ descriptions:["Attention, organisation et activité.","Communication sociale, routines et sensations.","Inquiétude, tension et anxiété.","Émotions, motivation et changements d'humeur.","Pensées, impulsions et comportements répétitifs.","Lecture, orthographe et langage.","Sensibilité aux sons, à la lumière et au toucher."],
+ frequency:"À quelle fréquence cela vous décrit-il ?",never:"Jamais",rarely:"Rarement",sometimes:"Parfois",often:"Souvent",very:"Très souvent",
+ back:"← Retour",next:"Suivant →",finish:"Voir les résultats →",summary:"VOTRE RÉSUMÉ",results:"Vos résultats",meaning:"Ce que cela signifie",tips:"Quelques idées utiles",download:"Télécharger le rapport",print:"Imprimer",retry:"Recommencer",homeBtn:"Accueil",
+ resultNotice:"Ce score reflète la fréquence de vos réponses. Ce n'est ni une probabilité ni un diagnostic. Si ces expériences affectent votre quotidien, consultez un professionnel qualifié.",
+ low:"Vous avez sélectionné ces expériences moins fréquemment.",mid:"Vous avez sélectionné différentes fréquences.",high:"Vous avez sélectionné ces expériences fréquemment.",help:"Ce résultat ne peut pas déterminer si vous présentez un trouble. Un professionnel peut vous accompagner.",
+ tipList:["Divisez les grandes tâches en petites étapes.","Utilisez des rappels et des listes visuelles.","Repérez les environnements où vous vous sentez bien.","Faites des pauses régulièrement.","Demandez de l'aide à une personne de confiance."],
+ footer:"MindFocus • Un espace pour mieux se comprendre • Pas un outil de diagnostic"
+},
+de:{
+ language:"Sprache",home:"Start",adhd:"ADHS",autism:"Autismus",anxiety:"Angst",mood:"Stimmung",ocd:"Zwang",dyslexia:"Legasthenie",sensory:"Sensorik",
+ heroTitle:"Verstehe deinen Geist.<br>Entdecke deine Stärken.",heroText:"Erkunde, wie du denkst, fühlst, lernst und die Welt erlebst. Beantworte einen Fragebogen und erhalte praktische Anregungen.",
+ start:"Tests entdecken →",choose:"Fragebögen entdecken",notice:"Dies sind informelle Selbstreflexionshilfen. Sie sind keine klinisch validierten Tests und stellen keine Diagnose.",
+ descriptions:["Aufmerksamkeit, Organisation und Aktivität.","Soziale Kommunikation, Routinen und Sinneswahrnehmung.","Sorgen, Anspannung und Ängste.","Gefühle, Motivation und Stimmungsschwankungen.","Wiederkehrende Gedanken, Impulse und Verhaltensweisen.","Lesen, Rechtschreibung und Sprache.","Empfindlichkeit gegenüber Geräuschen, Licht und Berührung."],
+ frequency:"Wie oft trifft das auf dich zu?",never:"Nie",rarely:"Selten",sometimes:"Manchmal",often:"Oft",very:"Sehr oft",
+ back:"← Zurück",next:"Weiter →",finish:"Ergebnisse ansehen →",summary:"DEINE ZUSAMMENFASSUNG",results:"Deine Ergebnisse",meaning:"Was bedeutet das?",tips:"Hilfreiche Ideen",download:"Bericht herunterladen",print:"Drucken",retry:"Erneut versuchen",homeBtn:"Start",
+ resultNotice:"Dieser Wert zeigt die Häufigkeit deiner Antworten. Er ist weder eine Wahrscheinlichkeit noch eine Diagnose. Wenn diese Erfahrungen deinen Alltag beeinträchtigen, wende dich an eine qualifizierte Fachperson.",
+ low:"Du hast diese Erfahrungen seltener ausgewählt.",mid:"Du hast unterschiedliche Häufigkeiten ausgewählt.",high:"Du hast diese Erfahrungen häufig ausgewählt.",help:"Dieses Ergebnis kann keine Diagnose stellen. Eine Fachperson kann dich bei Bedarf unterstützen.",
+ tipList:["Teile große Aufgaben in kleine Schritte auf.","Nutze Erinnerungen und visuelle Checklisten.","Achte auf Umgebungen, in denen du dich wohlfühlst.","Mache Pausen und erhole dich.","Bitte eine Vertrauensperson um Unterstützung."],
+ footer:"MindFocus • Ein Ort, um dich selbst besser zu verstehen • Kein Diagnoseangebot"
+},
+it:{
+ language:"Lingua",home:"Home",adhd:"ADHD",autism:"Autismo",anxiety:"Ansia",mood:"Umore",ocd:"DOC",dyslexia:"Dislessia",sensory:"Sensoriale",
+ heroTitle:"Comprendi la tua mente.<br>Scopri i tuoi punti di forza.",heroText:"Esplora come pensi, senti, impari e vivi il mondo. Completa un questionario e ricevi idee pratiche.",
+ start:"Esplora i questionari →",choose:"Esplora i questionari",notice:"Questi strumenti sono informali e di autoriflessione. Non sono test clinici validati e non formulano diagnosi.",
+ descriptions:["Attenzione, organizzazione e attività.","Comunicazione sociale, routine e sensazioni.","Preoccupazione, tensione e ansia.","Emozioni, motivazione e cambiamenti d'umore.","Pensieri, impulsi e comportamenti ripetitivi.","Lettura, ortografia e linguaggio.","Sensibilità a suoni, luce e tatto."],
+ frequency:"Con quale frequenza ti descrive?",never:"Mai",rarely:"Raramente",sometimes:"A volte",often:"Spesso",very:"Molto spesso",
+ back:"← Indietro",next:"Avanti →",finish:"Vedi i risultati →",summary:"IL TUO RIEPILOGO",results:"I tuoi risultati",meaning:"Cosa significa",tips:"Idee che possono aiutare",download:"Scarica il rapporto",print:"Stampa",retry:"Riprova",homeBtn:"Home",
+ resultNotice:"Il punteggio mostra la frequenza delle risposte. Non è una probabilità né una diagnosi. Se queste esperienze influenzano la tua vita quotidiana, consulta un professionista qualificato.",
+ low:"Hai selezionato queste esperienze meno frequentemente.",mid:"Hai selezionato frequenze diverse.",high:"Hai selezionato spesso queste esperienze.",help:"Questo risultato non può stabilire una diagnosi. Un professionista può offrirti supporto.",
+ tipList:["Dividi le attività grandi in piccoli passaggi.","Usa promemoria e liste visive.","Nota gli ambienti in cui ti senti a tuo agio.","Fai pause regolari.","Chiedi supporto a qualcuno di cui ti fidi."],
+ footer:"MindFocus • Uno spazio per conoscere meglio te stesso • Non è uno strumento diagnostico"
+},
+pt:{
+ language:"Idioma",home:"Início",adhd:"TDAH",autism:"Autismo",anxiety:"Ansiedade",mood:"Humor",ocd:"TOC",dyslexia:"Dislexia",sensory:"Sensorial",
+ heroTitle:"Compreenda a sua mente.<br>Descubra os seus pontos fortes.",heroText:"Explore como pensa, sente, aprende e experiencia o mundo. Responda a um questionário e receba ideias práticas.",
+ start:"Explorar questionários →",choose:"Explore os questionários",notice:"Estas ferramentas são informais e servem para reflexão pessoal. Não são testes clínicos validados nem fazem diagnósticos.",
+ descriptions:["Atenção, organização e atividade.","Comunicação social, rotinas e experiências sensoriais.","Preocupação, tensão e ansiedade.","Emoções, motivação e mudanças de humor.","Pensamentos, impulsos e comportamentos repetitivos.","Leitura, ortografia e linguagem.","Sensibilidade a sons, luz e toque."],
+ frequency:"Com que frequência isto o descreve?",never:"Nunca",rarely:"Raramente",sometimes:"Às vezes",often:"Frequentemente",very:"Muito frequentemente",
+ back:"← Voltar",next:"Seguinte →",finish:"Ver resultados →",summary:"O SEU RESUMO",results:"Os seus resultados",meaning:"O que significa",tips:"Ideias que podem ajudar",download:"Descarregar relatório",print:"Imprimir",retry:"Tentar novamente",homeBtn:"Início",
+ resultNotice:"A pontuação mostra a frequência das respostas. Não é uma probabilidade nem um diagnóstico. Se estas experiências afetarem o seu dia a dia, procure um profissional qualificado.",
+ low:"Selecionou estas experiências com menor frequência.",mid:"Selecionou várias frequências.",high:"Selecionou estas experiências frequentemente.",help:"Este resultado não determina se tem uma condição. Um profissional pode ajudar se precisar de apoio.",
+ tipList:["Divida tarefas grandes em pequenos passos.","Use lembretes e listas visuais.","Repare nos ambientes onde se sente confortável.","Faça pausas regulares.","Peça apoio a alguém de confiança."],
+ footer:"MindFocus • Um espaço para se compreender melhor • Não é um serviço de diagnóstico"
+},
+nl:{
+ language:"Taal",home:"Start",adhd:"ADHD",autism:"Autisme",anxiety:"Angst",mood:"Stemming",ocd:"Dwang",dyslexia:"Dyslexie",sensory:"Sensorisch",
+ heroTitle:"Begrijp je gedachten.<br>Ontdek je sterke punten.",heroText:"Ontdek hoe je denkt, voelt, leert en de wereld ervaart. Vul een vragenlijst in en ontvang praktische ideeën.",
+ start:"Ontdek vragenlijsten →",choose:"Ontdek de vragenlijsten",notice:"Dit zijn informele hulpmiddelen voor zelfreflectie. Het zijn geen klinisch gevalideerde tests en ze stellen geen diagnose.",
+ descriptions:["Aandacht, organisatie en activiteit.","Sociale communicatie, routines en zintuiglijke ervaringen.","Zorgen, spanning en angst.","Emoties, motivatie en stemmingswisselingen.","Terugkerende gedachten, impulsen en gedragingen.","Lezen, spelling en taal.","Gevoeligheid voor geluid, licht en aanraking."],
+ frequency:"Hoe vaak past dit bij jou?",never:"Nooit",rarely:"Zelden",sometimes:"Soms",often:"Vaak",very:"Heel vaak",
+ back:"← Terug",next:"Volgende →",finish:"Bekijk resultaten →",summary:"JOUW SAMENVATTING",results:"Jouw resultaten",meaning:"Wat betekent dit?",tips:"Ideeën die kunnen helpen",download:"Rapport downloaden",print:"Afdrukken",retry:"Opnieuw proberen",homeBtn:"Start",
+ resultNotice:"Deze score toont hoe vaak je deze antwoorden koos. Het is geen kansberekening of diagnose. Bespreek je ervaringen met een deskundige als ze je dagelijks leven beïnvloeden.",
+ low:"Je koos deze ervaringen minder vaak.",mid:"Je koos verschillende frequenties.",high:"Je koos deze ervaringen vaak.",help:"Dit resultaat kan geen diagnose stellen. Een deskundige kan je zo nodig ondersteunen.",
+ tipList:["Verdeel grote taken in kleinere stappen.","Gebruik herinneringen en visuele lijstjes.","Let op omgevingen waarin je je prettig voelt.","Neem regelmatig pauzes.","Vraag iemand die je vertrouwt om steun."],
+ footer:"MindFocus • Een plek om jezelf beter te begrijpen • Geen diagnostisch hulpmiddel"
+}
+};
+
+const questions = {
+en:[
+["I find it difficult to stay focused on tasks.","I often forget things or struggle to organise what I need to do.","I feel restless or act before thinking."],
+["Social situations can be confusing or tiring for me.","Changes to plans or routines can be difficult.","I experience sensory input, such as sounds or lights, very strongly."],
+["I worry about things even when there is no immediate problem.","I find it difficult to relax or switch off my thoughts.","Anxious feelings affect things I want or need to do."],
+["My mood changes noticeably or feels difficult to manage.","I often have low motivation or energy.","My emotions sometimes feel overwhelming."],
+["I get stuck on thoughts that are difficult to let go of.","I feel driven to repeat certain actions or check things.","These thoughts or actions take up time or cause distress."],
+["Reading takes me longer or requires extra effort.","I find spelling or written words difficult.","I understand information better when it is explained aloud."],
+["Sounds, lights, textures or smells can feel overwhelming.","I seek certain sensory experiences to feel comfortable.","Busy environments can make it hard for me to concentrate."]
+],
+pl:[
+["Trudno mi utrzymać koncentrację podczas wykonywania zadań.","Często zapominam o rzeczach lub mam trudności z organizacją.","Czuję niepokój ruchowy lub działam bez zastanowienia."],
+["Sytuacje społeczne bywają dla mnie niezrozumiałe lub męczące.","Zmiany planów lub rutyny bywają dla mnie trudne.","Bardzo intensywnie odbieram bodźce, takie jak dźwięki lub światło."],
+["Martwię się nawet wtedy, gdy nie ma bezpośredniego problemu.","Trudno mi się odprężyć lub wyłączyć natłok myśli.","Niepokój utrudnia mi wykonywanie codziennych czynności."],
+["Mój nastrój wyraźnie się zmienia lub trudno mi nim zarządzać.","Często brakuje mi motywacji lub energii.","Moje emocje bywają przytłaczające."],
+["Zatrzymuję się na myślach, których trudno mi się pozbyć.","Czuję potrzebę powtarzania pewnych czynności lub sprawdzania rzeczy.","Te myśli lub czynności zabierają mi czas albo powodują stres."],
+["Czytanie zajmuje mi więcej czasu lub wymaga większego wysiłku.","Mam trudności z pisownią lub słowami pisanymi.","Łatwiej rozumiem informacje, gdy ktoś wyjaśnia je na głos."],
+["Dźwięki, światło, faktury lub zapachy mogą mnie przytłaczać.","Szukam określonych bodźców, aby poczuć się komfortowo.","W zatłoczonych miejscach trudno mi się skoncentrować."]
+],
+es:[
+["Me cuesta mantener la concentración en las tareas.","A menudo olvido cosas o me cuesta organizarme.","Me siento inquieto o actúo sin pensar."],
+["Las situaciones sociales pueden resultarme confusas o agotadoras.","Los cambios de planes o rutinas pueden ser difíciles.","Percibo intensamente sonidos o luces."],
+["Me preocupo incluso cuando no existe un problema inmediato.","Me cuesta relajarme o desconectar mis pensamientos.","La ansiedad afecta a mis actividades cotidianas."],
+["Mi estado de ánimo cambia notablemente o me cuesta gestionarlo.","A menudo tengo poca motivación o energía.","A veces mis emociones me abruman."],
+["Me quedo atrapado en pensamientos difíciles de soltar.","Siento la necesidad de repetir acciones o comprobar cosas.","Estos pensamientos o acciones me quitan tiempo o me causan malestar."],
+["Leer me lleva más tiempo o esfuerzo.","Me cuesta la ortografía o las palabras escritas.","Entiendo mejor la información cuando la escucho."],
+["Los sonidos, luces, texturas u olores pueden abrumarme.","Busco ciertas sensaciones para sentirme cómodo.","Los lugares concurridos dificultan mi concentración."]
+],
+fr:[
+["J'ai du mal à rester concentré sur une tâche.","J'oublie souvent des choses ou j'ai du mal à m'organiser.","Je me sens agité ou j'agis sans réfléchir."],
+["Les situations sociales peuvent me sembler confuses ou fatigantes.","Les changements de plans ou de routine peuvent être difficiles.","Je ressens fortement les sons ou la lumière."],
+["Je m'inquiète même lorsqu'il n'y a pas de problème immédiat.","J'ai du mal à me détendre ou à arrêter mes pensées.","L'anxiété affecte mes activités quotidiennes."],
+["Mon humeur change beaucoup ou est difficile à gérer.","Je manque souvent de motivation ou d'énergie.","Mes émotions peuvent parfois me submerger."],
+["Je reste bloqué sur des pensées difficiles à abandonner.","Je ressens le besoin de répéter des actions ou de vérifier des choses.","Ces pensées ou actions me prennent du temps ou me causent de la détresse."],
+["La lecture me demande plus de temps ou d'efforts.","J'ai des difficultés avec l'orthographe ou les mots écrits.","Je comprends mieux les informations lorsqu'elles sont expliquées oralement."],
+["Les sons, lumières, textures ou odeurs peuvent me submerger.","Je recherche certaines sensations pour me sentir bien.","Les environnements bondés rendent ma concentration difficile."]
+],
+de:[
+["Es fällt mir schwer, mich auf Aufgaben zu konzentrieren.","Ich vergesse oft Dinge oder kann mich schwer organisieren.","Ich bin unruhig oder handle, bevor ich nachdenke."],
+["Soziale Situationen können verwirrend oder anstrengend sein.","Änderungen von Plänen oder Routinen können schwierig sein.","Ich nehme Geräusche oder Licht besonders intensiv wahr."],
+["Ich mache mir Sorgen, auch wenn kein unmittelbares Problem besteht.","Es fällt mir schwer, mich zu entspannen oder Gedanken abzuschalten.","Angstgefühle beeinflussen meinen Alltag."],
+["Meine Stimmung verändert sich deutlich oder ist schwer zu steuern.","Mir fehlen oft Motivation oder Energie.","Meine Gefühle können überwältigend sein."],
+["Ich bleibe an Gedanken hängen, die schwer loszulassen sind.","Ich verspüre den Drang, Handlungen zu wiederholen oder Dinge zu überprüfen.","Diese Gedanken oder Handlungen kosten Zeit oder verursachen Stress."],
+["Lesen kostet mich mehr Zeit oder Mühe.","Rechtschreibung oder geschriebene Wörter fallen mir schwer.","Ich verstehe Informationen besser, wenn sie mir vorgelesen werden."],
+["Geräusche, Licht, Texturen oder Gerüche können überwältigend sein.","Ich suche bestimmte Sinneseindrücke, um mich wohlzufühlen.","In belebten Umgebungen kann ich mich schwer konzentrieren."]
+],
+it:[
+["Faccio fatica a mantenere la concentrazione sulle attività.","Dimentico spesso le cose o faccio fatica a organizzarmi.","Mi sento irrequieto o agisco senza pensare."],
+["Le situazioni sociali possono sembrarmi confuse o stancanti.","I cambiamenti nei programmi o nelle abitudini possono essere difficili.","Percepisco suoni o luci in modo molto intenso."],
+["Mi preoccupo anche quando non c'è un problema immediato.","Faccio fatica a rilassarmi o a fermare i pensieri.","L'ansia influisce sulle mie attività quotidiane."],
+["Il mio umore cambia molto o è difficile da gestire.","Spesso mi mancano motivazione o energia.","A volte le emozioni mi sopraffanno."],
+["Rimango bloccato su pensieri difficili da abbandonare.","Sento il bisogno di ripetere azioni o controllare le cose.","Questi pensieri o azioni mi fanno perdere tempo o mi causano disagio."],
+["Leggere richiede più tempo o impegno.","Ho difficoltà con l'ortografia o le parole scritte.","Capisco meglio le informazioni quando vengono spiegate a voce."],
+["Suoni, luci, consistenze o odori possono sopraffarmi.","Cerco determinate sensazioni per sentirmi a mio agio.","Gli ambienti affollati rendono difficile concentrarmi."]
+],
+pt:[
+["Tenho dificuldade em manter a concentração nas tarefas.","Esqueço-me frequentemente de coisas ou tenho dificuldade em organizar-me.","Sinto-me inquieto ou ajo sem pensar."],
+["As situações sociais podem parecer confusas ou cansativas.","As mudanças de planos ou rotinas podem ser difíceis.","Sinto sons ou luzes de forma muito intensa."],
+["Preocupo-me mesmo quando não existe um problema imediato.","Tenho dificuldade em relaxar ou desligar os pensamentos.","A ansiedade afeta as minhas atividades diárias."],
+["O meu humor muda bastante ou é difícil de gerir.","Frequentemente tenho pouca motivação ou energia.","Por vezes, as minhas emoções parecem demasiado intensas."],
+["Fico preso a pensamentos difíceis de abandonar.","Sinto necessidade de repetir ações ou verificar coisas.","Estes pensamentos ou ações ocupam tempo ou causam sofrimento."],
+["Ler exige mais tempo ou esforço.","Tenho dificuldade com a ortografia ou palavras escritas.","Compreendo melhor a informação quando é explicada em voz alta."],
+["Sons, luzes, texturas ou cheiros podem ser demasiado intensos.","Procuro certas sensações para me sentir confortável.","Ambientes movimentados dificultam a minha concentração."]
+],
+nl:[
+["Ik vind het moeilijk om mijn aandacht bij taken te houden.","Ik vergeet vaak dingen of vind organiseren lastig.","Ik voel me rusteloos of handel voordat ik nadenk."],
+["Sociale situaties kunnen verwarrend of vermoeiend zijn.","Veranderingen in plannen of routines kunnen moeilijk zijn.","Ik ervaar geluiden of licht heel intens."],
+["Ik maak me zorgen, zelfs als er geen direct probleem is.","Ik vind het moeilijk om te ontspannen of mijn gedachten uit te zetten.","Angst beïnvloedt mijn dagelijkse activiteiten."],
+["Mijn stemming verandert sterk of is moeilijk te beheersen.","Ik heb vaak weinig motivatie of energie.","Mijn emoties kunnen soms overweldigend zijn."],
+["Ik blijf hangen in gedachten die moeilijk los te laten zijn.","Ik voel de drang om handelingen te herhalen of dingen te controleren.","Deze gedachten of handelingen kosten tijd of veroorzaken stress."],
+["Lezen kost me meer tijd of moeite.","Ik vind spelling of geschreven woorden moeilijk.","Ik begrijp informatie beter wanneer die hardop wordt uitgelegd."],
+["Geluiden, licht, texturen of geuren kunnen overweldigend zijn.","Ik zoek bepaalde zintuiglijke ervaringen om me prettig te voelen.","Drukke omgevingen maken concentreren moeilijk."]
+]
+};
+
+const names = {
+en:["ADHD","Autism","Anxiety","Mood","OCD","Dyslexia","Sensory"],
+pl:["ADHD","Autyzm","Lęk","Nastrój","OCD","Dysleksja","Sensoryka"],
+es:["TDAH","Autismo","Ansiedad","Ánimo","TOC","Dislexia","Sensorial"],
+fr:["TDAH","Autisme","Anxiété","Humeur","TOC","Dyslexie","Sensoriel"],
+de:["ADHS","Autismus","Angst","Stimmung","Zwang","Legasthenie","Sensorik"],
+it:["ADHD","Autismo","Ansia","Umore","DOC","Dislessia","Sensoriale"],
+pt:["TDAH","Autismo","Ansiedade","Humor","TOC","Dislexia","Sensorial"],
+nl:["ADHD","Autisme","Angst","Stemming","Dwang","Dyslexie","Sensorisch"]
+};
+
+let lang = localStorage.getItem("mindfocus-language") || "en";
+let current = 0, question = 0, answers = [], reportText = "";
+const scale = [0,1,2,3,4];
+
+function t(key){return translations[lang][key] || translations.en[key] || key}
+function setLanguage(value){
+ lang=value;
+ localStorage.setItem("mindfocus-language",value);
+ document.documentElement.lang=value;
+ document.getElementById("language").value=value;
+ renderAll();
+}
+function showTab(tab){
+ document.getElementById("home").classList.toggle("hidden",tab!=="home");
+ document.getElementById("assessment").classList.add("hidden");
+ document.getElementById("results").classList.add("hidden");
+ document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));
+ if(tab==="home") return;
+ if(categories.includes(tab)) startTest(categories.indexOf(tab));
+}
+function renderAll(){
+ const tr=translations[lang];
+ document.getElementById("languageLabel").textContent=tr.language;
+ document.getElementById("heroTitle").innerHTML=tr.heroTitle;
+ document.getElementById("heroText").textContent=tr.heroText;
+ document.getElementById("startBtn").textContent=tr.start;
+ document.getElementById("chooseTitle").textContent=tr.choose;
+ document.getElementById("homeNotice").textContent=tr.notice;
+ document.getElementById("footerText").textContent=tr.footer;
+ document.getElementById("nav").innerHTML=["home",...categories].map((c,i)=>`<button data-tab="${c}" onclick="showTab('${c}')">${i===0?"⌂ "+tr.home:icons[c]+" "+tr[c]}</button>`).join("");
+ document.getElementById("cards").innerHTML=categories.map((c,i)=>`
+ <div class="card"><div class="emoji">${icons[c]}</div><h3>${names[lang][i]}</h3>
+ <p>${tr.descriptions[i]}</p><button class="btn" onclick="showTab('${c}')">${tr.start}</button></div>`).join("");
+ if(!document.getElementById("assessment").classList.contains("hidden")) renderQuestion();
+ if(!document.getElementById("results").classList.contains("hidden")) renderResults();
+}
+function startTest(index){
+ current=index;question=0;answers=[];
+ document.getElementById("home").classList.add("hidden");
+ document.getElementById("results").classList.add("hidden");
+ document.getElementById("assessment").classList.remove("hidden");
+ renderQuestion();
+}
+function renderQuestion(){
+ const tr=translations[lang];
+ const q=questions[lang][current];
+ document.getElementById("testCategory").textContent=names[lang][current].toUpperCase()+" SELF-REFLECTION";
+ document.getElementById("testTitle").textContent=names[lang][current];
+ document.getElementById("questionCount").textContent=(question+1)+" / "+q.length;
+ document.getElementById("frequencyLabel").textContent=tr.frequency;
+ document.getElementById("questionText").textContent=q[question];
+ document.getElementById("progressFill").style.width=((question+1)/q.length*100)+"%";
+ const labels=[tr.never,tr.rarely,tr.sometimes,tr.often,tr.very];
+ document.getElementById("answers").innerHTML=labels.map((label,i)=>`
+ <button class="answer ${answers[question]===i?"selected":""}" onclick="chooseAnswer(${i})">
+ <span class="dot"></span>${label}</button>`).join("");
+ document.getElementById("backBtn").textContent=tr.back;
+ document.getElementById("nextBtn").textContent=question===q.length-1?tr.finish:tr.next;
+ document.getElementById("backBtn").disabled=question===0;
+ document.getElementById("nextBtn").disabled=answers[question]===undefined;
+}
+function chooseAnswer(value){answers[question]=value;renderQuestion()}
+function previousQuestion(){if(question>0){question--;renderQuestion()}}
+function nextQuestion(){
+ if(answers[question]===undefined)return;
+ if(question<questions[lang][current].length-1){question++;renderQuestion()}
+ else showResults();
+}
+function showResults(){
+ document.getElementById("assessment").classList.add("hidden");
+ document.getElementById("results").classList.remove("hidden");
+ renderResults();
+}
+function renderResults(){
+ const tr=translations[lang];
+ const score=Math.round(answers.reduce((a,b)=>a+b,0)/(answers.length*4)*100);
+ document.getElementById("resultEyebrow").textContent=tr.summary;
+ document.getElementById("resultTitle").textContent=names[lang][current]+" — "+tr.results;
+ document.getElementById("scoreNumber").textContent=score+"%";
+ document.getElementById("scoreFill").style.width=score+"%";
+ document.getElementById("scoreDescription").textContent=score<34?tr.low:score<67?tr.mid:tr.high;
+ document.getElementById("meaningTitle").textContent=tr.meaning;
+ document.getElementById("meaningText").textContent=tr.help;
+ document.getElementById("tipsTitle").textContent=tr.tips;
+ document.getElementById("tips").innerHTML=tr.tipList.map(x=>`<div class="card" style="margin:9px 0;padding:13px">✦ ${x}</div>`).join("");
+ document.getElementById("resultNotice").textContent=tr.resultNotice;
+ document.getElementById("downloadBtn").textContent=tr.download;
+ document.getElementById("printBtn").textContent=tr.print;
+ document.getElementById("retryBtn").textContent=tr.retry;
+ document.getElementById("homeBtn").textContent=tr.homeBtn;
+ reportText=`MindFocus — ${names[lang][current]}\nScore: ${score}%\n\n${tr.scoreDescription||""}\n\n${tr.resultNotice}\n\nAnswers:\n`+questions[lang][current].map((q,i)=>q+" — "+[tr.never,tr.rarely,tr.sometimes,tr.often,tr.very][answers[i]]).join("\n");
+}
+function downloadReport(){
+ const blob=new Blob([reportText],{type:"text/plain;charset=utf-8"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");a.href=url;a.download="MindFocus-report.txt";a.click();
+ URL.revokeObjectURL(url);
+}
+function restartTest(){startTest(current)}
+document.getElementById("language").value=lang;
+renderAll();
+</script>
+</body>
+</html>
