@@ -95,6 +95,15 @@ footer{text-align:center;color:var(--muted);padding:30px;font-size:12px}
 .row .actions{margin:0}
 .small{font-size:13px}
 ul.perms{line-height:1.8;padding-left:20px;margin:8px 0}
+.breath{width:150px;height:150px;border-radius:50%;margin:22px auto;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:bold;transition:transform 1s ease-in-out;text-align:center;padding:10px}
+@media(prefers-reduced-motion:reduce){.breath{transition:none!important}}
+body.zoom1{zoom:1.15}body.zoom2{zoom:1.3}
+body.dys{font-family:Verdana,"Comic Sans MS",Tahoma,sans-serif;letter-spacing:.04em;word-spacing:.12em}
+body.nomotion *,body.nomotion *::before{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+body.hc,body.hc.light{--bg:#000;--panel:#000;--panel2:#0d0d0d;--text:#fff;--muted:#e6e6e6;--border:#fff;--accent:#8fa8ff;--accent2:#5ff5dc;--danger:#ff8fa0;--warn:#ffd76a}
+body.hc .primary,body.hc .tab.active,body.hc .slot.selected{color:#000}
+.journal-entry{white-space:pre-wrap;word-break:break-word;margin:6px 0 10px}
+.chart-legend{margin-top:8px;font-size:13px;color:var(--muted)}
 @media(max-width:800px){.layout{display:block}aside{width:100%;display:flex;overflow-x:auto;padding:8px;border-right:0;border-bottom:1px solid var(--border)}.nav-label{display:none}.nav-btn{white-space:nowrap;width:auto;min-width:max-content;margin:0;padding:11px}main{padding:18px}header{padding:12px 15px}}
 @media(max-width:480px){.hero{padding:23px}.question-text{font-size:20px}.timer{font-size:50px}.two{grid-template-columns:1fr}}
 </style>
@@ -120,9 +129,12 @@ ul.perms{line-height:1.8;padding-left:20px;margin:8px 0}
  <button class="nav-btn" data-page="tests" onclick="page('tests')">🧠 <span data-en="Assessments" data-pl="Testy">Assessments</span></button>
  <button class="nav-btn" data-page="history" onclick="page('history')">📊 <span data-en="My results" data-pl="Moje wyniki">My results</span></button>
  <button class="nav-btn" data-page="mood" onclick="page('mood')">😊 <span data-en="Mood tracker" data-pl="Nastrój">Mood tracker</span></button>
- <button class="nav-btn" data-page="focus" onclick="page('focus')">⏱️ <span data-en="Focus timer" data-pl="Minutnik skupienia">Focus timer</span></button>
+ <button class="nav-btn" data-page="journal" onclick="page('journal')">📓 <span data-en="Journal" data-pl="Dziennik">Journal</span></button>
+ 
+<button class="nav-btn" data-page="focus" onclick="page('focus')">⏱️ <span data-en="Focus timer" data-pl="Minutnik skupienia">Focus timer</span></button>
  <button class="nav-btn" data-page="learn" onclick="page('learn')">📚 <span data-en="Learn" data-pl="Wiedza">Learn</span></button>
  <button class="nav-btn" data-page="meetings" onclick="page('meetings')">📅 <span data-en="Book a meeting" data-pl="Umów spotkanie">Book a meeting</span></button>
+ <button class="nav-btn" data-page="help" onclick="page('help')">🆘 <span data-en="Help and support" data-pl="Pomoc i wsparcie">Help and support</span></button>
  <div class="nav-label" data-en="PERSONAL" data-pl="OSOBISTE">PERSONAL</div>
  <button class="nav-btn" data-page="profile" onclick="page('profile')">👤 <span data-en="My profile" data-pl="Mój profil">My profile</span></button>
  <div class="nav-label hidden" id="navStaffLabel" data-en="STAFF" data-pl="PERSONEL">STAFF</div>
@@ -138,10 +150,14 @@ ul.perms{line-height:1.8;padding-left:20px;margin:8px 0}
   <button class="primary" onclick="page('tests')" data-en="Explore assessments →" data-pl="Odkryj testy →">Explore assessments →</button>
  </div>
  <div class="card hidden" id="announceCard" style="margin-bottom:20px"><h3 data-en="📢 Announcement" data-pl="📢 Ogłoszenie">📢 Announcement</h3><p id="announceText"></p><div class="muted small" id="announceMeta"></div></div>
- <div class="grid">
+ <div class="card" style="margin-bottom:20px"><h3 style="margin-top:0" data-en="💡 Tip of the day" data-pl="💡 Wskazówka dnia">💡 Tip of the day</h3><p id="tipText" style="margin-bottom:0"></p></div>
+ 
+<div class="card hidden" id="nextMeetingCard" style="margin-bottom:20px"><h3 data-en="📅 Your next meeting" data-pl="📅 Twoje następne spotkanie">📅 Your next meeting</h3><p id="nextMeetingText"></p><button class="secondary" onclick="page('meetings')" data-en="View meetings" data-pl="Zobacz spotkania">View meetings</button></div>
+ <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr))">
   <div class="card"><div class="card-icon">🧠</div><div class="muted" data-en="Assessments completed" data-pl="Ukończone testy">Assessments completed</div><div class="stat" id="statTests">0</div></div>
   <div class="card"><div class="card-icon">📈</div><div class="muted" data-en="Average score" data-pl="Średni wynik">Average score</div><div class="stat" id="statAverage">0%</div></div>
   <div class="card"><div class="card-icon">😊</div><div class="muted" data-en="Mood entries" data-pl="Wpisy nastroju">Mood entries</div><div class="stat" id="statMood">0</div></div>
+  <div class="card"><div class="card-icon">🔥</div><div class="muted" data-en="Check-in streak" data-pl="Seria wpisów">Check-in streak</div><div class="stat" id="statStreak">0</div></div>
  </div>
  <h2 style="margin-top:30px" data-en="Quick access" data-pl="Szybki dostęp">Quick access</h2>
  <div class="grid">
@@ -150,7 +166,7 @@ ul.perms{line-height:1.8;padding-left:20px;margin:8px 0}
   <div class="card"><div class="card-icon">💜</div><h3 data-en="Check in with yourself" data-pl="Sprawdź, jak się czujesz">Check in with yourself</h3><p class="muted" data-en="Record how you are feeling today." data-pl="Zapisz, jak się dzisiaj czujesz.">Record how you are feeling today.</p><button class="secondary" onclick="page('mood')" data-en="Track mood" data-pl="Zapisz nastrój">Track mood</button></div>
   <div class="card"><div class="card-icon">📅</div><h3 data-en="Talk to someone" data-pl="Porozmawiaj z kimś">Talk to someone</h3><p class="muted" data-en="Book a meeting with a member of our team." data-pl="Umów spotkanie z członkiem naszego zespołu.">Book a meeting with a member of our team.</p><button class="secondary" onclick="page('meetings')" data-en="Book a meeting" data-pl="Umów spotkanie">Book a meeting</button></div>
  </div>
- <div class="card" style="margin-top:20px"><h3 data-en="A little reminder" data-pl="Małe przypomnienie">A little reminder</h3><p data-en="You are more than a score. Take breaks, be kind to yourself and remember that asking for help is a strength." data-pl="Jesteś kimś więcej niż wynikiem. Odpoczywaj, bądź dla siebie życzliwy i pamiętaj, że proszenie o pomoc jest oznaką siły.">You are more than a score. Take breaks, be kind to yourself and remember that asking for help is a strength.</p></div>
+ <div class="card" style="margin-top:20px"><h3 data-en="A little reminder" data-pl="Małe przypomnienie">A little reminder</h3><p data-en="You are more than a score. Take breaks, be kind to yourself and remember that asking for help is a strength." data-pl="Jesteś kimś więcej niż wynikiem. Odpoczywaj, bądź dla siebie życzliwy i pamiętaj, że proszenie o pomoc jest oznaką siły.">You are more than a score. Take breaks, be kind to yourself and remember that asking for help is a strength.</p><button class="secondary" onclick="page('help')" data-en="Help and support" data-pl="Pomoc i wsparcie">Help and support</button></div>
 </section>
 
 <section id="auth" class="page">
@@ -233,6 +249,7 @@ ul.perms{line-height:1.8;padding-left:20px;margin:8px 0}
   <div class="progress"><div id="resultProgress"></div></div>
   <h3 id="resultLevel"></h3>
   <p id="resultDescription"></p>
+  <p class="muted" id="resultChange"></p>
   <div class="card" style="background:var(--panel2);box-shadow:none">
    <h3 data-en="What does this mean?" data-pl="Co to oznacza?">What does this mean?</h3>
    <p id="resultAdvice"></p>
@@ -249,6 +266,7 @@ ul.perms{line-height:1.8;padding-left:20px;margin:8px 0}
 <section id="history" class="page">
  <h1 data-en="My results" data-pl="Moje wyniki">My results</h1>
  <p class="muted" data-en="Your completed assessments are saved on this device." data-pl="Ukończone testy są zapisywane na tym urządzeniu.">Your completed assessments are saved on this device.</p>
+ <div class="card hidden" id="scoreChartCard" style="margin-bottom:16px"><h2 data-en="Scores over time" data-pl="Wyniki w czasie">Scores over time</h2><div id="scoreChart"></div><div class="chart-legend" id="scoreLegend"></div></div>
  <div class="card" id="historyList"></div>
  <div class="actions"><button class="danger" onclick="clearHistory()" data-en="Clear history" data-pl="Wyczyść historię">Clear history</button></div>
 </section>
@@ -268,6 +286,7 @@ ul.perms{line-height:1.8;padding-left:20px;margin:8px 0}
   <div class="field"><label data-en="Add a note (optional)" data-pl="Dodaj notatkę (opcjonalnie)">Add a note (optional)</label><textarea id="moodNote" data-placeholder-en="What's on your mind?" data-placeholder-pl="Co chodzi Ci po głowie?" placeholder="What's on your mind?"></textarea></div>
   <button class="primary" onclick="saveMood()" data-en="Save mood" data-pl="Zapisz nastrój">Save mood</button>
  </div>
+ <div class="card hidden" id="moodChartCard" style="margin-top:18px"><h2 data-en="Mood over time" data-pl="Nastrój w czasie">Mood over time</h2><div id="moodChart"></div></div>
  <div class="card" style="margin-top:18px"><h2 data-en="Mood history" data-pl="Historia nastroju">Mood history</h2><div id="moodHistory"></div></div>
 </section>
 
@@ -285,6 +304,12 @@ ul.perms{line-height:1.8;padding-left:20px;margin:8px 0}
    <button class="secondary" onclick="setBreak()" data-en="5 min break" data-pl="5 min przerwy">5 min break</button>
   </div>
   <p class="muted" id="timerMessage"></p>
+ </div>
+ <div class="card" style="max-width:600px;margin:18px auto 0;text-align:center">
+  <h2 data-en="Breathing exercise" data-pl="Ćwiczenie oddechowe">Breathing exercise</h2>
+  <div class="breath" id="breathCircle" aria-live="polite">Ready</div>
+  <p class="muted" id="breathText"></p>
+  <button class="primary" id="breathBtn" onclick="toggleBreath()">Start</button>
  </div>
 </section>
 
@@ -316,7 +341,37 @@ ul.perms{line-height:1.8;padding-left:20px;margin:8px 0}
  </div>
 </section>
 
+<section id="help" class="page">
+ <h1 data-en="Help and support" data-pl="Pomoc i wsparcie">Help and support</h1>
+ <div class="notice" data-en="If you or someone else is in immediate danger, call your local emergency number now. MindFocus is not an emergency service." data-pl="Jeśli Ty lub ktoś inny jesteś w bezpośrednim niebezpieczeństwie, natychmiast zadzwoń pod lokalny numer alarmowy. MindFocus nie jest służbą ratunkową.">If you or someone else is in immediate danger, call your local emergency number now. MindFocus is not an emergency service.</div>
+ <div class="grid" id="helpGrid"></div>
+ <p class="muted small" data-en="Numbers and opening hours can change, so please check them locally. These services are separate from MindFocus." data-pl="Numery i godziny pracy mogą się zmieniać, dlatego sprawdź je lokalnie. Te usługi nie są częścią MindFocus.">Numbers and opening hours can change, so please check them locally. These services are separate from MindFocus.</p>
+ <div class="card" style="margin-top:18px"><h3 data-en="Send feedback to the team" data-pl="Wyślij opinię zespołowi">Send feedback to the team</h3>
+  <p class="muted small" data-en="Tell us what works and what does not. Please do not include personal or medical details. This is not monitored for emergencies." data-pl="Napisz, co działa, a co nie. Nie podawaj danych osobowych ani medycznych. Ta wiadomość nie jest monitorowana pod kątem nagłych sytuacji.">Tell us what works and what does not. Please do not include personal or medical details. This is not monitored for emergencies.</p>
+  <div id="fbMsg" class="msg"></div>
+  <div class="field"><textarea id="fbText" maxlength="500"></textarea></div>
+  <button class="primary" onclick="sendFeedback()" data-en="Send feedback" data-pl="Wyślij opinię">Send feedback</button></div>
+ 
+<div class="card" style="margin-top:18px"><h3 data-en="A quick grounding exercise (5-4-3-2-1)" data-pl="Szybkie ćwiczenie uziemiające (5-4-3-2-1)">A quick grounding exercise (5-4-3-2-1)</h3>
+  <p data-en="Slowly name 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell and 1 you can taste." data-pl="Powoli wymień 5 rzeczy, które widzisz, 4, których możesz dotknąć, 3, które słyszysz, 2, które czujesz węchem, i 1, którą czujesz smakiem.">Slowly name 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell and 1 you can taste.</p>
+  <div class="actions"><button class="secondary" onclick="page('meetings')" data-en="Book a meeting" data-pl="Umów spotkanie">Book a meeting</button><button class="secondary" onclick="page('focus')" data-en="Try the breathing exercise" data-pl="Wypróbuj ćwiczenie oddechowe">Try the breathing exercise</button></div></div>
+</section>
+
+<section id="journal" class="page">
+ <h1 data-en="Journal" data-pl="Dziennik">Journal</h1>
+ <p class="muted" data-en="A private space to write. Entries stay on this device." data-pl="Prywatne miejsce do pisania. Wpisy zostają na tym urządzeniu.">A private space to write. Entries stay on this device.</p>
+ <div class="card">
+  <div class="muted small" data-en="Today's prompt" data-pl="Dzisiejsza podpowiedź">Today's prompt</div>
+  <h3 id="journalPrompt"></h3>
+  <div class="field"><textarea id="journalText" maxlength="2000"></textarea></div>
+  <button class="primary" onclick="saveJournal()" data-en="Save entry" data-pl="Zapisz wpis">Save entry</button>
+  <span id="journalMsg" class="muted" style="margin-left:10px"></span>
+ </div>
+ <div class="card" style="margin-top:18px"><h2 data-en="Past entries" data-pl="Dotychczasowe wpisy">Past entries</h2><div id="journalList"></div></div>
+</section>
+
 <section id="staff" class="page">
+
  <h1 data-en="Staff panel" data-pl="Panel personelu">Staff panel</h1>
  <div class="tabs" id="staffTabs"></div>
  <div id="staffBody"></div>
@@ -353,6 +408,22 @@ ul.perms{line-height:1.8;padding-left:20px;margin:8px 0}
    <div class="field"><label data-en="Confirm new password" data-pl="Powtórz nowe hasło">Confirm new password</label><input id="pwNew2" type="password" autocomplete="new-password" required></div>
    <button class="primary" type="submit" data-en="Change password" data-pl="Zmień hasło">Change password</button>
   </form>
+ </div>
+ <div class="card" style="max-width:750px;margin-top:18px">
+  <h2 data-en="Accessibility" data-pl="Dostępność">Accessibility</h2>
+  <p class="muted" data-en="Settings are saved on this device." data-pl="Ustawienia są zapisywane na tym urządzeniu.">Settings are saved on this device.</p>
+  <div class="field"><label data-en="Text size" data-pl="Rozmiar tekstu">Text size</label><select id="a11ySize" onchange="setA11y()"><option value="0" data-en="Normal" data-pl="Normalny">Normal</option><option value="1" data-en="Large" data-pl="Duży">Large</option><option value="2" data-en="Extra large" data-pl="Bardzo duży">Extra large</option></select></div>
+  <div class="field"><label class="checks"><input type="checkbox" id="a11yDys" onchange="setA11y()"> <span data-en="Easier-to-read font and spacing" data-pl="Czytelniejsza czcionka i odstępy">Easier-to-read font and spacing</span></label></div>
+  <div class="field"><label class="checks"><input type="checkbox" id="a11yHc" onchange="setA11y()"> <span data-en="High contrast" data-pl="Wysoki kontrast">High contrast</span></label></div>
+  <div class="field"><label class="checks"><input type="checkbox" id="a11yMotion" onchange="setA11y()"> <span data-en="Reduce motion" data-pl="Ogranicz animacje">Reduce motion</span></label></div>
+ </div>
+ 
+ <div class="card" style="max-width:750px;margin-top:18px">
+  <h2 data-en="Your data" data-pl="Twoje dane">Your data</h2>
+  <p class="muted" data-en="Download a backup of your results, moods and profile, or restore one on this device. Restoring replaces your current data." data-pl="Pobierz kopię zapasową wyników, nastroju i profilu lub przywróć ją na tym urządzeniu. Przywrócenie zastępuje obecne dane.">Download a backup of your results, moods and profile, or restore one on this device. Restoring replaces your current data.</p>
+  <div id="dataMsg" class="msg"></div>
+  <input type="file" id="importFile" accept="application/json,.json" class="hidden" onchange="importMyData(event)">
+  <div class="actions"><button class="secondary" onclick="exportMyData()" data-en="Download backup" data-pl="Pobierz kopię">Download backup</button><button class="secondary" onclick="document.getElementById('importFile').click()" data-en="Restore from file" data-pl="Przywróć z pliku">Restore from file</button></div>
  </div>
  <div class="card" style="max-width:750px;margin-top:18px">
   <h2 data-en="Your privacy" data-pl="Twoja prywatność">Your privacy</h2>
@@ -638,7 +709,10 @@ const articles=[
 {icon:"💜",title:["Looking after your mood","Dbanie o nastrój"],body:["Small routines can help: regular meals, sleep, gentle movement and staying connected with people you trust.","Pomocne mogą być drobne rutyny: regularne posiłki, sen, łagodna aktywność i kontakt z zaufanymi osobami."]},
 {icon:"🎧",title:["Sensory breaks","Przerwy sensoryczne"],body:["A quieter room, comfortable clothing, headphones or a short break may help when your surroundings feel overwhelming.","Cichszy pokój, wygodne ubrania, słuchawki lub krótka przerwa mogą pomóc, gdy otoczenie staje się przytłaczające."]},
 {icon:"📚",title:["Learning strategies","Strategie uczenia się"],body:["Try audio, diagrams, short reading sessions and extra time. Different approaches work for different people.","Wypróbuj nagrania audio, diagramy, krótkie sesje czytania i dodatkowy czas. Różne metody sprawdzają się u różnych osób."]},
-{icon:"⏱️",title:["Getting started","Jak zacząć"],body:["Choose one tiny first step. Work for a short period, take a break and celebrate progress rather than perfection.","Wybierz jeden mały pierwszy krok. Pracuj przez krótki czas, zrób przerwę i doceniaj postępy zamiast dążyć do perfekcji."]}
+{icon:"⏱️",title:["Getting started","Jak zacząć"],body:["Choose one tiny first step. Work for a short period, take a break and celebrate progress rather than perfection.","Wybierz jeden mały pierwszy krok. Pracuj przez krótki czas, zrób przerwę i doceniaj postępy zamiast dążyć do perfekcji."]},
+{icon:"😴",title:["Sleep and rest","Sen i odpoczynek"],body:["A regular bedtime, less screen time before sleep and a calm wind-down routine can make rest easier for many people.","Stała pora snu, mniej ekranów przed snem i spokojna rutyna wieczorna mogą ułatwić odpoczynek wielu osobom."]},
+{icon:"🗣️",title:["Talking to someone you trust","Rozmowa z zaufaną osobą"],body:["You do not need perfect words. Saying \"I have been finding things hard lately\" is a good start.","Nie potrzebujesz idealnych słów. Powiedzenie „ostatnio jest mi trudno” to dobry początek."]},
+{icon:"🚶",title:["Gentle movement","Łagodny ruch"],body:["A short walk, stretching or dancing to one song can lift energy and help you reset between tasks.","Krótki spacer, rozciąganie lub taniec do jednej piosenki mogą dodać energii i pomóc się zresetować między zadaniami."]}
 ];
 
 let language=localStorage.getItem("mf_language")||"en";
@@ -648,6 +722,7 @@ let timerSeconds=1500,timerInterval=null,timerRunning=false;
 let history=LS.get(K("history"),[]);
 let moods=LS.get(K("moods"),[]);
 let profile=LS.get(K("profile"),{});
+let journal=LS.get(K("journal"),[]);
 let avatarData=profile.avatar||"";
 let timerMode="focus";
 const L=(en,pl)=>language==="pl"?pl:en;
@@ -716,6 +791,7 @@ function updateWelcome(){
  $("welcomeTitle").textContent=name?(language==="pl"?"Witaj ponownie, ":"Welcome back, ")+name+"! 🧠":tr("welcome");
 }
 function page(id){
+ if(id!=="focus"&&breathOn)toggleBreath();
  const m=me();
  if(session&&(!m||m.suspended)){logout(true)}
  else if(m&&m.mustChange&&id!=="profile"){page("profile");setMsg("pwMsg",L("Please choose a new password before continuing.","Ustaw nowe hasło, zanim przejdziesz dalej."),"err");return}
@@ -726,8 +802,9 @@ function page(id){
  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
  if(id==="history")renderHistory();
  if(id==="mood")renderMoods();
+ if(id==="journal")renderJournal();
  if(id==="profile")loadProfile();
- if(id==="dashboard"){updateStats();renderAnnouncement()}
+ if(id==="dashboard"){updateStats();renderAnnouncement();renderNextMeeting()}
  if(id==="meetings")renderMeetings();
  if(id==="staff")renderStaff();
  window.scrollTo(0,0);
@@ -794,6 +871,7 @@ function showResult(result,changePage=true){
  $("resultLevel").textContent=tr(prefix);
  $("resultDescription").textContent=tr(prefix+"Desc");
  $("resultAdvice").textContent=tr(prefix+"Advice");
+ $("resultChange").textContent=previousNote(result);
  if(changePage)page("results");
 }
 function downloadResult(){
@@ -805,6 +883,7 @@ function downloadResult(){
  a.href=url;a.download="MindFocus-result.txt";a.click();URL.revokeObjectURL(url);
 }
 function renderHistory(){
+ renderScoreChart();
  const el=$("historyList");
  if(!history.length){el.innerHTML='<p class="muted">'+tr("none")+'</p>';return}
  el.innerHTML=history.map((h,i)=>`<div class="history-item"><strong>${esc(h.id)}</strong><div class="muted">${esc(h.date)}</div><div class="stat">${Number(h.score)}%</div><button class="secondary" onclick="deleteHistory(${i})">${tr("historyDelete")}</button></div>`).join("");
@@ -817,6 +896,7 @@ function clearHistory(){
 function updateStats(){
  $("statTests").textContent=history.length;
  $("statMood").textContent=moods.length;
+ if($("statStreak")){const n=moodStreak();$("statStreak").textContent=L(n+(n===1?" day":" days"),n+(n===1?" dzień":" dni"))}
  $("statAverage").textContent=history.length?Math.round(history.reduce((a,b)=>a+b.score,0)/history.length)+"%":"0%";
 }
 function selectMood(n,btn){
@@ -825,13 +905,14 @@ function selectMood(n,btn){
 function saveMood(){
  if(!selectedMood){alert(tr("chooseMood"));return}
  const emojis=["","😞","😕","😐","🙂","😄"];
- moods.unshift({value:selectedMood,emoji:emojis[selectedMood],note:$("moodNote").value,date:new Date().toLocaleString()});
+ moods.unshift({value:selectedMood,emoji:emojis[selectedMood],note:$("moodNote").value,date:new Date().toLocaleString(),day:fmtDate(new Date())});
  LS.set(K("moods"),moods);
  $("moodNote").value="";selectedMood=0;
  document.querySelectorAll(".mood-btn").forEach(b=>b.classList.remove("selected"));
  renderMoods();updateStats();
 }
 function renderMoods(){
+ renderMoodChart();
  const el=$("moodHistory");
  if(!moods.length){el.innerHTML='<p class="muted">'+tr("none")+'</p>';return}
  el.innerHTML=moods.map(m=>`<div class="history-item"><strong style="font-size:25px">${esc(m.emoji)}</strong> <span class="muted">${esc(m.date)}</span><p>${esc(m.note||"")}</p></div>`).join("");
@@ -985,7 +1066,7 @@ function logout(silent){
  if(silent!==true)page("dashboard");
 }
 function reloadUserData(){
- history=LS.get(K("history"),[]);moods=LS.get(K("moods"),[]);profile=LS.get(K("profile"),{});
+ history=LS.get(K("history"),[]);moods=LS.get(K("moods"),[]);profile=LS.get(K("profile"),{});journal=LS.get(K("journal"),[]);
  avatarData=profile.avatar||"";lastResult=null;
  updateWelcome();renderHistory();renderMoods();updateStats();renderExtra();
 }
@@ -1024,7 +1105,7 @@ function renderAnnouncement(){
  if(a&&a.text){$("announceText").textContent=a.text;$("announceMeta").textContent=a.by+" · "+new Date(a.t).toLocaleDateString()}
 }
 function renderExtra(){
- renderHeader();renderAnnouncement();
+ renderHeader();renderAnnouncement();renderNextMeeting();renderHelp();updateBreathUI();renderTip();renderJournal();
  if(session)renderMeetings();
  if(rank()>=1)renderStaff();
  renderAccountCard();
@@ -1109,7 +1190,7 @@ function renderMyMeetings(){
  const list=getBookings().filter(b=>b.userId===u.id).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
  $("myMeetings").innerHTML=list.length?list.map(b=>{
   const can=["pending","confirmed"].includes(b.status)&&parseDT(b.date,+b.time.slice(0,2))>new Date();
-  return `<div class="row"><div><strong>${esc(b.date)} · ${esc(b.time)}</strong> ${statusBadge(b.status)}<div class="muted small">${esc(b.specialistName)} (${roleName(b.specialistRole)}) · ${TOPICS[b.topic]?TOPICS[b.topic][language==="pl"?1:0]:""}</div></div>${can?`<button class="danger mini" onclick="cancelMine('${b.id}')">${L("Cancel","Anuluj")}</button>`:""}</div>`
+  return `<div class="row"><div><strong>${esc(b.date)} · ${esc(b.time)}</strong> ${statusBadge(b.status)}<div class="muted small">${esc(b.specialistName)} (${roleName(b.specialistRole)}) · ${TOPICS[b.topic]?TOPICS[b.topic][language==="pl"?1:0]:""}</div></div><div class="actions">${b.status==="confirmed"?`<button class="secondary mini" onclick="downloadIcs('${b.id}')">📅 ${L("Add to calendar","Dodaj do kalendarza")}</button>`:""}${can?`<button class="danger mini" onclick="cancelMine('${b.id}')">${L("Cancel","Anuluj")}</button>`:""}</div></div>`
  }).join(""):`<p class="muted">${L("No meetings yet.","Brak spotkań.")}</p>`;
 }
 function cancelMine(id){
@@ -1123,7 +1204,7 @@ function cancelMine(id){
 let staffTab="overview",bookView="mine";
 function staffTabsFor(){
  const r=rank();
- return [["overview",["Overview","Przegląd"],1],["bookings",["Meetings","Spotkania"],1],["users",["Users","Użytkownicy"],1],["create",["Create staff","Dodaj personel"],2],["me",["My profile & hours","Mój profil i godziny"],1],["announce",["Announcement","Ogłoszenie"],2],["audit",["Audit log","Dziennik zdarzeń"],2],["owner",["Owner tools","Narzędzia właściciela"],3]].filter(t=>r>=t[2]);
+ return [["overview",["Overview","Przegląd"],1],["bookings",["Meetings","Spotkania"],1],["users",["Users","Użytkownicy"],1],["create",["Create staff","Dodaj personel"],2],["me",["My profile & hours","Mój profil i godziny"],1],["announce",["Announcement","Ogłoszenie"],2],["feedback",["Feedback","Opinie"],2],["audit",["Audit log","Dziennik zdarzeń"],2],["owner",["Owner tools","Narzędzia właściciela"],3]].filter(t=>r>=t[2]);
 }
 function setStaffTab(t){staffTab=t;renderStaff()}
 function renderStaff(){
@@ -1131,7 +1212,7 @@ function renderStaff(){
  const tabs=staffTabsFor();
  if(!tabs.some(t=>t[0]===staffTab))staffTab="overview";
  $("staffTabs").innerHTML=tabs.map(t=>`<button class="tab${t[0]===staffTab?" active":""}" onclick="setStaffTab('${t[0]}')">${t[1][language==="pl"?1:0]}</button>`).join("");
- const fn={overview:tabOverview,bookings:tabBookings,users:tabUsers,create:tabCreate,me:tabMe,announce:tabAnnounce,audit:tabAudit,owner:tabOwner}[staffTab];
+ const fn={overview:tabOverview,bookings:tabBookings,users:tabUsers,create:tabCreate,me:tabMe,announce:tabAnnounce,audit:tabAudit,feedback:tabFeedback,owner:tabOwner}[staffTab];
  $("staffBody").innerHTML=fn();
 }
 function tabOverview(){
@@ -1159,7 +1240,7 @@ function tabBookings(){
   const a=[];
   if(canActBooking(b)){
    if(b.status==="pending")a.push(`<button class="primary mini" onclick="setBooking('${b.id}','confirmed')">${L("Confirm","Potwierdź")}</button><button class="danger mini" onclick="setBooking('${b.id}','declined')">${L("Decline","Odrzuć")}</button>`);
-   if(b.status==="confirmed")a.push(`<button class="primary mini" onclick="setBooking('${b.id}','completed')">${L("Mark completed","Zakończ")}</button><button class="danger mini" onclick="setBooking('${b.id}','cancelled')">${L("Cancel","Anuluj")}</button>`);
+   if(b.status==="confirmed")a.push(`<button class="primary mini" onclick="setBooking('${b.id}','completed')">${L("Mark completed","Zakończ")}</button><button class="danger mini" onclick="setBooking('${b.id}','cancelled')">${L("Cancel","Anuluj")}</button>${b.specialistId===u.id?`<button class="secondary mini" onclick="downloadIcs('${b.id}')">📅 .ics</button>`:""}`);
   }
   return `<div class="row"><div><strong>${esc(b.date)} · ${esc(b.time)}</strong> ${statusBadge(b.status)}<div class="muted small">${esc(b.userName)} → ${esc(b.specialistName)} (${roleName(b.specialistRole)}) · ${TOPICS[b.topic]?TOPICS[b.topic][language==="pl"?1:0]:""}</div>${b.note?`<div class="small" style="margin-top:4px">“${esc(b.note)}”</div>`:""}</div><div class="actions">${a.join("")}</div></div>`;
  }).join(""):`<p class="muted">${L("No meetings to show.","Brak spotkań do wyświetlenia.")}</p>`)+`</div>`;
@@ -1199,7 +1280,7 @@ function deleteUser(id){
  if(!t||rank()<2||rank()<=RANK[t.role]||t.id===session.id)return;
  if(!confirm(L("Permanently delete ","Trwale usunąć ")+t.username+"?"))return;
  cancelActiveWith(id,true);cancelActiveWith(id,false);
- ["history","moods","profile"].forEach(n=>localStorage.removeItem("mf_"+n+"_"+id));
+ ["history","moods","profile","journal"].forEach(n=>localStorage.removeItem("mf_"+n+"_"+id));
  saveUsers(us.filter(x=>x.id!==id));addAudit("Deleted "+t.username);renderStaff();
 }
 async function resetPw(id){
@@ -1300,8 +1381,181 @@ function resetSite(){
  location.reload();
 }
 
+/* ============ EXTRAS ============ */
+const CHART_COLORS=["#7c6cff","#37c9b0","#f5b942","#ff647c","#4aa3ff","#c77dff","#8bd450"];
+function saveBlob(text,type,name){const u=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement("a");a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+function lineChart(series,o){
+ const w=640,h=230,pl=48,pr=16,pt=16,pb=28,iw=w-pl-pr,ih=h-pt-pb;
+ const n=Math.max(2,...series.map(s=>s.pts.length));
+ const x=i=>pl+i*iw/(n-1),y=v=>pt+ih-(v-o.min)/(o.max-o.min)*ih;
+ let g=o.ticks.map(t=>`<line x1="${pl}" x2="${w-pr}" y1="${y(t)}" y2="${y(t)}" stroke="var(--border)"/><text x="${pl-8}" y="${y(t)+4}" text-anchor="end" fill="var(--muted)" font-size="12">${esc(o.fmt(t))}</text>`).join("");
+ series.forEach(s=>{
+  const pts=s.pts.map((v,i)=>[x(i),y(v)]);
+  if(pts.length>1)g+=`<polyline fill="none" stroke="${s.color}" stroke-width="2.5" stroke-linejoin="round" points="${pts.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ")}"/>`;
+  g+=pts.map(p=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="4.5" fill="${s.color}" stroke="var(--panel)" stroke-width="1.5"/>`).join("");
+ });
+ return `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(o.label)}" style="width:100%;height:auto">${g}</svg>`;
+}
+function renderScoreChart(){
+ const card=$("scoreChartCard");if(!card)return;
+ const by={};history.slice().reverse().forEach(h=>{(by[h.id]=by[h.id]||[]).push(Number(h.score)||0)});
+ const ids=Object.keys(by);
+ card.classList.toggle("hidden",!ids.length);
+ if(!ids.length)return;
+ const series=ids.map(id=>{const i=tests.findIndex(t=>t.id===id);return {id,color:CHART_COLORS[(i<0?0:i)%CHART_COLORS.length],pts:by[id]}});
+ $("scoreChart").innerHTML=lineChart(series,{min:0,max:100,ticks:[0,25,50,75,100],fmt:v=>v+"%",label:L("Assessment scores over time","Wyniki testów w czasie")});
+ $("scoreLegend").innerHTML=series.map(s=>`<span style="margin-right:14px;white-space:nowrap"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${s.color};margin-right:5px"></span>${esc(s.id)}</span>`).join("")+`<div>${L("Each point is one attempt.","Każdy punkt to jedno podejście.")}</div>`;
+}
+function renderMoodChart(){
+ const card=$("moodChartCard");if(!card)return;
+ const pts=moods.slice(0,14).reverse().map(m=>Math.min(5,Math.max(1,Number(m.value)||3)));
+ card.classList.toggle("hidden",!pts.length);
+ if(!pts.length)return;
+ const e=["","😞","😕","😐","🙂","😄"];
+ $("moodChart").innerHTML=lineChart([{color:"#37c9b0",pts}],{min:1,max:5,ticks:[1,2,3,4,5],fmt:v=>e[v],label:L("Mood over your latest entries","Nastrój w ostatnich wpisach")});
+}
+function moodStreak(){
+ const days=new Set(moods.map(m=>m.day).filter(Boolean));
+ const d=new Date();let n=0;
+ if(!days.has(fmtDate(d)))d.setDate(d.getDate()-1);
+ while(days.has(fmtDate(d))){n++;d.setDate(d.getDate()-1)}
+ return n;
+}
+/* breathing */
+let breathOn=false,breathTimer=null;
+const BREATH=[{s:4,en:"Breathe in",pl:"Wdech",sc:1.45,anim:true},{s:4,en:"Hold",pl:"Zatrzymaj",sc:1.45,anim:false},{s:6,en:"Breathe out",pl:"Wydech",sc:1,anim:true}];
+function breathStep(i){
+ if(!breathOn)return;
+ const p=BREATH[i],c=$("breathCircle");
+ c.style.transitionDuration=(p.anim?p.s:0)+"s";c.style.transform="scale("+p.sc+")";c.textContent=L(p.en,p.pl);
+ breathTimer=setTimeout(()=>breathStep((i+1)%3),p.s*1000);
+}
+function toggleBreath(){
+ breathOn=!breathOn;
+ if(breathOn)breathStep(0);
+ else{clearTimeout(breathTimer);const c=$("breathCircle");c.style.transitionDuration="1s";c.style.transform="scale(1)"}
+ updateBreathUI();
+}
+function updateBreathUI(){
+ const b=$("breathBtn");if(!b)return;
+ b.textContent=breathOn?L("Stop","Zatrzymaj"):L("Start","Start");
+ $("breathText").textContent=L("Breathe in for 4 seconds, hold for 4, breathe out for 6. Stop any time.","Wdech przez 4 sekundy, zatrzymanie przez 4, wydech przez 6. Możesz przerwać w każdej chwili.");
+ if(!breathOn)$("breathCircle").textContent=L("Ready","Gotowe");
+}
+/* help page */
+function renderHelp(){
+ const card=(flag,name,rows)=>`<div class="card"><h3>${flag} ${name}</h3>${rows.map(r=>`<div class="row"><span>${r[0]}</span><strong>${esc(r[1])}</strong></div>`).join("")}</div>`;
+ $("helpGrid").innerHTML=
+  card("🇵🇱",L("Poland","Polska"),[[L("Emergency number","Numer alarmowy"),"112"],[L("Crisis support line for adults","Telefon zaufania dla dorosłych w kryzysie"),"116 123"],[L("Children and young people","Dzieci i młodzież"),"116 111"],[L("Crisis support centre","Centrum Wsparcia w kryzysie psychicznym"),"800 70 2222"]])+
+  card("🇬🇧",L("United Kingdom","Wielka Brytania"),[[L("Emergency number","Numer alarmowy"),"999"],[L("Samaritans (24/7, free)","Samaritans (całodobowo, bezpłatnie)"),"116 123"],[L("NHS non-emergency (England)","NHS, pomoc nienagła (Anglia)"),"111"]])+
+  card("🇺🇸",L("United States","Stany Zjednoczone"),[[L("Emergency number","Numer alarmowy"),"911"],[L("Suicide and Crisis Lifeline (call or text)","Linia kryzysowa (połączenie lub SMS)"),"988"]]);
+}
+/* next meeting */
+function renderNextMeeting(){
+ const u=me(),el=$("nextMeetingCard");if(!el)return;
+ const list=u?activeBookingsOf(u.id).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)):[];
+ el.classList.toggle("hidden",!list.length);
+ if(list.length){const b=list[0];$("nextMeetingText").textContent=b.date+" · "+b.time+" — "+b.specialistName+" ("+STATUS[b.status][language==="pl"?1:0]+")"}
+}
+/* calendar file */
+function icsEscape(s){return String(s).replace(/\\/g,"\\\\").replace(/;/g,"\;").replace(/,/g,"\\,").replace(/\r?\n/g,"\\n")}
+function downloadIcs(id){
+ const b=getBookings().find(x=>x.id===id),u=me();
+ if(!b||!u||(b.userId!==u.id&&b.specialistId!==u.id)||b.status!=="confirmed")return;
+ const h=Number(b.time.slice(0,2)),d=b.date.replace(/-/g,"");
+ const now=new Date().toISOString().replace(/[-:]/g,"").replace(/\.\d+/,"");
+ const who=u.id===b.userId?b.specialistName:b.userName;
+ const lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//MindFocus//EN","BEGIN:VEVENT","UID:"+b.id+"@mindfocus","DTSTAMP:"+now,"DTSTART:"+d+"T"+pad(h)+"0000","DTEND:"+d+"T"+pad(h+1)+"0000","SUMMARY:"+icsEscape("MindFocus meeting with "+who),"DESCRIPTION:"+icsEscape(TOPICS[b.topic]?TOPICS[b.topic][0]:"MindFocus meeting"),"END:VEVENT","END:VCALENDAR"];
+ saveBlob(lines.join("\r\n")+"\r\n","text/calendar;charset=utf-8","mindfocus-meeting.ics");
+}
+/* personal data backup */
+function exportMyData(){
+ saveBlob(JSON.stringify({app:"mindfocus",version:1,exported:new Date().toISOString(),history,moods,profile,journal},null,2),"application/json","mindfocus-backup.json");
+}
+function importMyData(ev){
+ const f=ev.target.files[0];ev.target.value="";if(!f)return;
+ if(f.size>6*1024*1024)return setMsg("dataMsg",L("That file is too large.","Ten plik jest za duży."));
+ const r=new FileReader();
+ r.onload=()=>{
+  try{
+   const d=JSON.parse(r.result);if(!d||d.app!=="mindfocus")throw new Error("format");
+   const ids=tests.map(t=>t.id),emo=["","😞","😕","😐","🙂","😄"];
+   const h=(Array.isArray(d.history)?d.history:[]).filter(x=>x&&ids.includes(x.id)&&Number.isFinite(x.score)&&x.score>=0&&x.score<=100&&Array.isArray(x.answers)).slice(0,500).map(x=>({id:x.id,score:Math.round(x.score),total:Number(x.total)||0,date:String(x.date||"").slice(0,40),answers:x.answers.slice(0,30).map(v=>Math.max(0,Math.min(4,Math.round(Number(v))||0)))}));
+   const m=(Array.isArray(d.moods)?d.moods:[]).filter(x=>x&&Number.isInteger(x.value)&&x.value>=1&&x.value<=5).slice(0,1000).map(x=>({value:x.value,emoji:emo[x.value],note:String(x.note||"").slice(0,500),date:String(x.date||"").slice(0,40),day:/^\d{4}-\d{2}-\d{2}$/.test(String(x.day||""))?x.day:""}));
+   const jn=(Array.isArray(d.journal)?d.journal:[]).filter(x=>x&&typeof x.text==="string"&&x.text.trim()).slice(0,300).map(x=>({date:String(x.date||"").slice(0,40),day:/^\d{4}-\d{2}-\d{2}$/.test(String(x.day||""))?x.day:"",p:Math.abs(Math.round(Number(x.p)||0))%JPROMPTS.length,text:x.text.slice(0,2000)}));
+   const p=d.profile&&typeof d.profile==="object"?d.profile:{};
+   const pr={nickname:String(p.nickname||"").slice(0,30),bio:String(p.bio||"").slice(0,300),goals:String(p.goals||"").slice(0,500),favourite:ids.includes(p.favourite)?p.favourite:"ADHD",avatar:(typeof p.avatar==="string"&&/^data:image\/(png|jpeg|gif|webp);base64,[A-Za-z0-9+\/=]+$/.test(p.avatar)&&p.avatar.length<3000000)?p.avatar:""};
+   if(!confirm(L("Replace your current results, moods and profile with this backup? ("+h.length+" results, "+m.length+" mood entries)","Zastąpić obecne wyniki, nastroje i profil tą kopią? ("+h.length+" wyników, "+m.length+" wpisów nastroju)")))return;
+   history=h;moods=m;profile=pr;journal=jn;LS.set(K("journal"),jn);
+   LS.set(K("history"),h);LS.set(K("moods"),m);LS.set(K("profile"),pr);
+   loadProfile();updateWelcome();renderHistory();renderMoods();updateStats();
+   setMsg("dataMsg",L("Backup restored.","Kopia przywrócona."),"ok");
+  }catch(e){setMsg("dataMsg",L("That file is not a valid MindFocus backup.","To nie jest prawidłowa kopia MindFocus."))}
+ };
+ r.readAsText(f);
+}
+
+/* ============ EXTRAS 2 ============ */
+const TIPS=[["Break a big task into the smallest first step you can imagine, then do just that.","Podziel duże zadanie na najmniejszy możliwy pierwszy krok i zrób tylko ten krok."],["Drink some water and stretch for a minute. Small resets add up.","Napij się wody i rozciągnij się przez minutę. Małe resety się sumują."],["Notice three things that went okay today, however small.","Zauważ trzy rzeczy, które dziś poszły dobrze, nawet drobne."],["If a worry keeps looping, write it down and choose one thing you can do about it.","Jeśli zmartwienie ciągle wraca, zapisz je i wybierz jedną rzecz, którą możesz zrobić."],["Try a 25-minute focus session, then a real 5-minute break away from screens.","Spróbuj 25-minutowej sesji skupienia, a potem prawdziwej 5-minutowej przerwy od ekranów."],["Rest is productive. Your brain needs downtime to work well.","Odpoczynek jest produktywny. Twój mózg potrzebuje przerw, by dobrze działać."],["Reaching out to someone you trust is a strength, not a burden.","Zwrócenie się do zaufanej osoby to siła, a nie ciężar."]];
+const JPROMPTS=[["What is one thing that went well today?","Co jednego dobrego wydarzyło się dziś?"],["What is taking up most of your mind right now?","Co zajmuje teraz najwięcej miejsca w Twoich myślach?"],["What would make tomorrow a little easier?","Co mogłoby ułatwić jutro?"],["Who or what helped you recently?","Kto lub co pomogło Ci ostatnio?"],["Describe how your body feels right now.","Opisz, jak teraz czuje się Twoje ciało."],["What are you proud of this week, however small?","Z czego jesteś dumny lub dumna w tym tygodniu, nawet z drobiazgu?"],["What do you need more of, and less of, right now?","Czego potrzebujesz teraz więcej, a czego mniej?"]];
+function dayNo(){const d=new Date();return Math.floor((d-new Date(d.getFullYear(),0,0))/864e5)}
+function renderTip(){const el=$("tipText");if(el)el.textContent=TIPS[dayNo()%TIPS.length][language==="pl"?1:0]}
+function renderJournal(){
+ const pe=$("journalPrompt");if(!pe)return;
+ pe.textContent=JPROMPTS[dayNo()%JPROMPTS.length][language==="pl"?1:0];
+ $("journalList").innerHTML=journal.length?journal.map((j,i)=>`<div class="history-item"><strong>${esc(JPROMPTS[(Number(j.p)||0)%JPROMPTS.length][language==="pl"?1:0])}</strong><div class="muted small">${esc(j.date)}</div><div class="journal-entry">${esc(j.text)}</div><button class="danger mini" onclick="deleteJournal(${i})">${L("Delete","Usuń")}</button></div>`).join(""):`<p class="muted">${L("No entries yet.","Brak wpisów.")}</p>`;
+}
+function saveJournal(){
+ const t=$("journalText").value.trim().slice(0,2000);
+ if(!t)return;
+ journal.unshift({date:new Date().toLocaleString(),day:fmtDate(new Date()),p:dayNo()%JPROMPTS.length,text:t});
+ journal=journal.slice(0,300);LS.set(K("journal"),journal);
+ $("journalText").value="";renderJournal();
+ $("journalMsg").textContent=L("Saved.","Zapisano.");setTimeout(()=>$("journalMsg").textContent="",2000);
+}
+function deleteJournal(i){
+ if(!confirm(L("Delete this entry?","Usunąć ten wpis?")))return;
+ journal.splice(i,1);LS.set(K("journal"),journal);renderJournal();
+}
+/* accessibility */
+let a11y=LS.get("mf_a11y",{size:0,dys:false,hc:false,motion:false});
+function applyA11y(){
+ const b=document.body;
+ b.classList.toggle("zoom1",a11y.size===1);b.classList.toggle("zoom2",a11y.size===2);
+ b.classList.toggle("dys",!!a11y.dys);b.classList.toggle("hc",!!a11y.hc);b.classList.toggle("nomotion",!!a11y.motion);
+ if($("a11ySize")){$("a11ySize").value=String(a11y.size||0);$("a11yDys").checked=!!a11y.dys;$("a11yHc").checked=!!a11y.hc;$("a11yMotion").checked=!!a11y.motion}
+}
+function setA11y(){
+ a11y={size:Number($("a11ySize").value)||0,dys:$("a11yDys").checked,hc:$("a11yHc").checked,motion:$("a11yMotion").checked};
+ LS.set("mf_a11y",a11y);applyA11y();
+}
+/* feedback */
+let lastFb=0;
+function sendFeedback(){
+ const t=$("fbText").value.trim().slice(0,500);
+ if(t.length<5)return setMsg("fbMsg",L("Please write a little more.","Napisz trochę więcej."));
+ if(Date.now()-lastFb<30000)return setMsg("fbMsg",L("Please wait a moment before sending another.","Poczekaj chwilę przed wysłaniem kolejnej opinii."));
+ const u=me(),all=LS.get("mf_feedback",[]);
+ all.unshift({id:uid(),t:Date.now(),from:u?u.username:"guest",text:t,read:false});
+ LS.set("mf_feedback",all.slice(0,200));lastFb=Date.now();$("fbText").value="";
+ setMsg("fbMsg",L("Thank you, your feedback was sent.","Dziękujemy, opinia została wysłana."),"ok");
+}
+function tabFeedback(){
+ const a=LS.get("mf_feedback",[]);
+ return `<div class="card">`+(a.length?a.map(f=>`<div class="row"><div><strong>${esc(f.from)}</strong> ${f.read?"":`<span class="badge b-pending">${L("New","Nowe")}</span>`}<div class="muted small">${new Date(f.t).toLocaleString()}</div><div class="journal-entry">${esc(f.text)}</div></div><div class="actions">${f.read?"":`<button class="secondary mini" onclick="markFeedback('${f.id}')">${L("Mark read","Oznacz jako przeczytane")}</button>`}<button class="danger mini" onclick="deleteFeedback('${f.id}')">${L("Delete","Usuń")}</button></div></div>`).join(""):`<p class="muted">${L("No feedback yet.","Brak opinii.")}</p>`)+`</div>`;
+}
+function markFeedback(id){if(rank()<2)return;const a=LS.get("mf_feedback",[]),f=a.find(x=>x.id===id);if(f){f.read=true;LS.set("mf_feedback",a);renderStaff()}}
+function deleteFeedback(id){if(rank()<2)return;LS.set("mf_feedback",LS.get("mf_feedback",[]).filter(x=>x.id!==id));renderStaff()}
+/* previous attempt */
+function previousNote(result){
+ const i=history.indexOf(result);if(i<0)return "";
+ const prev=history.slice(i+1).find(h=>h.id===result.id);if(!prev)return "";
+ const d=result.score-prev.score;
+ return L("Your previous "+result.id+" score was "+prev.score+"% ("+(d===0?"the same":Math.abs(d)+" points "+(d>0?"higher":"lower")+" now")+"). Scores can vary with mood, sleep and circumstances, so treat this as a snapshot.","Twój poprzedni wynik "+result.id+" to "+prev.score+"% ("+(d===0?"taki sam":"teraz o "+Math.abs(d)+" pkt "+(d>0?"wyżej":"niżej"))+"). Wyniki zmieniają się z nastrojem, snem i okolicznościami, więc traktuj to jako chwilowy obraz.");
+}
 /* ============ INIT ============ */
 function initialise(){
+ applyA11y();
  $("languageSelect").value=language;
  if(localStorage.getItem("mf_theme")==="light")document.body.classList.add("light");
  renderTests();renderHistory();renderMoods();renderArticles();updateStats();loadProfile();resetTimer();changeLanguage(language);
