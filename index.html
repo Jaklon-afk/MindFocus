@@ -1,533 +1,743 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta name="google-site-verification" content="ALwMNBPsCZQ8pGsCvzL95NWCqMIF_dx86gqszFQ6Ua0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindFocus</title>
 <link rel="icon" href="./Mindfocus.png" type="image/png">
 <link rel="shortcut icon" href="./Mindfocus.png" type="image/png">
 <link rel="apple-touch-icon" href="./Mindfocus.png">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MindFocus Ultimate</title>
 <style>
-:root{
---bg:#0b1020;--panel:#151e34;--panel2:#202b46;
---text:#fff;--muted:#aab5d0;--border:#34415e;
---accent:#927cff;--accent2:#b6a5ff;
-}
-body.light{
---bg:#eef0fa;--panel:#fff;--panel2:#e6e8f5;
---text:#20243a;--muted:#626b84;--border:#d5d9ea;
---accent:#7058d9;--accent2:#7058d9;
-}
+:root{--bg:#0b1020;--panel:#141c31;--panel2:#1b2741;--text:#edf2ff;--muted:#9ba9c5;--accent:#7c6cff;--accent2:#37c9b0;--border:#293653;--danger:#ff647c}
+body.light{--bg:#f2f5fc;--panel:#fff;--panel2:#edf1fa;--text:#17213a;--muted:#68748c;--accent:#6254e7;--accent2:#149e89;--border:#dce3f0}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;transition:.2s}
-header{background:var(--panel);border-bottom:1px solid var(--border);padding:17px 4%;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
-.logo{font-size:26px;font-weight:900;color:var(--accent2)}
-.logo span{color:var(--text)}
-nav{display:flex;flex-wrap:wrap;gap:6px}
-nav button,.navbtn{padding:10px 12px;border-radius:9px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer}
-nav button.active,nav button:hover{background:var(--accent);color:white}
-.container{max-width:1150px;margin:25px auto;padding:15px}
-.hero{text-align:center;padding:35px 10px}
-.hero h1{font-size:43px;margin:12px}
-.hero h1 span{color:var(--accent2)}
-.hero p,.muted{color:var(--muted);line-height:1.7}
-.card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:23px;margin-bottom:18px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
-.tile{background:var(--panel2);border:1px solid var(--border);padding:20px;border-radius:14px}
-.tile h3{margin-top:8px}
-.tile p{font-size:13px;color:var(--muted);line-height:1.6}
-.tag{font-size:11px;letter-spacing:2px;color:var(--accent2);font-weight:bold}
-button{cursor:pointer;font-weight:bold}
-.primary{background:var(--accent);color:white;border:0;padding:13px 19px;border-radius:9px}
-.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--border);padding:12px 17px;border-radius:9px}
-.danger{background:#a63855;color:white;border:0;padding:12px;border-radius:9px}
-input,textarea,select{width:100%;padding:12px;background:var(--panel2);border:1px solid var(--border);color:var(--text);border-radius:9px;margin:8px 0}
-.hidden{display:none!important}
-.center{text-align:center}
-.big{font-size:65px;color:var(--accent2);font-weight:900;margin:15px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+header{position:sticky;top:0;z-index:20;background:var(--panel);border-bottom:1px solid var(--border);padding:13px 5%;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:900}
+.logo{width:39px;height:39px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));font-size:21px}
+.header-actions{display:flex;gap:9px;align-items:center}
+select,.small-btn{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:9px 12px}
+.layout{display:flex;min-height:calc(100vh - 65px)}
+aside{width:230px;flex-shrink:0;padding:22px 13px;background:var(--panel);border-right:1px solid var(--border)}
+.nav-label{font-size:11px;color:var(--muted);font-weight:bold;letter-spacing:1.5px;padding:12px}
+.nav-btn{width:100%;border:0;background:transparent;color:var(--muted);padding:13px;border-radius:11px;text-align:left;margin:3px 0;display:flex;gap:12px;align-items:center}
+.nav-btn:hover,.nav-btn.active{background:var(--panel2);color:var(--text)}
+main{flex:1;min-width:0;padding:30px;max-width:1400px;margin:auto;width:100%}
+.page{display:none}.page.active{display:block}
+h1{font-size:clamp(27px,4vw,39px);margin:0 0 10px}
+h2{margin-top:0}
+p{line-height:1.6}
+.muted{color:var(--muted)}
+.hero{padding:32px;border-radius:22px;background:linear-gradient(120deg,#6458d9,#278eaa);color:white;margin-bottom:25px}
+.hero h1{max-width:650px}.hero p{max-width:650px;color:#eef2ff}
+.primary,.secondary,.danger{border:0;border-radius:11px;padding:12px 17px;font-weight:bold}
+.primary{background:var(--accent);color:white}.primary:hover{filter:brightness(1.1)}
+.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--border)}
+.danger{background:#ff647c20;color:var(--danger);border:1px solid #ff647c55}
+button:disabled{opacity:.4;cursor:not-allowed}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.tag{display:inline-block;background:var(--panel2);color:var(--muted);padding:5px 9px;border-radius:30px;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:17px;padding:21px;box-shadow:0 12px 35px #0002}
+.stat{font-size:31px;font-weight:900;margin:10px 0}
+.card-icon{font-size:27px;margin-bottom:10px}
+.test-card{display:flex;flex-direction:column;gap:12px}.test-card .primary{margin-top:auto}
 .progress{height:9px;background:var(--panel2);border-radius:20px;overflow:hidden;margin:15px 0}
-.progress div{height:100%;background:var(--accent);width:0}
-.answer{padding:16px;border-radius:10px;background:var(--panel2);border:1px solid var(--border);margin:9px 0;cursor:pointer}
-.answer:hover,.answer.selected{border-color:var(--accent);background:var(--accent);color:white}
-.question{font-size:22px;line-height:1.5;margin:25px 0}
-.buttons{display:flex;justify-content:space-between;gap:10px;margin-top:20px}
-.resultbar{height:12px;background:var(--panel2);border-radius:20px;overflow:hidden}
-.resultbar div{height:100%;background:var(--accent)}
-.tip{padding:14px;background:var(--panel2);border-radius:10px;margin:10px 0;line-height:1.6}
-.stat{font-size:32px;color:var(--accent2);font-weight:bold}
-footer{text-align:center;padding:30px;color:var(--muted)}
-a{color:var(--accent2)}
+.progress div{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:.2s}
+.question-box{max-width:850px;margin:25px auto}
+.question-number{color:var(--accent2);font-weight:bold}
+.question-text{font-size:24px;line-height:1.4;margin:24px 0}
+.answer-option{display:flex;align-items:center;gap:12px;padding:15px;border:1px solid var(--border);border-radius:12px;margin:10px 0;background:var(--panel);cursor:pointer}
+.answer-option:hover,.answer-option.selected{border-color:var(--accent);background:var(--panel2)}
+.answer-option input{accent-color:var(--accent);width:18px;height:18px}
+.result-score{font-size:54px;font-weight:900;color:var(--accent2)}
+.field{margin:15px 0}.field label{display:block;margin-bottom:7px;font-weight:bold}
+.field input,.field textarea,.field select{width:100%;padding:12px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}
+.field textarea{min-height:100px;resize:vertical}
+.avatar{width:75px;height:75px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));font-size:30px;font-weight:bold;color:white;margin-bottom:12px;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.history-item{border-bottom:1px solid var(--border);padding:14px 0}
+.mood-btn{font-size:27px;border:1px solid var(--border);background:var(--panel2);border-radius:12px;padding:12px}
+.mood-btn.selected{border:2px solid var(--accent)}
+.timer{font-size:65px;font-weight:900;text-align:center;margin:25px 0}
+.article{margin-bottom:15px}
+footer{text-align:center;color:var(--muted);padding:30px;font-size:12px}
+@media(max-width:800px){.layout{display:block}aside{width:100%;display:flex;overflow-x:auto;padding:8px;border-right:0;border-bottom:1px solid var(--border)}.nav-label{display:none}.nav-btn{white-space:nowrap;width:auto;min-width:max-content;margin:0;padding:11px}main{padding:18px}header{padding:12px 15px}}
+@media(max-width:480px){.hero{padding:23px}.question-text{font-size:20px}.timer{font-size:50px}}
 </style>
 </head>
 <body>
-
 <header>
-<div class="logo">MIND<span>FOCUS</span> ✦</div>
-<nav id="nav">
-<button class="active" onclick="page('dashboard',this)">Dashboard</button>
-<button onclick="page('tests',this)">Tests</button>
-<button onclick="page('history',this)">History</button>
-<button onclick="page('mood',this)">Mood</button>
-<button onclick="page('focus',this)">Focus</button>
-<button onclick="page('learn',this)">Learn</button>
-<button onclick="page('profile',this)">Profile</button>
-</nav>
-<button class="secondary" onclick="toggleTheme()">☀ / ☾</button>
+ <div class="brand"><div class="logo">🧠</div> MindFocus</div>
+ <div class="header-actions">
+  <select id="languageSelect" aria-label="Language" onchange="changeLanguage(this.value)">
+   <option value="en">🇬🇧 English</option>
+   <option value="pl">🇵🇱 Polski</option>
+  </select>
+  <button class="small-btn" id="themeButton" onclick="toggleTheme">🌙 Theme</button>
+ </div>
 </header>
+<div class="layout">
+<aside>
+ <div class="nav-label" data-en="MAIN MENU" data-pl="MENU GŁÓWNE">MAIN MENU</div>
+ <button class="nav-btn active" data-page="dashboard" onclick="page('dashboard')">🏠 <span data-en="Dashboard" data-pl="Strona główna">Dashboard</span></button>
+ <button class="nav-btn" data-page="tests" onclick="page('tests')">🧠 <span data-en="Assessments" data-pl="Testy">Assessments</span></button>
+ <button class="nav-btn" data-page="history" onclick="page('history')">📊 <span data-en="My results" data-pl="Moje wyniki">My results</span></button>
+ <button class="nav-btn" data-page="mood" onclick="page('mood')">😊 <span data-en="Mood tracker" data-pl="Nastrój">Mood tracker</span></button>
+ <button class="nav-btn" data-page="focus" onclick="page('focus')">⏱️ <span data-en="Focus timer" data-pl="Minutnik skupienia">Focus timer</span></button>
+ <button class="nav-btn" data-page="learn" onclick="page('learn')">📚 <span data-en="Learn" data-pl="Wiedza">Learn</span></button>
+ <div class="nav-label" data-en="PERSONAL" data-pl="OSOBISTE">PERSONAL</div>
+ <button class="nav-btn" data-page="profile" onclick="page('profile')">👤 <span data-en="My profile" data-pl="Mój profil">My profile</span></button>
+</aside>
+<main>
 
-<div class="container">
-
-<!-- DASHBOARD -->
-<section id="dashboard">
-<div class="hero">
-<div class="tag">YOUR PERSONAL WELLNESS SPACE</div>
-<h1>Welcome to <span>MindFocus.</span></h1>
-<p>Understand your experiences. Discover helpful strategies. Take things one step at a time.</p>
-<button class="primary" onclick="page('tests')">Explore screening tests →</button>
-</div>
-<div class="grid">
-<div class="tile"><div class="tag">COMPLETED TESTS</div><div class="stat" id="statTests">0</div><p>Your completed questionnaires</p></div>
-<div class="tile"><div class="tag">MOOD CHECK-INS</div><div class="stat" id="statMood">0</div><p>Your saved mood entries</p></div>
-<div class="tile"><div class="tag">FOCUS SESSIONS</div><div class="stat" id="statFocus">0</div><p>Your completed focus sessions</p></div>
-</div>
-<div class="card">
-<h2>🚀 Quick access</h2>
-<div class="grid">
-<div class="tile"><h3>🧠 Screening tests</h3><p>Explore different self-reflection questionnaires.</p><button class="primary" onclick="page('tests')">Explore</button></div>
-<div class="tile"><h3>⏱ Focus timer</h3><p>Work in short, manageable sessions.</p><button class="primary" onclick="page('focus')">Start focus</button></div>
-<div class="tile"><h3>💜 Daily check-in</h3><p>Record how you are feeling today.</p><button class="primary" onclick="page('mood')">Check in</button></div>
-<div class="tile"><h3>📚 Learning centre</h3><p>Read helpful educational guides.</p><button class="primary" onclick="page('learn')">Learn</button></div>
-</div>
-</div>
-<div class="card">
-<h2>📌 A little reminder</h2>
-<p class="muted">You don't have to be productive every minute. Rest is important, progress takes time, and your worth is not measured by your achievements.</p>
-</div>
+<section id="dashboard" class="page active">
+ <div class="hero">
+  <span class="tag" style="background:#ffffff25;color:white" data-en="YOUR MIND MATTERS" data-pl="TWÓJ UMYSŁ MA ZNACZENIE">YOUR MIND MATTERS</span>
+  <h1 id="welcomeTitle">Welcome to MindFocus 🧠</h1>
+  <p data-en="Explore how you think, feel and focus. Learn about yourself and discover helpful strategies." data-pl="Odkrywaj, jak myślisz, czujesz i koncentrujesz się. Poznawaj siebie i odkrywaj pomocne strategie.">Explore how you think, feel and focus. Learn about yourself and discover helpful strategies.</p>
+  <button class="primary" onclick="page('tests')" data-en="Explore assessments →" data-pl="Odkryj testy →">Explore assessments →</button>
+ </div>
+ <div class="grid">
+  <div class="card"><div class="card-icon">🧠</div><div class="muted" data-en="Assessments completed" data-pl="Ukończone testy">Assessments completed</div><div class="stat" id="statTests">0</div></div>
+  <div class="card"><div class="card-icon">📈</div><div class="muted" data-en="Average score" data-pl="Średni wynik">Average score</div><div class="stat" id="statAverage">0%</div></div>
+  <div class="card"><div class="card-icon">😊</div><div class="muted" data-en="Mood entries" data-pl="Wpisy nastroju">Mood entries</div><div class="stat" id="statMood">0</div></div>
+ </div>
+ <h2 style="margin-top:30px" data-en="Quick access" data-pl="Szybki dostęp">Quick access</h2>
+ <div class="grid">
+  <div class="card"><div class="card-icon">🧩</div><h3 data-en="Explore your mind" data-pl="Poznaj swój umysł">Explore your mind</h3><p class="muted" data-en="Try one of our self-reflection assessments." data-pl="Wypróbuj jeden z testów do autorefleksji.">Try one of our self-reflection assessments.</p><button class="secondary" onclick="page('tests')" data-en="View tests" data-pl="Zobacz testy">View tests</button></div>
+  <div class="card"><div class="card-icon">⏱️</div><h3 data-en="Get focused" data-pl="Skoncentruj się">Get focused</h3><p class="muted" data-en="Use the focus timer to work in short sessions." data-pl="Użyj minutnika, aby pracować w krótkich sesjach.">Use the focus timer to work in short sessions.</p><button class="secondary" onclick="page('focus')" data-en="Start timer" data-pl="Uruchom minutnik">Start timer</button></div>
+  <div class="card"><div class="card-icon">💜</div><h3 data-en="Check in with yourself" data-pl="Sprawdź, jak się czujesz">Check in with yourself</h3><p class="muted" data-en="Record how you are feeling today." data-pl="Zapisz, jak się dzisiaj czujesz.">Record how you are feeling today.</p><button class="secondary" onclick="page('mood')" data-en="Track mood" data-pl="Zapisz nastrój">Track mood</button></div>
+ </div>
+ <div class="card" style="margin-top:20px"><h3 data-en="A little reminder" data-pl="Małe przypomnienie">A little reminder</h3><p data-en="You are more than a score. Take breaks, be kind to yourself and remember that asking for help is a strength." data-pl="Jesteś kimś więcej niż wynikiem. Odpoczywaj, bądź dla siebie życzliwy i pamiętaj, że proszenie o pomoc jest oznaką siły.">You are more than a score. Take breaks, be kind to yourself and remember that asking for help is a strength.</p></div>
 </section>
 
-<!-- TEST LIBRARY -->
-<section id="tests" class="hidden">
-<div class="hero">
-<div class="tag">SCREENING LIBRARY</div>
-<h1>Explore your <span>mind.</span></h1>
-<p>Choose a questionnaire to begin.</p>
-</div>
-<div class="grid" id="testLibrary"></div>
+<section id="tests" class="page">
+ <h1 data-en="Explore assessments" data-pl="Poznaj testy">Explore assessments</h1>
+ <p class="muted" data-en="Choose an area you would like to explore. Each assessment contains 30 questions." data-pl="Wybierz obszar, który chcesz poznać. Każdy test zawiera 30 pytań.">Choose an area you would like to explore. Each assessment contains 30 questions.</p>
+ <div class="grid" id="testGrid"></div>
 </section>
 
-<!-- TEST -->
-<section id="test" class="hidden">
-<div class="card">
-<div class="tag" id="testCategory"></div>
-<p class="muted" id="questionNumber"></p>
-<div class="progress"><div id="testProgress"></div></div>
-<div class="question" id="question"></div>
-<div id="answers"></div>
-<div class="buttons">
-<button class="secondary" onclick="previousQuestion()" id="prev">← Previous</button>
-<button class="primary" onclick="nextQuestion()" id="next" disabled>Next →</button>
-</div>
-</div>
+<section id="takingTest" class="page">
+ <button class="secondary" onclick="page('tests')" data-en="← Back to assessments" data-pl="← Wróć do testów">← Back to assessments</button>
+ <div class="question-box card">
+  <div class="muted" id="testName"></div>
+  <div class="progress"><div id="testProgress"></div></div>
+  <div class="question-number" id="questionNumber"></div>
+  <div class="question-text" id="questionText"></div>
+  <div id="answerOptions"></div>
+  <div class="actions" style="justify-content:space-between">
+   <button class="secondary" id="previousButton" onclick="previousQuestion()">← Previous</button>
+   <button class="primary" id="nextButton" onclick="nextQuestion()">Next →</button>
+  </div>
+ </div>
 </section>
 
-<!-- RESULTS -->
-<section id="results" class="hidden">
-<div class="card center">
-<div class="tag">YOUR SELF-REFLECTION SUMMARY</div>
-<h1 id="resultTitle"></h1>
-<div class="big" id="resultScore"></div>
-<h2 id="resultLevel"></h2>
-<p class="muted" id="resultDescription"></p>
-<div class="resultbar"><div id="resultFill"></div></div>
-<p class="muted" id="scoreExplanation"></p>
-</div>
-<div class="card">
-<h2>📊 Category breakdown</h2>
-<div id="breakdown"></div>
-</div>
-<div class="card">
-<h2>💡 Helpful strategies</h2>
-<div id="recommendations"></div>
-</div>
-<div class="card">
-<button class="primary" onclick="exportReport()">⬇ Export report</button>
-<button class="secondary" onclick="page('tests')">More tests</button>
-<button class="secondary" onclick="page('history')">View history</button>
-</div>
+<section id="results" class="page">
+ <div class="card" style="max-width:800px;margin:auto">
+  <div class="card-icon">🎉</div>
+  <h1 data-en="Your results" data-pl="Twoje wyniki">Your results</h1>
+  <div id="resultName"></div>
+  <div class="result-score" id="resultScore">0%</div>
+  <div class="progress"><div id="resultProgress"></div></div>
+  <h3 id="resultLevel"></h3>
+  <p id="resultDescription"></p>
+  <div class="card" style="background:var(--panel2);box-shadow:none">
+   <h3 data-en="What does this mean?" data-pl="Co to oznacza?">What does this mean?</h3>
+   <p id="resultAdvice"></p>
+  </div>
+  <p class="muted" data-en="This is a self-reflection score, not a diagnosis or a validated clinical screening result. It cannot tell you whether you have a condition." data-pl="To wynik autorefleksji, a nie diagnoza ani zwalidowany wynik badania klinicznego. Nie może określić, czy masz dane zaburzenie.">This is a self-reflection score, not a diagnosis or a validated clinical screening result. It cannot tell you whether you have a condition.</p>
+  <div class="actions">
+   <button class="primary" onclick="page('history')" data-en="View history" data-pl="Zobacz historię">View history</button>
+   <button class="secondary" onclick="page('tests')" data-en="Try another assessment" data-pl="Wypróbuj kolejny test">Try another assessment</button>
+   <button class="secondary" onclick="downloadResult()" data-en="Download result" data-pl="Pobierz wynik">Download result</button>
+  </div>
+ </div>
 </section>
 
-<!-- HISTORY -->
-<section id="history" class="hidden">
-<div class="hero"><h1>Test <span>History</span></h1><p>Your saved screening summaries.</p></div>
-<div class="card">
-<div id="historyList"></div>
-<button class="secondary" onclick="exportAll()">Export all history</button>
-</div>
+<section id="history" class="page">
+ <h1 data-en="My results" data-pl="Moje wyniki">My results</h1>
+ <p class="muted" data-en="Your completed assessments are saved on this device." data-pl="Ukończone testy są zapisywane na tym urządzeniu.">Your completed assessments are saved on this device.</p>
+ <div class="card" id="historyList"></div>
+ <div class="actions"><button class="danger" onclick="clearHistory()" data-en="Clear history" data-pl="Wyczyść historię">Clear history</button></div>
 </section>
 
-<!-- MOOD -->
-<section id="mood" class="hidden">
-<div class="hero"><h1>Daily <span>Check-in</span></h1><p>How are you feeling today?</p></div>
-<div class="card">
-<h2>Choose your mood</h2>
-<div class="grid" id="moodChoices">
-<button class="secondary" onclick="selectMood('😊 Happy')">😊 Happy</button>
-<button class="secondary" onclick="selectMood('😌 Calm')">😌 Calm</button>
-<button class="secondary" onclick="selectMood('😐 Okay')">😐 Okay</button>
-<button class="secondary" onclick="selectMood('😟 Anxious')">😟 Anxious</button>
-<button class="secondary" onclick="selectMood('😢 Sad')">😢 Sad</button>
-<button class="secondary" onclick="selectMood('😴 Tired')">😴 Tired</button>
-</div>
-<p id="selectedMood" class="muted">No mood selected.</p>
-<label>Anything you want to write about? (Optional)</label>
-<textarea id="moodNote" rows="4" placeholder="Write your thoughts here..."></textarea>
-<button class="primary" onclick="saveMood()">Save check-in</button>
-</div>
-<div class="card"><h2>Your mood history</h2><div id="moodHistory"></div></div>
+<section id="mood" class="page">
+ <h1 data-en="Mood tracker" data-pl="Monitor nastroju">Mood tracker</h1>
+ <p class="muted" data-en="Take a moment to check in with yourself." data-pl="Poświęć chwilę, aby sprawdzić, jak się czujesz.">Take a moment to check in with yourself.</p>
+ <div class="card">
+  <h2 data-en="How are you feeling today?" data-pl="Jak się dzisiaj czujesz?">How are you feeling today?</h2>
+  <div class="actions" id="moodButtons">
+   <button class="mood-btn" onclick="selectMood(1,this)" aria-label="Very sad">😞</button>
+   <button class="mood-btn" onclick="selectMood(2,this)" aria-label="Sad">😕</button>
+   <button class="mood-btn" onclick="selectMood(3,this)" aria-label="Okay">😐</button>
+   <button class="mood-btn" onclick="selectMood(4,this)" aria-label="Happy">🙂</button>
+   <button class="mood-btn" onclick="selectMood(5,this)" aria-label="Very happy">😄</button>
+  </div>
+  <div class="field"><label data-en="Add a note (optional)" data-pl="Dodaj notatkę (opcjonalnie)">Add a note (optional)</label><textarea id="moodNote" data-placeholder-en="What's on your mind?" data-placeholder-pl="Co chodzi Ci po głowie?" placeholder="What's on your mind?"></textarea></div>
+  <button class="primary" onclick="saveMood()" data-en="Save mood" data-pl="Zapisz nastrój">Save mood</button>
+ </div>
+ <div class="card" style="margin-top:18px"><h2 data-en="Mood history" data-pl="Historia nastroju">Mood history</h2><div id="moodHistory"></div></div>
 </section>
 
-<!-- FOCUS TIMER -->
-<section id="focus" class="hidden">
-<div class="hero"><h1>Focus <span>Zone</span></h1><p>One task at a time. You've got this.</p></div>
-<div class="card center">
-<div class="tag">POMODORO TIMER</div>
-<div class="big" id="clock">25:00</div>
-<p id="timerStatus" class="muted">Ready when you are.</p>
-<div class="grid">
-<button class="primary" onclick="startTimer()">▶ Start</button>
-<button class="secondary" onclick="pauseTimer()">Ⅱ Pause</button>
-<button class="secondary" onclick="resetTimer()">↻ Reset</button>
-</div>
-</div>
-<div class="card">
-<h2>Choose duration</h2>
-<div class="grid">
-<button class="secondary" onclick="setTimer(15)">15 minutes</button>
-<button class="secondary" onclick="setTimer(25)">25 minutes</button>
-<button class="secondary" onclick="setTimer(45)">45 minutes</button>
-<button class="secondary" onclick="setTimer(60)">60 minutes</button>
-</div>
-<p class="muted">Completed sessions: <b id="focusCount">0</b></p>
-</div>
+<section id="focus" class="page">
+ <h1 data-en="Focus timer" data-pl="Minutnik skupienia">Focus timer</h1>
+ <p class="muted" data-en="Try a short focus session, followed by a break." data-pl="Wypróbuj krótką sesję skupienia, a następnie przerwę.">Try a short focus session, followed by a break.</p>
+ <div class="card" style="max-width:600px;margin:auto;text-align:center">
+  <span class="tag" id="timerMode">FOCUS SESSION</span>
+  <div class="timer" id="timerDisplay">25:00</div>
+  <div class="field"><label data-en="Session length (minutes)" data-pl="Długość sesji (minuty)">Session length (minutes)</label><input type="number" id="focusMinutes" min="1" max="180" value="25"></div>
+  <div class="actions" style="justify-content:center">
+   <button class="primary" onclick="startTimer()" data-en="Start" data-pl="Start">Start</button>
+   <button class="secondary" onclick="pauseTimer()" data-en="Pause" data-pl="Pauza">Pause</button>
+   <button class="secondary" onclick="resetTimer()" data-en="Reset" data-pl="Reset">Reset</button>
+   <button class="secondary" onclick="setBreak()" data-en="5 min break" data-pl="5 min przerwy">5 min break</button>
+  </div>
+  <p class="muted" id="timerMessage"></p>
+ </div>
 </section>
 
-<!-- LEARNING -->
-<section id="learn" class="hidden">
-<div class="hero"><h1>Learning <span>Centre</span></h1><p>Explore information and practical strategies.</p></div>
-<input id="searchLearn" placeholder="Search articles..." oninput="filterArticles()">
-<div class="grid" id="articles"></div>
+<section id="learn" class="page">
+ <h1 data-en="Learn about your mind" data-pl="Poznaj swój umysł">Learn about your mind</h1>
+ <p class="muted" data-en="Helpful information and everyday strategies." data-pl="Przydatne informacje i codzienne strategie.">Helpful information and everyday strategies.</p>
+ <div id="articles"></div>
 </section>
 
-<!-- PROFILE -->
-<section id="profile" class="hidden">
-<div class="hero"><h1>Your <span>Profile</span></h1><p>Customise your MindFocus experience.</p></div>
-<div class="card">
-<h2>Personal settings</h2>
-<label>Display name</label>
-<input id="nickname" placeholder="Enter your nickname">
-<button class="primary" onclick="saveProfile()">Save profile</button>
-<p id="profileMessage" class="muted"></p>
-</div>
-<div class="card">
-<h2>Privacy and data</h2>
-<p class="muted">Your information is stored locally in this browser using localStorage. It is not automatically sent to a server. Other people using the same browser profile may be able to see it.</p>
-<button class="secondary" onclick="exportAll()">Export my data</button>
-<button class="danger" onclick="clearData()">Delete all saved data</button>
-</div>
+<section id="profile" class="page">
+ <h1 data-en="My profile" data-pl="Mój profil">My profile</h1>
+ <p class="muted" data-en="Make MindFocus feel more like your space." data-pl="Dostosuj MindFocus do siebie.">Make MindFocus feel more like your space.</p>
+ <div class="card" style="max-width:750px">
+  <div class="avatar" id="profileAvatar">?</div>
+  <div class="field"><label data-en="Profile picture" data-pl="Zdjęcie profilowe">Profile picture</label><input type="file" id="avatarFile" accept="image/*" onchange="uploadAvatar(event)"></div>
+  <div class="field"><label data-en="Username" data-pl="Nazwa użytkownika">Username</label><input id="nickname" maxlength="30" data-placeholder-en="Your name" data-placeholder-pl="Twoje imię" placeholder="Your name"></div>
+  <div class="field"><label data-en="About me" data-pl="O mnie">About me</label><textarea id="bio" maxlength="300" data-placeholder-en="Tell us a little about yourself..." data-placeholder-pl="Napisz coś o sobie..." placeholder="Tell us a little about yourself..."></textarea></div>
+  <div class="field"><label data-en="My goals" data-pl="Moje cele">My goals</label><textarea id="goals" maxlength="500" data-placeholder-en="What would you like to work on?" data-placeholder-pl="Nad czym chcesz popracować?" placeholder="What would you like to work on?"></textarea></div>
+  <div class="field"><label data-en="Favourite category" data-pl="Ulubiona kategoria">Favourite category</label>
+   <select id="favourite">
+    <option value="ADHD">ADHD</option><option value="Autism" data-en="Autism" data-pl="Autyzm">Autism</option>
+    <option value="Anxiety" data-en="Anxiety" data-pl="Lęk">Anxiety</option>
+    <option value="Mood" data-en="Mood" data-pl="Nastrój">Mood</option>
+    <option value="OCD">OCD</option><option value="Dyslexia" data-en="Dyslexia" data-pl="Dysleksja">Dyslexia</option>
+    <option value="Sensory" data-en="Sensory" data-pl="Sensoryka">Sensory</option>
+   </select>
+  </div>
+  <button class="primary" onclick="saveProfile()" data-en="Save profile" data-pl="Zapisz profil">Save profile</button>
+  <span id="profileMessage" class="muted" style="margin-left:10px"></span>
+ </div>
+ <div class="card" style="max-width:750px;margin-top:18px">
+  <h2 data-en="Your privacy" data-pl="Twoja prywatność">Your privacy</h2>
+  <p data-en="Your profile, mood entries and assessment history are stored locally in this browser. They are not automatically sent to a server. Clearing browser data may erase them." data-pl="Twój profil, wpisy nastroju i historia testów są przechowywane lokalnie w tej przeglądarce. Nie są automatycznie wysyłane na serwer. Wyczyszczenie danych przeglądarki może je usunąć.">Your profile, mood entries and assessment history are stored locally in this browser. They are not automatically sent to a server. Clearing browser data may erase them.</p>
+ </div>
 </section>
-
+<footer>MindFocus © 2026 · <span data-en="Understand yourself. Take care of yourself." data-pl="Poznaj siebie. Dbaj o siebie.">Understand yourself. Take care of yourself.</span></footer>
+</main>
 </div>
-
-<footer>MindFocus Ultimate © 2026 · Educational self-reflection only · Not a diagnostic service.</footer>
 
 <script>
-const database={
-ADHD:{
-groups:[["Attention",10],["Organisation",10],["Hyperactivity",5],["Impulsivity",5]],
-questions:[
-"How often do you make careless mistakes?",
-"How often do you struggle to concentrate on boring tasks?",
-"How often do you lose track of conversations?",
-"How often do you start tasks but struggle to finish them?",
-"How often are you distracted by things around you?",
-"How often do you avoid tasks requiring concentration?",
-"How often do you daydream when focusing?",
-"How often do you reread things because your mind wandered?",
-"How often do you forget instructions?",
-"How often do you struggle to concentrate?",
-"How often do you struggle to organise tasks?",
-"How often do you forget appointments?",
-"How often do you lose things you need?",
-"How often do you leave tasks until the last minute?",
-"How often do you underestimate how long tasks take?",
-"How often does your workspace become disorganised?",
-"How often do you forget what you were about to do?",
-"How often do you struggle to choose which task to do first?",
-"How often do you leave projects unfinished?",
-"How often do you need reminders for everyday tasks?",
-"How often do you feel restless when sitting?",
-"How often do you move your hands or feet without noticing?",
-"How often do you struggle to sit still?",
-"How often do you feel like you have too much energy?",
-"How often do you talk more than you intended?",
-"How often do you interrupt people?",
-"How often do you answer before someone finishes?",
-"How often do you struggle to wait your turn?",
-"How often do you make quick decisions without thinking?",
-"How often do you say things before considering them?"
-],
-tips:["Try short work sessions with breaks.","Use reminders and checklists.","Break big tasks into small steps.","Reduce distractions.","Create simple routines.","Consider professional assessment if difficulties affect daily life."]
+const tests=[
+{id:"ADHD",icon:"⚡",desc:["Attention, organisation, activity and impulse control.","Uwaga, organizacja, aktywność i kontrola impulsów."],qs:[
+["I find it difficult to keep my attention on tasks.","Trudno mi utrzymać uwagę podczas wykonywania zadań."],
+["I get distracted by sounds, movement or things around me.","Rozpraszają mnie dźwięki, ruch lub rzeczy wokół mnie."],
+["I start tasks but struggle to finish them.","Zaczynam zadania, ale trudno mi je ukończyć."],
+["I forget appointments, plans or things I need to do.","Zapominam o spotkaniach, planach lub obowiązkach."],
+["I often lose objects that I need.","Często gubię potrzebne mi przedmioty."],
+["I find it difficult to organise my tasks.","Trudno mi organizować swoje zadania."],
+["I put off tasks that require a lot of concentration.","Odkładam zadania wymagające dużej koncentracji."],
+["I make careless mistakes when doing things.","Podczas wykonywania zadań popełniam nieuważne błędy."],
+["I struggle to listen when someone speaks for a long time.","Trudno mi słuchać, gdy ktoś mówi przez dłuższy czas."],
+["I find it difficult to follow multi-step instructions.","Trudno mi wykonywać instrukcje składające się z wielu kroków."],
+["I feel restless when I have to sit still.","Czuję niepokój, gdy muszę siedzieć nieruchomo."],
+["I often feel like I need to be moving.","Często czuję potrzebę ruchu."],
+["I talk more than I intend to.","Mówię więcej, niż zamierzam."],
+["I sometimes interrupt people.","Czasami przerywam innym."],
+["I find waiting for my turn difficult.","Trudno mi czekać na swoją kolej."],
+["I act before thinking about the consequences.","Działam, zanim pomyślę o konsekwencjach."],
+["I find it hard to relax when I have free time.","Trudno mi się zrelaksować w wolnym czasie."],
+["My mind often jumps quickly between different thoughts.","Moje myśli często szybko przeskakują między tematami."],
+["I underestimate how long tasks will take.","Nie doceniam tego, ile czasu zajmą mi zadania."],
+["I struggle to manage my time.","Trudno mi zarządzać swoim czasem."],
+["I forget what I was about to do.","Zapominam, co miałem lub miałam właśnie zrobić."],
+["I find it difficult to concentrate on reading.","Trudno mi skupić się na czytaniu."],
+["I become distracted during conversations.","Rozpraszam się podczas rozmów."],
+["I sometimes make decisions too quickly.","Czasami podejmuję decyzje zbyt szybko."],
+["I struggle to keep my belongings organised.","Trudno mi utrzymać porządek w swoich rzeczach."],
+["I find repetitive tasks difficult to complete.","Trudno mi kończyć powtarzalne zadania."],
+["I have trouble switching between activities.","Trudno mi przechodzić między różnymi czynnościami."],
+["I feel overwhelmed when I have many tasks.","Czuję przytłoczenie, gdy mam wiele zadań."],
+["I need reminders to complete everyday tasks.","Potrzebuję przypomnień, aby wykonywać codzienne zadania."],
+["These difficulties affect my everyday life.","Te trudności wpływają na moje codzienne życie."]
+]},
+{id:"Autism",icon:"🧩",desc:["Communication, routines, sensory experiences and social situations.","Komunikacja, rutyna, doświadczenia sensoryczne i sytuacje społeczne."],qs:[
+["I find social situations confusing.","Sytuacje społeczne bywają dla mnie niezrozumiałe."],
+["I find it difficult to know when it is my turn to speak.","Trudno mi rozpoznać, kiedy jest moja kolej, aby mówić."],
+["I sometimes struggle to understand sarcasm.","Czasami trudno mi zrozumieć sarkazm."],
+["I prefer clear and direct communication.","Wolę jasną i bezpośrednią komunikację."],
+["I find unexpected changes difficult.","Trudno mi radzić sobie z niespodziewanymi zmianami."],
+["I feel more comfortable when I follow routines.","Czuję się lepiej, gdy mam ustaloną rutynę."],
+["I have interests that I enjoy very deeply.","Mam zainteresowania, które pochłaniają mnie bez reszty."],
+["I can spend a long time learning about one topic.","Mogę spędzać dużo czasu na poznawaniu jednego tematu."],
+["I find small talk difficult.","Trudno mi prowadzić niezobowiązujące rozmowy."],
+["I sometimes need time alone after socialising.","Czasami potrzebuję samotności po spotkaniach z ludźmi."],
+["I find eye contact uncomfortable or distracting.","Kontakt wzrokowy jest dla mnie niekomfortowy lub rozpraszający."],
+["I find it difficult to understand what someone is feeling from their expression.","Trudno mi rozpoznać uczucia innych na podstawie ich mimiki."],
+["I prefer knowing what will happen in advance.","Wolę wiedzieć z wyprzedzeniem, co się wydarzy."],
+["Certain sounds feel much louder to me than to others.","Niektóre dźwięki wydają mi się znacznie głośniejsze niż innym."],
+["Some textures or clothing sensations bother me.","Niektóre faktury lub odczucia związane z ubraniami mi przeszkadzają."],
+["Bright lights can feel uncomfortable.","Jasne światło może być dla mnie nieprzyjemne."],
+["I notice small details that others may miss.","Zauważam drobne szczegóły, które inni mogą przeoczyć."],
+["I sometimes repeat movements when excited or stressed.","Czasami powtarzam ruchy, gdy jestem podekscytowany lub zestresowany."],
+["I find busy places overwhelming.","Zatłoczone miejsca bywają dla mnie przytłaczające."],
+["I prefer familiar foods or routines.","Wolę znane potrawy i sprawdzone rutyny."],
+["I find it difficult to change from one activity to another.","Trudno mi zmieniać jedną czynność na inną."],
+["I sometimes rehearse conversations in my head.","Czasami ćwiczę rozmowy w myślach."],
+["I copy other people's behaviour to fit in.","Naśladuję zachowanie innych, aby się dopasować."],
+["I feel unsure about social rules.","Nie zawsze rozumiem zasady społeczne."],
+["I prefer spending time with a small number of people.","Wolę spędzać czas z niewielką liczbą osób."],
+["I find group conversations difficult to follow.","Trudno mi nadążać za rozmowami w grupie."],
+["I need time to process questions before answering.","Potrzebuję czasu, aby przemyśleć pytania przed odpowiedzią."],
+["I feel overwhelmed by too much information.","Nadmiar informacji mnie przytłacza."],
+["I find it easier to communicate in writing sometimes.","Czasami łatwiej jest mi komunikować się na piśmie."],
+["These experiences affect my everyday life.","Te doświadczenia wpływają na moje codzienne życie."]
+]},
+{id:"Anxiety",icon:"🌧️",desc:["Worry, stress, tension and anxious feelings.","Zmartwienia, stres, napięcie i uczucie niepokoju."],qs:[
+["I worry about things that might happen.","Martwię się o rzeczy, które mogą się wydarzyć."],
+["I find it difficult to stop worrying.","Trudno mi przestać się martwić."],
+["I feel nervous without knowing exactly why.","Czuję zdenerwowanie, choć nie wiem dokładnie dlaczego."],
+["I expect something to go wrong.","Spodziewam się, że coś pójdzie nie tak."],
+["I find uncertainty uncomfortable.","Niepewność jest dla mnie niekomfortowa."],
+["I replay conversations in my head.","Odtwarzam rozmowy w myślach."],
+["I worry about what other people think of me.","Martwię się tym, co myślą o mnie inni."],
+["I avoid situations because they make me anxious.","Unikam sytuacji, które wywołują u mnie niepokój."],
+["I feel tense or on edge.","Czuję napięcie lub zdenerwowanie."],
+["I find it difficult to relax.","Trudno mi się zrelaksować."],
+["I notice my heart beating faster when worried.","Gdy się martwię, zauważam przyspieszone bicie serca."],
+["I get butterflies or discomfort in my stomach.","Czuję ścisk lub dyskomfort w żołądku."],
+["I struggle to fall asleep because of thoughts.","Myśli utrudniają mi zasypianie."],
+["I imagine worst-case scenarios.","Wyobrażam sobie najgorsze możliwe scenariusze."],
+["I worry about making mistakes.","Martwię się popełnianiem błędów."],
+["I feel nervous when meeting new people.","Denerwuję się podczas poznawania nowych osób."],
+["I find it difficult to ask for help.","Trudno mi prosić o pomoc."],
+["I become overwhelmed by everyday responsibilities.","Codzienne obowiązki mnie przytłaczają."],
+["I need reassurance from others.","Potrzebuję zapewnień ze strony innych osób."],
+["I feel uncomfortable when plans change.","Czuję dyskomfort, gdy plany się zmieniają."],
+["I find it difficult to focus when worried.","Trudno mi się skupić, gdy się martwię."],
+["I worry about things I cannot control.","Martwię się rzeczami, na które nie mam wpływu."],
+["I avoid tasks because I fear doing them badly.","Unikam zadań, ponieważ boję się, że wykonam je źle."],
+["I feel restless when waiting for something.","Czuję niepokój, gdy na coś czekam."],
+["I sometimes feel panicky.","Czasami odczuwam panikę."],
+["I worry about the future.","Martwię się o przyszłość."],
+["I find it hard to switch off my thoughts.","Trudno mi wyłączyć natłok myśli."],
+["I feel nervous before ordinary activities.","Denerwuję się przed zwykłymi czynnościami."],
+["My worries affect my sleep or concentration.","Moje zmartwienia wpływają na sen lub koncentrację."],
+["Anxiety makes everyday life more difficult.","Niepokój utrudnia mi codzienne życie."]
+]},
+{id:"Mood",icon:"💜",desc:["Mood, motivation, energy and emotional wellbeing.","Nastrój, motywacja, energia i samopoczucie emocjonalne."],qs:[
+["I have felt down or low in mood.","Mój nastrój był obniżony."],
+["I have found it difficult to enjoy things.","Trudno mi było czerpać radość z różnych rzeczy."],
+["I have had less energy than usual.","Miałem lub miałam mniej energii niż zwykle."],
+["I have struggled to get started with tasks.","Trudno mi było zabrać się do zadań."],
+["I have felt tired even after resting.","Czułem lub czułam zmęczenie nawet po odpoczynku."],
+["I have found it difficult to concentrate.","Trudno mi było się skoncentrować."],
+["I have felt less interested in hobbies.","Moje zainteresowanie hobby było mniejsze."],
+["I have been harder on myself than usual.","Byłem lub byłam dla siebie bardziej krytyczna niż zwykle."],
+["I have felt hopeless about the future.","Czułem lub czułam beznadzieję związaną z przyszłością."],
+["I have struggled with sleep.","Miałem lub miałam problemy ze snem."],
+["I have slept more than I usually do.","Spałem lub spałam więcej niż zwykle."],
+["I have noticed changes in my appetite.","Zauważyłem lub zauważyłam zmiany apetytu."],
+["I have felt isolated from other people.","Czułem lub czułam się odizolowany od innych."],
+["I have found everyday tasks overwhelming.","Codzienne zadania wydawały mi się przytłaczające."],
+["I have felt irritable or frustrated.","Czułem lub czułam rozdrażnienie albo frustrację."],
+["I have found it difficult to make decisions.","Trudno mi było podejmować decyzje."],
+["I have felt that I am not good enough.","Czułem lub czułam, że nie jestem wystarczająco dobry."],
+["I have struggled to feel positive.","Trudno mi było odczuwać pozytywne emocje."],
+["I have avoided spending time with others.","Unikałem lub unikałam spędzania czasu z innymi."],
+["I have felt emotionally exhausted.","Czułem lub czułam wyczerpanie emocjonalne."],
+["I have found it difficult to maintain routines.","Trudno mi było utrzymać codzienną rutynę."],
+["I have felt less motivated.","Miałem lub miałam mniejszą motywację."],
+["I have struggled to look after myself.","Trudno mi było zadbać o siebie."],
+["I have felt overwhelmed by small problems.","Nawet drobne problemy mnie przytłaczały."],
+["I have found it difficult to talk about my feelings.","Trudno mi było rozmawiać o swoich uczuciach."],
+["I have had trouble remembering things.","Miałem lub miałam trudności z zapamiętywaniem."],
+["I have felt disconnected from activities I enjoy.","Czułem lub czułam się oderwany od czynności, które lubię."],
+["I have struggled to imagine things improving.","Trudno mi było wyobrazić sobie poprawę sytuacji."],
+["My mood has affected my everyday activities.","Mój nastrój wpływał na codzienne czynności."],
+["I would like more support with my wellbeing.","Chciałbym lub chciałabym otrzymać większe wsparcie w dbaniu o samopoczucie."]
+]},
+{id:"OCD",icon:"🔁",desc:["Repeated thoughts, checking and routines.","Nawracające myśli, sprawdzanie i rutyna."],qs:[
+["I sometimes have unwanted thoughts that keep returning.","Czasami pojawiają się u mnie niechciane, powracające myśli."],
+["I feel uncomfortable when things seem uneven or incomplete.","Czuję dyskomfort, gdy coś wydaje się nierówne lub niekompletne."],
+["I feel a strong urge to check things repeatedly.","Odczuwam silną potrzebę wielokrotnego sprawdzania rzeczy."],
+["I worry that I may have forgotten something important.","Martwię się, że mogłem lub mogłam zapomnieć o czymś ważnym."],
+["I repeat actions to feel more certain.","Powtarzam czynności, aby poczuć większą pewność."],
+["I find it difficult to ignore certain thoughts.","Trudno mi ignorować niektóre myśli."],
+["I feel that I must do things in a particular order.","Czuję, że muszę wykonywać rzeczy w określonej kolejności."],
+["I spend longer than I want checking things.","Spędzam więcej czasu na sprawdzaniu, niż bym chciał lub chciała."],
+["I feel distressed when I cannot complete a routine.","Odczuwam niepokój, gdy nie mogę wykonać swojej rutyny."],
+["I seek reassurance about things I have already checked.","Szukam potwierdzenia w sprawach, które już sprawdziłem lub sprawdziłam."],
+["I worry about making a serious mistake.","Martwię się, że popełnię poważny błąd."],
+["I sometimes repeat words or phrases in my mind.","Czasami powtarzam w myślach słowa lub zwroty."],
+["I feel uncomfortable when objects are not arranged how I expect.","Czuję dyskomfort, gdy przedmioty nie są ułożone tak, jak oczekuję."],
+["I struggle to move on from a thought.","Trudno mi przestać myśleć o danej rzeczy."],
+["I feel driven to repeat an action until it feels right.","Czuję przymus powtarzania czynności, aż będzie odpowiednia."],
+["I worry about accidentally causing harm.","Martwię się, że przypadkowo mogę komuś zaszkodzić."],
+["I find it hard to tolerate uncertainty.","Trudno mi tolerować niepewność."],
+["I spend time trying to make thoughts feel complete.","Poświęcam czas na próby uporządkowania myśli."],
+["I repeat tasks even when I know they are finished.","Powtarzam zadania, nawet gdy wiem, że są już skończone."],
+["I feel anxious if I cannot follow a personal routine.","Czuję niepokój, gdy nie mogę przestrzegać swojej rutyny."],
+["I find unwanted thoughts distracting.","Niechciane myśli mnie rozpraszają."],
+["I try to avoid things that trigger uncomfortable thoughts.","Staram się unikać rzeczy wywołujących nieprzyjemne myśli."],
+["I spend time mentally reviewing events.","Spędzam czas na analizowaniu wydarzeń w myślach."],
+["I feel a need to make things perfectly correct.","Czuję potrzebę doprowadzania wszystkiego do perfekcji."],
+["I find it difficult to stop checking.","Trudno mi przestać sprawdzać."],
+["My routines take up more time than I would like.","Moje rutyny zajmują więcej czasu, niż bym chciał lub chciała."],
+["I feel upset when I cannot do things my usual way.","Denerwuję się, gdy nie mogę robić rzeczy w zwykły sposób."],
+["I find it difficult to resist repeating certain actions.","Trudno mi powstrzymać się od powtarzania niektórych czynności."],
+["These thoughts or routines interfere with my day.","Te myśli lub rutyny przeszkadzają mi w codziennym życiu."],
+["I would like help understanding these experiences.","Chciałbym lub chciałabym lepiej zrozumieć te doświadczenia."]
+]},
+{id:"Dyslexia",icon:"📖",desc:["Reading, spelling, written information and learning.","Czytanie, pisownia, informacje pisemne i nauka."],qs:[
+["I find reading slower than I would like.","Czytam wolniej, niż bym chciał lub chciała."],
+["I sometimes lose my place while reading.","Czasami gubię miejsce podczas czytania."],
+["I find spelling difficult.","Pisownia sprawia mi trudność."],
+["I mix up letters when writing.","Myli mi się kolejność liter podczas pisania."],
+["I find reading aloud uncomfortable.","Czytanie na głos jest dla mnie niekomfortowe."],
+["I need to read sentences more than once.","Muszę czytać zdania więcej niż raz."],
+["I find long written instructions difficult.","Długie instrukcje pisemne sprawiają mi trudność."],
+["I sometimes confuse similar-looking words.","Czasami mylę podobnie wyglądające słowa."],
+["I find it difficult to remember spellings.","Trudno mi zapamiętywać pisownię."],
+["I struggle to take notes while listening.","Trudno mi robić notatki podczas słuchania."],
+["I find copying information from a board difficult.","Przepisywanie informacji z tablicy sprawia mi trudność."],
+["I find it hard to organise written work.","Trudno mi organizować prace pisemne."],
+["I sometimes read a word incorrectly.","Czasami odczytuję słowo nieprawidłowo."],
+["I find writing essays or long texts challenging.","Pisanie wypracowań lub długich tekstów jest dla mnie wyzwaniem."],
+["I struggle to remember sequences of letters.","Trudno mi zapamiętywać kolejność liter."],
+["I find learning new vocabulary difficult.","Nauka nowego słownictwa sprawia mi trudność."],
+["I prefer listening to information rather than reading it.","Wolę słuchać informacji, niż je czytać."],
+["I need extra time for reading tasks.","Potrzebuję więcej czasu na zadania związane z czytaniem."],
+["I find punctuation difficult to use.","Trudno mi prawidłowo stosować znaki interpunkcyjne."],
+["I sometimes miss words when reading.","Czasami pomijam słowa podczas czytania."],
+["I find it difficult to summarise written information.","Trudno mi streszczać informacje pisemne."],
+["I struggle to remember written instructions.","Trudno mi zapamiętywać instrukcje pisemne."],
+["I find forms with lots of text difficult.","Formularze z dużą ilością tekstu sprawiają mi trudność."],
+["I sometimes reverse the order of letters.","Czasami zapisuję litery w odwrotnej kolejności."],
+["I find proofreading my own writing challenging.","Sprawdzanie własnych tekstów jest dla mnie trudne."],
+["I prefer visual explanations.","Wolę wyjaśnienia przedstawione w formie wizualnej."],
+["I find it difficult to learn from text alone.","Trudno mi uczyć się wyłącznie z tekstu."],
+["Reading can make me feel tired.","Czytanie może powodować u mnie zmęczenie."],
+["These difficulties affect school, work or daily life.","Te trudności wpływają na szkołę, pracę lub codzienne życie."],
+["I would like to explore different learning strategies.","Chciałbym lub chciałabym poznać różne strategie nauki."]
+]},
+{id:"Sensory",icon:"🎧",desc:["Sound, light, touch, taste and sensory comfort.","Dźwięk, światło, dotyk, smak i komfort sensoryczny."],qs:[
+["Loud sounds bother me more than they seem to bother others.","Głośne dźwięki przeszkadzają mi bardziej niż innym osobom."],
+["I notice background noises when trying to concentrate.","Zauważam dźwięki w tle, gdy próbuję się skoncentrować."],
+["Bright lights make me uncomfortable.","Jasne światło powoduje u mnie dyskomfort."],
+["Certain clothing textures bother me.","Niektóre materiały ubrań mi przeszkadzają."],
+["I dislike unexpected physical touch.","Nie lubię niespodziewanego dotyku."],
+["Some food textures are difficult for me.","Niektóre konsystencje jedzenia są dla mnie trudne do zaakceptowania."],
+["Strong smells can overwhelm me.","Intensywne zapachy mogą mnie przytłaczać."],
+["Busy environments make me feel overloaded.","Zatłoczone otoczenie powoduje u mnie przeciążenie."],
+["I prefer quieter places.","Wolę cichsze miejsca."],
+["I sometimes need to cover my ears.","Czasami muszę zasłaniać uszy."],
+["I find crowded spaces uncomfortable.","Zatłoczone przestrzenie są dla mnie niekomfortowe."],
+["I notice small changes in temperature.","Zauważam niewielkie zmiany temperatury."],
+["I dislike certain tags or seams in clothing.","Nie lubię niektórych metek lub szwów w ubraniach."],
+["Some sounds make me feel irritated.","Niektóre dźwięki wywołują u mnie irytację."],
+["I find fluorescent lighting uncomfortable.","Światło fluorescencyjne jest dla mnie nieprzyjemne."],
+["I need breaks after sensory-heavy activities.","Potrzebuję przerw po intensywnych doświadczeniach sensorycznych."],
+["I sometimes seek out particular textures.","Czasami celowo szukam określonych faktur."],
+["I enjoy repetitive sensory activities.","Lubię powtarzalne czynności sensoryczne."],
+["I find multiple people talking at once overwhelming.","Jednoczesne rozmowy wielu osób mnie przytłaczają."],
+["I prefer predictable sensory environments.","Wolę przewidywalne otoczenie pod względem bodźców."],
+["I can become distracted by visual movement.","Ruch w polu widzenia może mnie rozpraszać."],
+["I find certain tastes unusually strong.","Niektóre smaki wydają mi się wyjątkowo intensywne."],
+["I notice smells that other people do not notice.","Zauważam zapachy, których inni nie wyczuwają."],
+["I find sudden noises startling.","Nagłe dźwięki mnie zaskakują."],
+["I sometimes feel overloaded without knowing why.","Czasami czuję przeciążenie, nie wiedząc dlaczego."],
+["I prefer comfortable familiar surroundings.","Wolę wygodne i znane otoczenie."],
+["I find shopping centres or busy streets tiring.","Centra handlowe i ruchliwe ulice są dla mnie męczące."],
+["I use music or headphones to manage noise.","Używam muzyki lub słuchawek, aby radzić sobie z hałasem."],
+["Sensory experiences affect my daily activities.","Doświadczenia sensoryczne wpływają na moje codzienne czynności."],
+["I would like to understand my sensory preferences better.","Chciałbym lub chciałabym lepiej zrozumieć swoje preferencje sensoryczne."]
+]}
+];
+
+const answers=[
+{en:"Never",pl:"Nigdy",v:0},
+{en:"Rarely",pl:"Rzadko",v:1},
+{en:"Sometimes",pl:"Czasami",v:2},
+{en:"Often",pl:"Często",v:3},
+{en:"Very often",pl:"Bardzo często",v:4}
+];
+
+const articles=[
+{icon:"⚡",title:["Understanding attention","Zrozumienie uwagi"],body:["Attention can vary from day to day. Try breaking larger tasks into small steps, using reminders and reducing distractions.","Uwaga może się zmieniać z dnia na dzień. Spróbuj dzielić większe zadania na małe kroki, korzystać z przypomnień i ograniczać rozpraszacze."]},
+{icon:"🧩",title:["Understanding different minds","Różne sposoby myślenia"],body:["People experience communication, routines and sensory information differently. There is no single correct way to experience the world.","Ludzie różnie doświadczają komunikacji, rutyny i bodźców sensorycznych. Nie istnieje jeden właściwy sposób odbierania świata."]},
+{icon:"🌧️",title:["Managing worry","Radzenie sobie ze zmartwieniami"],body:["Try writing down worries, identifying what you can control and using slow breathing to settle your body.","Spróbuj zapisywać swoje zmartwienia, określać, na co masz wpływ, i stosować powolne oddychanie, aby się uspokoić."]},
+{icon:"💜",title:["Looking after your mood","Dbanie o nastrój"],body:["Small routines can help: regular meals, sleep, gentle movement and staying connected with people you trust.","Pomocne mogą być drobne rutyny: regularne posiłki, sen, łagodna aktywność i kontakt z zaufanymi osobami."]},
+{icon:"🎧",title:["Sensory breaks","Przerwy sensoryczne"],body:["A quieter room, comfortable clothing, headphones or a short break may help when your surroundings feel overwhelming.","Cichszy pokój, wygodne ubrania, słuchawki lub krótka przerwa mogą pomóc, gdy otoczenie staje się przytłaczające."]},
+{icon:"📚",title:["Learning strategies","Strategie uczenia się"],body:["Try audio, diagrams, short reading sessions and extra time. Different approaches work for different people.","Wypróbuj nagrania audio, diagramy, krótkie sesje czytania i dodatkowy czas. Różne metody sprawdzają się u różnych osób."]},
+{icon:"⏱️",title:["Getting started","Jak zacząć"],body:["Choose one tiny first step. Work for a short period, take a break and celebrate progress rather than perfection.","Wybierz jeden mały pierwszy krok. Pracuj przez krótki czas, zrób przerwę i doceniaj postępy zamiast dążyć do perfekcji."]}
+];
+
+let language=localStorage.getItem("mf_language")||"en";
+let currentTest=null,currentQuestion=0,currentAnswers=[];
+let lastResult=null,selectedMood=0;
+let timerSeconds=1500,timerInterval=null,timerRunning=false;
+let history=JSON.parse(localStorage.getItem("mf_history")||"[]");
+let moods=JSON.parse(localStorage.getItem("mf_moods")||"[]");
+let profile=JSON.parse(localStorage.getItem("mf_profile")||"{}");
+let avatarData=profile.avatar||"";
+let timerMode="focus";
+
+const words={
+en:{
+theme:"🌙 Theme",welcome:"Welcome to MindFocus 🧠",back:"← Back to assessments",previous:"← Previous",next:"Next →",finish:"Finish assessment",
+question:"QUESTION",required:"Please choose an answer first.",start:"Start assessment",none:"No entries yet.",
+historyDelete:"Delete",confirmClear:"Delete all assessment history?",saved:"Profile saved!",chooseMood:"Choose a mood first.",
+emptyName:"Your name",verySad:"Very sad",sad:"Sad",okay:"Okay",happy:"Happy",veryHappy:"Very happy",
+focus:"FOCUS SESSION",break:"BREAK TIME",done:"Great work! Your session is complete!",rest:"Time to relax!",
+low:"Lower self-reflection score",medium:"Moderate self-reflection score",high:"Higher self-reflection score",veryHigh:"High self-reflection score",
+lowDesc:"Your answers suggest these experiences occur less frequently for you.",
+mediumDesc:"Some of the experiences described may sometimes occur in your life.",
+highDesc:"Many of the experiences described may feel familiar to you.",
+veryHighDesc:"Your answers suggest many of the experiences described occur frequently.",
+lowAdvice:"You can still use helpful wellbeing strategies and revisit this assessment if your experiences change.",
+mediumAdvice:"Notice when these experiences occur. Breaks, routines and talking with someone you trust may help.",
+highAdvice:"It may help to note specific situations and how they affect everyday life. If they concern you, consider speaking with a qualified professional.",
+veryHighAdvice:"If these experiences make everyday life difficult, consider speaking with a doctor, psychologist or another qualified professional.",
+score:"Score",date:"Date",downloadTitle:"MINDFOCUS SELF-REFLECTION RESULT",downloadDisclaimer:"This is not a diagnosis or a validated clinical screening result.",
+imageError:"Please choose an image.",imageSize:"Please choose an image smaller than 2 MB."
 },
-Autism:{
-groups:[["Social communication",5],["Routines",5],["Sensory experiences",5],["Interests",5]],
-questions:[
-"Do you find social situations difficult to understand?","Do you struggle to know when it is your turn to speak?","Do you find small talk uncomfortable?","Do you misunderstand indirect language?","Do you find socialising tiring?","Do unexpected changes upset you?","Do you prefer predictable routines?","Are transitions between activities difficult?","Do you prefer doing things in a particular order?","Do changed routines make you uncomfortable?","Are certain sounds overwhelming?","Are bright lights uncomfortable?","Are certain textures difficult to tolerate?","Are strong smells overwhelming?","Do busy environments overwhelm you?","Do you develop strong interests in specific subjects?","Do you enjoy learning detailed information?","Do you repeat movements when excited or stressed?","Do you prefer direct communication?","Do you feel you have to act differently around others?"
-],
-tips:["Allow yourself recovery time after socialising.","Use visual schedules.","Identify sensory triggers.","Explore your interests.","Communicate your needs.","Seek a professional assessment if wanted."]
-},
-Anxiety:{
-groups:[["Worry",5],["Physical tension",5],["Avoidance",5]],
-questions:[
-"Do you worry about things that might happen?","Is it difficult to stop worrying?","Do you imagine the worst outcomes?","Do you worry about what people think?","Do you feel nervous in everyday situations?","Do you experience muscle tension?","Do you feel restless or on edge?","Does stress affect your sleep?","Does worry cause a racing heartbeat?","Do you struggle to relax?","Do you avoid situations because of anxiety?","Do you overthink conversations?","Do you fear making mistakes?","Does worry make decisions difficult?","Does anxiety interfere with daily life?"
-],
-tips:["Try slow breathing.","Break stressful tasks into steps.","Maintain a sleep routine.","Write down worries.","Talk to someone you trust.","Consider professional support."]
-},
-Depression:{
-groups:[["Mood",5],["Energy",5],["Daily life",5]],
-questions:[
-"Have you felt sad or low?","Have you lost interest in activities you enjoy?","Have you felt hopeless?","Have you felt unusually emotional?","Have you struggled to feel positive?","Have you felt tired after sleeping?","Have you struggled with motivation?","Have you experienced sleep changes?","Have everyday tasks felt exhausting?","Have you struggled to concentrate?","Have you withdrawn from others?","Have you struggled with responsibilities?","Have you been very critical of yourself?","Have you felt disconnected?","Have these experiences affected your daily life?"
-],
-tips:["Maintain a gentle daily routine.","Break tasks into smaller steps.","Stay connected to people you trust.","Make time for enjoyable activities.","Prioritise rest and meals.","Speak with a professional if struggling."]
-},
-Dyslexia:{
-groups:[["Reading",5],["Writing",5],["Learning",5]],
-questions:[
-"Do you find reading slower than you would like?","Do you lose your place when reading?","Do long passages feel tiring?","Do you reread sentences to understand them?","Do you mix up similar-looking words?","Do you find spelling difficult?","Do you forget how to spell familiar words?","Is writing your thoughts difficult?","Do you make spelling mistakes?","Do you find copying text difficult?","Do you struggle to remember sequences?","Are written instructions difficult?","Is learning written vocabulary challenging?","Do you remember information better when hearing it?","Do reading tasks take longer than expected?"
-],
-tips:["Try audiobooks.","Use spellcheck and speech-to-text.","Break reading into smaller sections.","Try different text backgrounds.","Ask about learning support.","Consider an educational assessment."]
-},
-OCD:{
-groups:[["Intrusive thoughts",5],["Repetitive behaviours",5],["Daily impact",5]],
-questions:[
-"Do unwanted thoughts repeatedly enter your mind?","Do you find certain worries difficult to dismiss?","Do you feel distressed by unwanted thoughts?","Do you seek certainty about things?","Do thoughts sometimes feel difficult to control?","Do you repeat actions to feel reassured?","Do you repeatedly check things?","Do you feel driven to arrange things in a particular way?","Do you repeat routines even when you do not want to?","Do you feel distressed if a routine is interrupted?","Do these experiences take up time?","Do they interfere with concentration?","Do they affect your everyday activities?","Do you hide these experiences from others?","Would you like support with these experiences?"
-],
-tips:["OCD is treatable; professional support can help.","Avoid judging yourself for intrusive thoughts.","Speak to a qualified mental health professional.","Learn about evidence-based treatments such as CBT with ERP."]
-},
-Dyscalculia:{
-groups:[["Number understanding",5],["Calculations",5],["Everyday maths",5]],
-questions:[
-"Do you find understanding numbers difficult?","Do you struggle to compare quantities?","Do you find mental arithmetic challenging?","Do you mix up numbers?","Do you struggle to remember number facts?","Do calculations take you longer than expected?","Do you find multiplication tables difficult to remember?","Do you struggle to follow mathematical steps?","Do you make mistakes when calculating?","Do you find estimating quantities difficult?","Do you struggle with reading clocks?","Do you find handling money challenging?","Do you struggle with measurements?","Do directions involving numbers confuse you?","Does maths affect your confidence?"
-],
-tips:["Use visual number aids.","Break calculations into steps.","Use calculators when appropriate.","Practise with real-life examples.","Consider educational assessment."]
-},
-Sensory:{
-groups:[["Sound and light",5],["Touch and texture",5],["Sensory regulation",5]],
-questions:[
-"Are loud sounds uncomfortable?","Are sudden noises upsetting?","Do bright lights bother you?","Do busy places feel overwhelming?","Do multiple conversations distract you?","Do clothing labels bother you?","Are certain food textures unpleasant?","Do you dislike certain physical sensations?","Are strong smells overwhelming?","Do temperature changes bother you?","Do you seek quiet spaces?","Do you need movement to feel comfortable?","Do sensory experiences affect concentration?","Do you become overwhelmed by too much stimulation?","Do you use activities to calm your senses?"
-],
-tips:["Identify your sensory preferences.","Use headphones when appropriate.","Adjust lighting and clothing.","Take breaks from busy environments.","Create a comfortable space."]
-},
-Sleep:{
-groups:[["Falling asleep",5],["Sleep quality",5],["Daytime effects",5]],
-questions:[
-"Do you struggle to fall asleep?","Do you stay awake later than intended?","Does your mind become active at bedtime?","Do you find it difficult to maintain a sleep schedule?","Do you worry when trying to sleep?","Do you wake up during the night?","Do you wake feeling unrefreshed?","Does noise disturb your sleep?","Do you have inconsistent sleep times?","Do you find it difficult to get back to sleep?","Do you feel sleepy during the day?","Does tiredness affect concentration?","Do you struggle to wake up?","Does poor sleep affect your mood?","Does sleep difficulty affect daily life?"
-],
-tips:["Keep a consistent sleep routine.","Reduce bright screens before bedtime.","Make your bedroom comfortable.","Limit caffeine late in the day.","Seek medical advice for persistent sleep problems."]
-},
-Stress:{
-groups:[["Emotional stress",5],["Physical stress",5],["Burnout experiences",5]],
-questions:[
-"Do you feel overwhelmed by responsibilities?","Do you find it hard to switch off?","Do small problems feel unusually difficult?","Do you feel under constant pressure?","Do you struggle to relax?","Do you experience tension when stressed?","Does stress affect your sleep?","Do you experience stress-related headaches?","Do you feel physically exhausted?","Do you struggle to recover after busy days?","Do you feel emotionally drained?","Have you lost motivation?","Do you feel disconnected from activities?","Do you struggle to keep up with responsibilities?","Do you feel you need more rest?"
-],
-tips:["Set realistic priorities.","Take regular breaks.","Ask for help when needed.","Protect time for rest.","Try gentle physical activity.","Speak with a professional if stress becomes overwhelming."]
+pl:{
+theme:"🌙 Motyw",welcome:"Witaj w MindFocus 🧠",back:"← Wróć do testów",previous:"← Wstecz",next:"Dalej →",finish:"Zakończ test",
+question:"PYTANIE",required:"Najpierw wybierz odpowiedź.",start:"Rozpocznij test",none:"Brak wpisów.",
+historyDelete:"Usuń",confirmClear:"Usunąć całą historię testów?",saved:"Profil zapisany!",chooseMood:"Najpierw wybierz nastrój.",
+emptyName:"Twoje imię",verySad:"Bardzo źle",sad:"Źle",okay:"Tak sobie",happy:"Dobrze",veryHappy:"Bardzo dobrze",
+focus:"SESJA SKUPIENIA",break:"CZAS NA PRZERWĘ",done:"Świetna robota! Sesja została zakończona!",rest:"Czas odpocząć!",
+low:"Niski wynik autorefleksji",medium:"Umiarkowany wynik autorefleksji",high:"Podwyższony wynik autorefleksji",veryHigh:"Wysoki wynik autorefleksji",
+lowDesc:"Twoje odpowiedzi wskazują, że opisane doświadczenia występują u Ciebie rzadziej.",
+mediumDesc:"Niektóre opisane doświadczenia mogą czasami pojawiać się w Twoim życiu.",
+highDesc:"Wiele opisanych doświadczeń może być Ci znajomych.",
+veryHighDesc:"Twoje odpowiedzi wskazują, że wiele z opisanych doświadczeń występuje często.",
+lowAdvice:"Możesz nadal korzystać ze strategii dbania o siebie i wrócić do testu, jeśli Twoje doświadczenia się zmienią.",
+mediumAdvice:"Zwróć uwagę, kiedy pojawiają się te doświadczenia. Pomocne mogą być przerwy, rutyny i rozmowa z zaufaną osobą.",
+highAdvice:"Warto zapisywać konkretne sytuacje i ich wpływ na codzienne życie. Jeśli Cię martwią, porozmawiaj ze specjalistą.",
+veryHighAdvice:"Jeśli te doświadczenia utrudniają codzienne życie, rozważ rozmowę z lekarzem, psychologiem lub innym wykwalifikowanym specjalistą.",
+score:"Wynik",date:"Data",downloadTitle:"WYNIK AUTOREFLEKSJI MINDFOCUS",downloadDisclaimer:"To nie jest diagnoza ani zwalidowany wynik badania klinicznego.",
+imageError:"Wybierz plik graficzny.",imageSize:"Wybierz obraz mniejszy niż 2 MB."
 }
 };
-
-const genericOptions=["Never","Rarely","Sometimes","Often","Very often"];
-let activeName="",answers=[],questionIndex=0,lastReport=null;
-
-function getData(key){
- try{return JSON.parse(localStorage.getItem(key))||[]}catch(e){return []}
+function tr(key){return words[language][key]||key}
+function changeLanguage(lang){
+ language=lang;
+ localStorage.setItem("mf_language",lang);
+ document.documentElement.lang=lang;
+ document.getElementById("languageSelect").value=lang;
+ document.querySelectorAll("[data-en][data-pl]").forEach(el=>{
+  el.textContent=el.getAttribute("data-"+lang);
+ });
+ document.querySelectorAll("[data-placeholder-en][data-placeholder-pl]").forEach(el=>{
+  el.placeholder=el.getAttribute("data-placeholder-"+lang);
+ });
+ document.querySelectorAll("option[data-en][data-pl]").forEach(el=>{
+  el.textContent=el.getAttribute("data-"+lang);
+ });
+ document.getElementById("themeButton").textContent=tr("theme");
+ updateWelcome();
+ renderTests();renderHistory();renderMoods();renderArticles();updateStats();
+ if(currentTest&&document.getElementById("takingTest").classList.contains("active"))renderQuestion();
+ if(lastResult&&document.getElementById("results").classList.contains("active"))showResult(lastResult,false);
+ updateTimerLabels();
 }
-function putData(key,value){localStorage.setItem(key,JSON.stringify(value))}
-function page(id,btn){
- document.querySelectorAll(".container>section").forEach(s=>s.classList.add("hidden"));
- document.getElementById(id).classList.remove("hidden");
- document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
- if(btn)btn.classList.add("active");
+function updateWelcome(){
+ document.getElementById("welcomeTitle").textContent=profile.nickname?
+ (language==="pl"?"Witaj ponownie, ":"Welcome back, ")+profile.nickname+"! 🧠":tr("welcome");
+}
+function page(id){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
  if(id==="history")renderHistory();
- if(id==="mood")renderMood();
- if(id==="dashboard")updateStats();
+ if(id==="mood")renderMoods();
  if(id==="profile")loadProfile();
+ if(id==="dashboard")updateStats();
  window.scrollTo(0,0);
 }
-function renderLibrary(){
- let html="";
- Object.keys(database).forEach(name=>{
- html+=`<div class="tile"><div class="tag">${database[name].questions.length} QUESTIONS</div><h3>🧠 ${name}</h3><p>Educational self-reflection questionnaire with a summary and practical strategies.</p><button class="primary" onclick="startTest('${name}')">Start test →</button></div>`;
- });
- document.getElementById("testLibrary").innerHTML=html;
-}
-renderLibrary();
-
-function startTest(name){
- activeName=name;answers=Array(database[name].questions.length).fill(null);questionIndex=0;
- page("test");renderQuestion();
-}
-function groupAt(i){
- let groups=database[activeName].groups,offset=0;
- for(let g of groups){if(i<offset+g[1])return g[0];offset+=g[1]}
- return "";
-}
-function renderQuestion(){
- let t=database[activeName],n=t.questions.length;
- document.getElementById("testCategory").textContent=activeName.toUpperCase()+" · "+groupAt(questionIndex).toUpperCase();
- document.getElementById("questionNumber").textContent=`Question ${questionIndex+1} of ${n}`;
- document.getElementById("testProgress").style.width=(questionIndex+1)/n*100+"%";
- document.getElementById("question").textContent=t.questions[questionIndex];
- document.getElementById("answers").innerHTML=genericOptions.map((o,i)=>`<div class="answer ${answers[questionIndex]===i?"selected":""}" onclick="chooseAnswer(${i})">${o}</div>`).join("");
- document.getElementById("prev").disabled=questionIndex===0;
- document.getElementById("next").disabled=answers[questionIndex]===null;
- document.getElementById("next").textContent=questionIndex===n-1?"Finish →":"Next →";
-}
-function chooseAnswer(i){answers[questionIndex]=i;renderQuestion()}
-function nextQuestion(){
- if(answers[questionIndex]===null)return;
- if(questionIndex===answers.length-1){finishTest();return}
- questionIndex++;renderQuestion();
-}
-function previousQuestion(){if(questionIndex>0){questionIndex--;renderQuestion()}}
-function finishTest(){
- let t=database[activeName],score=Math.round(answers.reduce((a,b)=>a+b,0)/(answers.length*4)*100);
- let report={name:activeName,score,date:new Date().toLocaleString(),answers:[...answers]};
- let history=getData("mf_history");history.unshift(report);putData("mf_history",history.slice(0,100));
- lastReport=report;
- page("results");
- document.getElementById("resultTitle").textContent=activeName+" reflection summary";
- document.getElementById("resultScore").textContent=score+"%";
- document.getElementById("resultLevel").textContent=score<20?"Few experiences reported":score<40?"Some experiences reported":score<60?"Several experiences reported":score<80?"Many experiences reported":"Very many experiences reported";
- document.getElementById("resultDescription").textContent="This score reflects the frequency of experiences reported in this questionnaire. It cannot establish whether you have "+activeName+".";
- document.getElementById("scoreExplanation").textContent="Percentage of the maximum possible questionnaire score, not the probability of a diagnosis.";
- document.getElementById("resultFill").style.width=score+"%";
- let html="",offset=0;
- t.groups.forEach(g=>{
- let sum=answers.slice(offset,offset+g[1]).reduce((a,b)=>a+b,0),p=Math.round(sum/(g[1]*4)*100);
- html+=`<p>${g[0]} <b style="float:right">${p}%</b></p><div class="progress"><div style="width:${p}%"></div></div>`;
- offset+=g[1];
- });
- document.getElementById("breakdown").innerHTML=html;
- document.getElementById("recommendations").innerHTML=t.tips.map(x=>`<div class="tip">💡 ${x}</div>`).join("");
- updateStats();
-}
-function renderHistory(){
- let h=getData("mf_history");
- document.getElementById("historyList").innerHTML=h.length?h.map((r,i)=>`<div class="tip"><b>${r.name}</b> · ${r.score}%<br><span class="muted">${r.date}</span><br><button class="secondary" onclick="viewReport(${i})">View summary</button></div>`).join(""):"<p class='muted'>No completed tests yet.</p>";
-}
-function viewReport(i){
- let r=getData("mf_history")[i];
- lastReport=r;
- alert(r.name+" reflection summary\nScore: "+r.score+"%\nDate: "+r.date+"\n\nThis is not a diagnosis.");
-}
-function exportReport(){
- if(!lastReport)return;
- download("mindfocus-"+lastReport.name+".txt",reportText(lastReport));
-}
-function reportText(r){
- return "MINDFOCUS SELF-REFLECTION REPORT\n\nQuestionnaire: "+r.name+"\nScore: "+r.score+"%\nDate: "+r.date+"\n\nThis percentage is not a diagnosis or the probability of a condition.\n\nAnswers:\n"+r.answers.map((a,i)=>"Question "+(i+1)+": "+genericOptions[a]).join("\n");
-}
-function exportAll(){
- let h=getData("mf_history");
- download("mindfocus-history.txt",h.map(reportText).join("\n\n----------------\n\n")||"No saved history");
-}
-function download(name,content){
- let blob=new Blob([content],{type:"text/plain"});
- let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;a.click();URL.revokeObjectURL(a.href);
-}
-let selectedMood="";
-function selectMood(m){
- selectedMood=m;document.getElementById("selectedMood").textContent="Selected: "+m;
-}
-function saveMood(){
- if(!selectedMood){alert("Please select a mood first.");return}
- let moods=getData("mf_moods");
- moods.unshift({mood:selectedMood,note:document.getElementById("moodNote").value,date:new Date().toLocaleString()});
- putData("mf_moods",moods.slice(0,100));
- selectedMood="";document.getElementById("moodNote").value="";
- document.getElementById("selectedMood").textContent="Saved! Thank you for checking in.";
- renderMood();updateStats();
-}
-function renderMood(){
- let m=getData("mf_moods");
- document.getElementById("moodHistory").innerHTML=m.length?m.map(x=>`<div class="tip">${x.mood}<br><span class="muted">${x.date}</span><p>${escapeHTML(x.note)}</p></div>`).join(""):"<p class='muted'>No check-ins saved yet.</p>";
-}
-function escapeHTML(s){
- return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-let seconds=1500,interval=null,focusDuration=25;
-function clockDisplay(){
- let m=Math.floor(seconds/60),s=seconds%60;
- document.getElementById("clock").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
-}
-function setTimer(m){
- pauseTimer();focusDuration=m;seconds=m*60;clockDisplay();
- document.getElementById("timerStatus").textContent=m+" minute session selected.";
-}
-function startTimer(){
- if(interval)return;
- document.getElementById("timerStatus").textContent="Focus time. One step at a time.";
- interval=setInterval(()=>{
- seconds--;clockDisplay();
- if(seconds<=0){
- pauseTimer();putData("mf_focus",getData("mf_focus").concat([new Date().toLocaleString()]));
- document.getElementById("timerStatus").textContent="🎉 Session complete! Great work.";
- updateStats();alert("Focus session complete! Take a break.");
- }
- },1000);
-}
-function pauseTimer(){clearInterval(interval);interval=null}
-function resetTimer(){pauseTimer();seconds=focusDuration*60;clockDisplay();document.getElementById("timerStatus").textContent="Timer reset."}
-const articles=[
-["Understanding ADHD","ADHD can involve differences in attention, activity and impulse regulation. Experiences vary from person to person.","ADHD"],
-["Understanding Autism","Autism is a neurodevelopmental difference involving social communication, sensory experiences and patterns of interests or behaviour.","Autism"],
-["Managing Anxiety","Grounding exercises, support and practical coping strategies can help with anxious feelings.","Anxiety"],
-["Understanding Dyslexia","Dyslexia can affect reading, spelling and written language. Support can make learning more accessible.","Dyslexia"],
-["Understanding OCD","OCD can involve intrusive thoughts and repetitive behaviours. Evidence-based treatment is available.","OCD"],
-["Understanding Dyscalculia","Dyscalculia affects the understanding and use of numbers and mathematical concepts.","Dyscalculia"],
-["Sensory differences","People experience sound, light, touch and other sensations differently. Adjusting environments may help.","Sensory"],
-["Healthy sleep routines","Consistent sleep habits and a comfortable sleeping environment can support rest.","Sleep"],
-["Stress and burnout","Long-lasting stress can affect energy, mood and concentration. Rest and support matter.","Stress"],
-["Depression and support","Depression can affect mood, motivation, energy and daily activities. Effective help is available.","Depression"]
-];
-function renderArticles(filter=""){
- document.getElementById("articles").innerHTML=articles.filter(a=>a.join(" ").toLowerCase().includes(filter.toLowerCase())).map(a=>`<div class="tile"><div class="tag">LEARNING GUIDE</div><h3>${a[0]}</h3><p>${a[1]}</p><button class="secondary" onclick="openArticle('${a[2]}')">Explore related test</button></div>`).join("")||"<p>No articles found.</p>";
-}
-function filterArticles(){renderArticles(document.getElementById("searchLearn").value)}
-function openArticle(name){if(database[name])startTest(name);else page("tests")}
-renderArticles();
 function toggleTheme(){
  document.body.classList.toggle("light");
  localStorage.setItem("mf_theme",document.body.classList.contains("light")?"light":"dark");
 }
 if(localStorage.getItem("mf_theme")==="light")document.body.classList.add("light");
-function saveProfile(){
- localStorage.setItem("mf_name",document.getElementById("nickname").value);
- document.getElementById("profileMessage").textContent="Profile saved!";
+
+function renderTests(){
+ const grid=document.getElementById("testGrid");grid.innerHTML="";
+ tests.forEach(test=>{
+  const card=document.createElement("div");card.className="card test-card";
+  const desc=test.desc[language==="pl"?1:0];
+  card.innerHTML=`<div class="card-icon">${test.icon}</div><h2>${test.id}</h2><p class="muted">${desc}</p><span class="tag">${language==="pl"?"30 pytań":"30 questions"}</span><button class="primary">${tr("start")} →</button>`;
+  card.querySelector("button").onclick=()=>startTest(test.id);
+  grid.appendChild(card);
+ });
 }
-function loadProfile(){document.getElementById("nickname").value=localStorage.getItem("mf_name")||""}
-function clearData(){
- if(!confirm("Delete ALL MindFocus saved data in this browser? This cannot be undone."))return;
- ["mf_history","mf_moods","mf_focus","mf_name"].forEach(k=>localStorage.removeItem(k));
- updateStats();renderHistory();renderMood();loadProfile();
- alert("Saved data cleared.");
+function startTest(id){
+ currentTest=tests.find(x=>x.id===id);currentQuestion=0;currentAnswers=Array(30).fill(null);
+ page("takingTest");renderQuestion();
+}
+function renderQuestion(){
+ const q=currentTest.qs[currentQuestion][language==="pl"?1:0];
+ document.getElementById("testName").textContent=currentTest.icon+" "+currentTest.id;
+ document.getElementById("questionNumber").textContent=tr("question")+" "+(currentQuestion+1)+" / 30";
+ document.getElementById("questionText").textContent=q;
+ document.getElementById("testProgress").style.width=((currentQuestion+1)/30*100)+"%";
+ const box=document.getElementById("answerOptions");box.innerHTML="";
+ answers.forEach(a=>{
+  const label=document.createElement("label");
+  label.className="answer-option"+(currentAnswers[currentQuestion]===a.v?" selected":"");
+  label.innerHTML=`<input type="radio" name="answer" value="${a.v}" ${currentAnswers[currentQuestion]===a.v?"checked":""}><span>${a[language]}</span>`;
+  label.querySelector("input").onchange=()=>{currentAnswers[currentQuestion]=a.v;renderQuestion()};
+  box.appendChild(label);
+ });
+ document.getElementById("previousButton").textContent=tr("previous");
+ document.getElementById("previousButton").disabled=currentQuestion===0;
+ document.getElementById("nextButton").textContent=currentQuestion===29?tr("finish"):tr("next");
+}
+function previousQuestion(){if(currentQuestion>0){currentQuestion--;renderQuestion()}}
+function nextQuestion(){
+ if(currentAnswers[currentQuestion]===null){alert(tr("required"));return}
+ if(currentQuestion<29){currentQuestion++;renderQuestion();return}
+ finishTest();
+}
+function finishTest(){
+ const total=currentAnswers.reduce((a,b)=>a+b,0);
+ const result={id:currentTest.id,score:Math.round(total/120*100),total,date:new Date().toLocaleString(),answers:currentAnswers.slice()};
+ history.unshift(result);localStorage.setItem("mf_history",JSON.stringify(history));
+ lastResult=result;showResult(result);updateStats();
+}
+function showResult(result,changePage=true){
+ document.getElementById("resultName").textContent=result.id;
+ document.getElementById("resultScore").textContent=result.score+"%";
+ document.getElementById("resultProgress").style.width=result.score+"%";
+ let level,description,advice,prefix;
+ if(result.score<25)prefix="low";
+ else if(result.score<50)prefix="medium";
+ else if(result.score<75)prefix="high";
+ else prefix="veryHigh";
+ document.getElementById("resultLevel").textContent=tr(prefix);
+ document.getElementById("resultDescription").textContent=tr(prefix+"Desc");
+ document.getElementById("resultAdvice").textContent=tr(prefix+"Advice");
+ if(changePage)page("results");
+}
+function downloadResult(){
+ if(!lastResult)return;
+ const test=tests.find(t=>t.id===lastResult.id);
+ const content=[tr("downloadTitle"),"Assessment: "+lastResult.id,tr("score")+": "+lastResult.score+"%",tr("date")+": "+lastResult.date,"","Answers:",...lastResult.answers.map((v,i)=>`${i+1}. ${test.qs[i][language==="pl"?1:0]} — ${answers[v][language]}`),"",tr("downloadDisclaimer")].join("\n");
+ const blob=new Blob([content],{type:"text/plain;charset=utf-8"});
+ const url=URL.createObjectURL(blob);const a=document.createElement("a");
+ a.href=url;a.download="MindFocus-result.txt";a.click();URL.revokeObjectURL(url);
+}
+function renderHistory(){
+ const el=document.getElementById("historyList");
+ if(!history.length){el.innerHTML='<p class="muted">'+tr("none")+'</p>';return}
+ el.innerHTML=history.map((h,i)=>`<div class="history-item"><strong>${h.id}</strong><div class="muted">${h.date}</div><div class="stat">${h.score}%</div><button class="secondary" onclick="deleteHistory(${i})">${tr("historyDelete")}</button></div>`).join("");
+}
+function deleteHistory(i){history.splice(i,1);localStorage.setItem("mf_history",JSON.stringify(history));renderHistory();updateStats()}
+function clearHistory(){
+ if(!confirm(tr("confirmClear")))return;
+ history=[];localStorage.setItem("mf_history","[]");renderHistory();updateStats();
 }
 function updateStats(){
- document.getElementById("statTests").textContent=getData("mf_history").length;
- document.getElementById("statMood").textContent=getData("mf_moods").length;
- document.getElementById("statFocus").textContent=getData("mf_focus").length;
- document.getElementById("focusCount").textContent=getData("mf_focus").length;
+ document.getElementById("statTests").textContent=history.length;
+ document.getElementById("statMood").textContent=moods.length;
+ document.getElementById("statAverage").textContent=history.length?Math.round(history.reduce((a,b)=>a+b.score,0)/history.length)+"%":"0%";
 }
-updateStats();clockDisplay();
+function selectMood(n,btn){
+ selectedMood=n;document.querySelectorAll(".mood-btn").forEach(b=>b.classList.remove("selected"));btn.classList.add("selected");
+}
+function saveMood(){
+ if(!selectedMood){alert(tr("chooseMood"));return}
+ const emojis=["","😞","😕","😐","🙂","😄"];
+ moods.unshift({value:selectedMood,emoji:emojis[selectedMood],note:document.getElementById("moodNote").value,date:new Date().toLocaleString()});
+ localStorage.setItem("mf_moods",JSON.stringify(moods));
+ document.getElementById("moodNote").value="";selectedMood=0;
+ document.querySelectorAll(".mood-btn").forEach(b=>b.classList.remove("selected"));
+ renderMoods();updateStats();
+}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function renderMoods(){
+ const el=document.getElementById("moodHistory");
+ if(!moods.length){el.innerHTML='<p class="muted">'+tr("none")+'</p>';return}
+ el.innerHTML=moods.map(m=>`<div class="history-item"><strong style="font-size:25px">${m.emoji}</strong> <span class="muted">${m.date}</span><p>${escapeHTML(m.note||"")}</p></div>`).join("");
+}
+function updateTimer(){const m=Math.floor(timerSeconds/60),s=timerSeconds%60;document.getElementById("timerDisplay").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")}
+function updateTimerLabels(){
+ document.getElementById("timerMode").textContent=timerMode==="break"?tr("break"):tr("focus");
+}
+function startTimer(){
+ if(timerRunning)return;
+ if(timerSeconds<=0)resetTimer();
+ timerRunning=true;
+ timerInterval=setInterval(()=>{
+  timerSeconds--;updateTimer();
+  if(timerSeconds<=0){
+   clearInterval(timerInterval);timerRunning=false;
+   document.getElementById("timerMessage").textContent=tr("done");
+   if("Notification" in window&&Notification.permission==="granted")new Notification("MindFocus",{body:tr("done")});
+   else if("Notification" in window&&Notification.permission==="default")Notification.requestPermission();
+  }
+ },1000);
+}
+function pauseTimer(){clearInterval(timerInterval);timerRunning=false}
+function resetTimer(){
+ pauseTimer();timerMode="focus";
+ timerSeconds=Math.max(1,Math.min(180,Number(document.getElementById("focusMinutes").value)||25))*60;
+ document.getElementById("timerMessage").textContent="";
+ updateTimer();updateTimerLabels();
+}
+function setBreak(){
+ pauseTimer();timerMode="break";timerSeconds=300;updateTimer();updateTimerLabels();
+ document.getElementById("timerMessage").textContent=tr("rest");
+}
+document.getElementById("focusMinutes").addEventListener("change",resetTimer);
+
+function renderArticles(){
+ document.getElementById("articles").innerHTML=articles.map(a=>`<div class="card article"><div class="card-icon">${a.icon}</div><h3>${a.title[language==="pl"?1:0]}</h3><p class="muted">${a.body[language==="pl"?1:0]}</p></div>`).join("");
+}
+function loadProfile(){
+ document.getElementById("nickname").value=profile.nickname||"";
+ document.getElementById("bio").value=profile.bio||"";
+ document.getElementById("goals").value=profile.goals||"";
+ document.getElementById("favourite").value=profile.favourite||"ADHD";
+ avatarData=profile.avatar||"";updateAvatar();
+}
+function updateAvatar(){
+ const el=document.getElementById("profileAvatar");
+ if(avatarData)el.innerHTML=`<img src="${avatarData}" alt="Profile picture">`;
+ else el.textContent=(profile.nickname||"?").trim().charAt(0).toUpperCase()||"?";
+}
+function uploadAvatar(event){
+ const file=event.target.files[0];if(!file)return;
+ if(!file.type.startsWith("image/")){alert(tr("imageError"));return}
+ if(file.size>2*1024*1024){alert(tr("imageSize"));return}
+ const reader=new FileReader();
+ reader.onload=()=>{avatarData=reader.result;updateAvatar()};
+ reader.readAsDataURL(file);
+}
+function saveProfile(){
+ profile={nickname:document.getElementById("nickname").value.trim(),bio:document.getElementById("bio").value.trim(),goals:document.getElementById("goals").value.trim(),favourite:document.getElementById("favourite").value,avatar:avatarData};
+ localStorage.setItem("mf_profile",JSON.stringify(profile));
+ updateAvatar();updateWelcome();
+ document.getElementById("profileMessage").textContent=tr("saved");
+ setTimeout(()=>document.getElementById("profileMessage").textContent="",2500);
+}
+function initialise(){
+ document.getElementById("languageSelect").value=language;
+ if(localStorage.getItem("mf_theme")==="light")document.body.classList.add("light");
+ renderTests();renderHistory();renderMoods();renderArticles();updateStats();loadProfile();resetTimer();changeLanguage(language);
+}
+initialise();
 </script>
 </body>
 </html>
