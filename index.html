@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,16 +8,17 @@
 <link rel="shortcut icon" href="./Mindfocus.png" type="image/png">
 <link rel="apple-touch-icon" href="./Mindfocus.png">
 <style>
-:root{--bg:#0b1020;--panel:#141c31;--panel2:#1b2741;--text:#edf2ff;--muted:#9ba9c5;--accent:#7c6cff;--accent2:#37c9b0;--border:#293653;--danger:#ff647c}
-body.light{--bg:#f2f5fc;--panel:#fff;--panel2:#edf1fa;--text:#17213a;--muted:#68748c;--accent:#6254e7;--accent2:#149e89;--border:#dce3f0}
+:root{--bg:#0b1020;--panel:#141c31;--panel2:#1b2741;--text:#edf2ff;--muted:#9ba9c5;--accent:#7c6cff;--accent2:#37c9b0;--border:#293653;--danger:#ff647c;--warn:#f5b942}
+body.light{--bg:#f2f5fc;--panel:#fff;--panel2:#edf1fa;--text:#17213a;--muted:#68748c;--accent:#6254e7;--accent2:#149e89;--border:#dce3f0;--warn:#b7791f}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
+.hidden{display:none!important}
 header{position:sticky;top:0;z-index:20;background:var(--panel);border-bottom:1px solid var(--border);padding:13px 5%;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:900}
 .logo{width:39px;height:39px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));font-size:21px}
-.header-actions{display:flex;gap:9px;align-items:center}
+.header-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
 select,.small-btn{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:9px 12px}
 .layout{display:flex;min-height:calc(100vh - 65px)}
 aside{width:230px;flex-shrink:0;padding:22px 13px;background:var(--panel);border-right:1px solid var(--border)}
@@ -37,10 +37,12 @@ p{line-height:1.6}
 .primary{background:var(--accent);color:white}.primary:hover{filter:brightness(1.1)}
 .secondary{background:var(--panel2);color:var(--text);border:1px solid var(--border)}
 .danger{background:#ff647c20;color:var(--danger);border:1px solid #ff647c55}
+.mini{padding:7px 11px!important;font-size:13px;border-radius:9px!important}
 button:disabled{opacity:.4;cursor:not-allowed}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .tag{display:inline-block;background:var(--panel2);color:var(--muted);padding:5px 9px;border-radius:30px;font-size:12px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;align-items:start}
 .card{background:var(--panel);border:1px solid var(--border);border-radius:17px;padding:21px;box-shadow:0 12px 35px #0002}
 .stat{font-size:31px;font-weight:900;margin:10px 0}
 .card-icon{font-size:27px;margin-bottom:10px}
@@ -56,7 +58,9 @@ button:disabled{opacity:.4;cursor:not-allowed}
 .result-score{font-size:54px;font-weight:900;color:var(--accent2)}
 .field{margin:15px 0}.field label{display:block;margin-bottom:7px;font-weight:bold}
 .field input,.field textarea,.field select{width:100%;padding:12px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}
+.field input[type=checkbox]{width:auto}
 .field textarea{min-height:100px;resize:vertical}
+.checks{display:flex;gap:12px;flex-wrap:wrap}.checks label{display:flex;gap:6px;align-items:center;font-weight:normal;margin:0}
 .avatar{width:75px;height:75px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));font-size:30px;font-weight:bold;color:white;margin-bottom:12px;overflow:hidden}
 .avatar img{width:100%;height:100%;object-fit:cover}
 .history-item{border-bottom:1px solid var(--border);padding:14px 0}
@@ -65,19 +69,48 @@ button:disabled{opacity:.4;cursor:not-allowed}
 .timer{font-size:65px;font-weight:900;text-align:center;margin:25px 0}
 .article{margin-bottom:15px}
 footer{text-align:center;color:var(--muted);padding:30px;font-size:12px}
+/* auth, tabs, messages */
+.auth-card{max-width:520px;margin:20px auto}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tab{background:var(--panel2);color:var(--muted);border:1px solid var(--border);border-radius:10px;padding:9px 14px;font-weight:bold}
+.tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.role-pick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:6px 0 12px}
+.msg{display:none;padding:10px 12px;border-radius:10px;margin:10px 0;font-size:14px;line-height:1.5}
+.msg.show{display:block}
+.msg.err{background:#ff647c20;color:var(--danger);border:1px solid #ff647c55}
+.msg.ok{background:#37c9b020;color:var(--accent2);border:1px solid #37c9b055}
+.notice{background:var(--panel2);border-left:4px solid var(--accent2);padding:12px 14px;border-radius:10px;margin:14px 0;font-size:14px;line-height:1.6}
+/* meetings / staff */
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px}
+.slot{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:10px 6px;font-weight:bold}
+.slot.selected{background:var(--accent);border-color:var(--accent);color:#fff}
+.slot:disabled{opacity:.3;text-decoration:line-through}
+.badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:12px;font-weight:bold}
+.b-pending{background:#f5b94233;color:var(--warn)}
+.b-confirmed{background:#37c9b02a;color:var(--accent2)}
+.b-declined,.b-cancelled{background:#ff647c25;color:var(--danger)}
+.b-completed{background:var(--panel2);color:var(--muted)}
+.row{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;border-bottom:1px solid var(--border);padding:13px 0}
+.row:last-child{border-bottom:0}
+.row .actions{margin:0}
+.small{font-size:13px}
+ul.perms{line-height:1.8;padding-left:20px;margin:8px 0}
 @media(max-width:800px){.layout{display:block}aside{width:100%;display:flex;overflow-x:auto;padding:8px;border-right:0;border-bottom:1px solid var(--border)}.nav-label{display:none}.nav-btn{white-space:nowrap;width:auto;min-width:max-content;margin:0;padding:11px}main{padding:18px}header{padding:12px 15px}}
-@media(max-width:480px){.hero{padding:23px}.question-text{font-size:20px}.timer{font-size:50px}}
+@media(max-width:480px){.hero{padding:23px}.question-text{font-size:20px}.timer{font-size:50px}.two{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <header>
  <div class="brand"><div class="logo">🧠</div> MindFocus</div>
  <div class="header-actions">
+  <span id="userChip"></span>
+  <button class="small-btn" id="staffLink" onclick="showAuth('staff')">🛡️ Staff</button>
+  <button class="small-btn" id="authBtn">Log in / Sign up</button>
   <select id="languageSelect" aria-label="Language" onchange="changeLanguage(this.value)">
    <option value="en">🇬🇧 English</option>
    <option value="pl">🇵🇱 Polski</option>
   </select>
-  <button class="small-btn" id="themeButton" onclick="toggleTheme">🌙 Theme</button>
+  <button class="small-btn" id="themeButton" onclick="toggleTheme()">🌙 Theme</button>
  </div>
 </header>
 <div class="layout">
@@ -89,8 +122,11 @@ footer{text-align:center;color:var(--muted);padding:30px;font-size:12px}
  <button class="nav-btn" data-page="mood" onclick="page('mood')">😊 <span data-en="Mood tracker" data-pl="Nastrój">Mood tracker</span></button>
  <button class="nav-btn" data-page="focus" onclick="page('focus')">⏱️ <span data-en="Focus timer" data-pl="Minutnik skupienia">Focus timer</span></button>
  <button class="nav-btn" data-page="learn" onclick="page('learn')">📚 <span data-en="Learn" data-pl="Wiedza">Learn</span></button>
+ <button class="nav-btn" data-page="meetings" onclick="page('meetings')">📅 <span data-en="Book a meeting" data-pl="Umów spotkanie">Book a meeting</span></button>
  <div class="nav-label" data-en="PERSONAL" data-pl="OSOBISTE">PERSONAL</div>
  <button class="nav-btn" data-page="profile" onclick="page('profile')">👤 <span data-en="My profile" data-pl="Mój profil">My profile</span></button>
+ <div class="nav-label hidden" id="navStaffLabel" data-en="STAFF" data-pl="PERSONEL">STAFF</div>
+ <button class="nav-btn hidden" id="navStaff" data-page="staff" onclick="page('staff')">🛡️ <span data-en="Staff panel" data-pl="Panel personelu">Staff panel</span></button>
 </aside>
 <main>
 
@@ -101,6 +137,7 @@ footer{text-align:center;color:var(--muted);padding:30px;font-size:12px}
   <p data-en="Explore how you think, feel and focus. Learn about yourself and discover helpful strategies." data-pl="Odkrywaj, jak myślisz, czujesz i koncentrujesz się. Poznawaj siebie i odkrywaj pomocne strategie.">Explore how you think, feel and focus. Learn about yourself and discover helpful strategies.</p>
   <button class="primary" onclick="page('tests')" data-en="Explore assessments →" data-pl="Odkryj testy →">Explore assessments →</button>
  </div>
+ <div class="card hidden" id="announceCard" style="margin-bottom:20px"><h3 data-en="📢 Announcement" data-pl="📢 Ogłoszenie">📢 Announcement</h3><p id="announceText"></p><div class="muted small" id="announceMeta"></div></div>
  <div class="grid">
   <div class="card"><div class="card-icon">🧠</div><div class="muted" data-en="Assessments completed" data-pl="Ukończone testy">Assessments completed</div><div class="stat" id="statTests">0</div></div>
   <div class="card"><div class="card-icon">📈</div><div class="muted" data-en="Average score" data-pl="Średni wynik">Average score</div><div class="stat" id="statAverage">0%</div></div>
@@ -111,8 +148,59 @@ footer{text-align:center;color:var(--muted);padding:30px;font-size:12px}
   <div class="card"><div class="card-icon">🧩</div><h3 data-en="Explore your mind" data-pl="Poznaj swój umysł">Explore your mind</h3><p class="muted" data-en="Try one of our self-reflection assessments." data-pl="Wypróbuj jeden z testów do autorefleksji.">Try one of our self-reflection assessments.</p><button class="secondary" onclick="page('tests')" data-en="View tests" data-pl="Zobacz testy">View tests</button></div>
   <div class="card"><div class="card-icon">⏱️</div><h3 data-en="Get focused" data-pl="Skoncentruj się">Get focused</h3><p class="muted" data-en="Use the focus timer to work in short sessions." data-pl="Użyj minutnika, aby pracować w krótkich sesjach.">Use the focus timer to work in short sessions.</p><button class="secondary" onclick="page('focus')" data-en="Start timer" data-pl="Uruchom minutnik">Start timer</button></div>
   <div class="card"><div class="card-icon">💜</div><h3 data-en="Check in with yourself" data-pl="Sprawdź, jak się czujesz">Check in with yourself</h3><p class="muted" data-en="Record how you are feeling today." data-pl="Zapisz, jak się dzisiaj czujesz.">Record how you are feeling today.</p><button class="secondary" onclick="page('mood')" data-en="Track mood" data-pl="Zapisz nastrój">Track mood</button></div>
+  <div class="card"><div class="card-icon">📅</div><h3 data-en="Talk to someone" data-pl="Porozmawiaj z kimś">Talk to someone</h3><p class="muted" data-en="Book a meeting with a member of our team." data-pl="Umów spotkanie z członkiem naszego zespołu.">Book a meeting with a member of our team.</p><button class="secondary" onclick="page('meetings')" data-en="Book a meeting" data-pl="Umów spotkanie">Book a meeting</button></div>
  </div>
  <div class="card" style="margin-top:20px"><h3 data-en="A little reminder" data-pl="Małe przypomnienie">A little reminder</h3><p data-en="You are more than a score. Take breaks, be kind to yourself and remember that asking for help is a strength." data-pl="Jesteś kimś więcej niż wynikiem. Odpoczywaj, bądź dla siebie życzliwy i pamiętaj, że proszenie o pomoc jest oznaką siły.">You are more than a score. Take breaks, be kind to yourself and remember that asking for help is a strength.</p></div>
+</section>
+
+<section id="auth" class="page">
+ <div class="card auth-card">
+  <div class="tabs" id="authTabs">
+   <button class="tab active" data-tab="login" onclick="authTab('login')" data-en="Log in" data-pl="Zaloguj">Log in</button>
+   <button class="tab" data-tab="signup" onclick="authTab('signup')" data-en="Sign up" data-pl="Załóż konto">Sign up</button>
+   <button class="tab" data-tab="staff" onclick="authTab('staff')" data-en="🛡️ Staff login" data-pl="🛡️ Logowanie personelu">🛡️ Staff login</button>
+  </div>
+  <div id="authMsg" class="msg"></div>
+
+  <form id="loginForm" onsubmit="doLogin(event)">
+   <div class="field"><label data-en="Username or email" data-pl="Nazwa użytkownika lub e-mail">Username or email</label><input id="liUser" autocomplete="username" required></div>
+   <div class="field"><label data-en="Password" data-pl="Hasło">Password</label><input id="liPass" type="password" autocomplete="current-password" required></div>
+   <button class="primary" type="submit" data-en="Log in" data-pl="Zaloguj">Log in</button>
+  </form>
+
+  <form id="signupForm" class="hidden" onsubmit="doSignup(event)">
+   <div class="field"><label data-en="Username (3–20 characters)" data-pl="Nazwa użytkownika (3–20 znaków)">Username (3–20 characters)</label><input id="suUser" autocomplete="username" maxlength="20" required></div>
+   <div class="field"><label data-en="Email" data-pl="E-mail">Email</label><input id="suEmail" type="email" autocomplete="email" required></div>
+   <div class="field"><label data-en="Password (at least 8 characters)" data-pl="Hasło (co najmniej 8 znaków)">Password (at least 8 characters)</label><input id="suPass" type="password" autocomplete="new-password" required></div>
+   <div class="field"><label data-en="Confirm password" data-pl="Powtórz hasło">Confirm password</label><input id="suPass2" type="password" autocomplete="new-password" required></div>
+   <button class="primary" type="submit" data-en="Create account" data-pl="Utwórz konto">Create account</button>
+  </form>
+
+  <div id="staffPane" class="hidden">
+   <p class="muted small" data-en="For MindFocus team members only. Choose your role, then log in with the account you were given." data-pl="Tylko dla zespołu MindFocus. Wybierz swoją rolę, a następnie zaloguj się na otrzymane konto.">For MindFocus team members only. Choose your role, then log in with the account you were given.</p>
+   <div class="role-pick" id="rolePick">
+    <button type="button" class="tab active" data-role="mod" onclick="pickStaffRole('mod')">🛡️ Moderator</button>
+    <button type="button" class="tab" data-role="admin" onclick="pickStaffRole('admin')">⚙️ Admin</button>
+    <button type="button" class="tab" data-role="owner" onclick="pickStaffRole('owner')">👑 Owner</button>
+   </div>
+   <form id="staffForm" onsubmit="doStaffLogin(event)">
+    <div class="field"><label data-en="Username or email" data-pl="Nazwa użytkownika lub e-mail">Username or email</label><input id="stUser" autocomplete="username" required></div>
+    <div class="field"><label data-en="Password" data-pl="Hasło">Password</label><input id="stPass" type="password" autocomplete="current-password" required></div>
+    <button class="primary" type="submit" data-en="Staff log in" data-pl="Zaloguj jako personel">Staff log in</button>
+   </form>
+   <form id="setupForm" class="hidden" onsubmit="doOwnerSetup(event)">
+    <div class="notice" data-en="First-time setup: no owner account exists yet. Create it now. The owner can then create admin and moderator accounts." data-pl="Pierwsza konfiguracja: konto właściciela jeszcze nie istnieje. Utwórz je teraz. Właściciel może następnie tworzyć konta administratorów i moderatorów.">First-time setup: no owner account exists yet. Create it now. The owner can then create admin and moderator accounts.</div>
+    <div class="field"><label data-en="Owner username" data-pl="Nazwa użytkownika właściciela">Owner username</label><input id="osUser" maxlength="20" required></div>
+    <div class="field"><label data-en="Email" data-pl="E-mail">Email</label><input id="osEmail" type="email" required></div>
+    <div class="field"><label data-en="Password (at least 8 characters)" data-pl="Hasło (co najmniej 8 znaków)">Password (at least 8 characters)</label><input id="osPass" type="password" autocomplete="new-password" required></div>
+    <div class="field"><label data-en="Confirm password" data-pl="Powtórz hasło">Confirm password</label><input id="osPass2" type="password" autocomplete="new-password" required></div>
+    <button class="primary" type="submit" data-en="Create owner account" data-pl="Utwórz konto właściciela">Create owner account</button>
+   </form>
+  </div>
+
+  <div class="actions"><button class="secondary" onclick="page('dashboard')" data-en="Continue as guest" data-pl="Kontynuuj jako gość">Continue as guest</button></div>
+  <p class="muted small" data-en="Accounts are stored in this browser only. Guests can use assessments, the mood tracker and the timer; booking a meeting needs an account." data-pl="Konta są przechowywane tylko w tej przeglądarce. Goście mogą korzystać z testów, monitora nastroju i minutnika; umówienie spotkania wymaga konta.">Accounts are stored in this browser only. Guests can use assessments, the mood tracker and the timer; booking a meeting needs an account.</p>
+ </div>
 </section>
 
 <section id="tests" class="page">
@@ -206,6 +294,34 @@ footer{text-align:center;color:var(--muted);padding:30px;font-size:12px}
  <div id="articles"></div>
 </section>
 
+<section id="meetings" class="page">
+ <h1 data-en="Book a meeting" data-pl="Umów spotkanie">Book a meeting</h1>
+ <p class="muted" data-en="Choose a member of the MindFocus team and pick a time that suits you. They will confirm your request." data-pl="Wybierz członka zespołu MindFocus i termin, który Ci odpowiada. Osoba ta potwierdzi Twoją prośbę.">Choose a member of the MindFocus team and pick a time that suits you. They will confirm your request.</p>
+ <div class="notice" data-en="Our team members are not emergency services and a meeting is not a clinical assessment or treatment. If you are in danger or in crisis, contact your local emergency number (for example 112 in Poland and the EU) or a doctor straight away." data-pl="Członkowie naszego zespołu nie są służbami ratunkowymi, a spotkanie nie jest oceną kliniczną ani leczeniem. Jeśli jesteś w niebezpieczeństwie lub kryzysie, natychmiast zadzwoń pod lokalny numer alarmowy (np. 112 w Polsce i UE) lub skontaktuj się z lekarzem.">Our team members are not emergency services and a meeting is not a clinical assessment or treatment. If you are in danger or in crisis, contact your local emergency number (for example 112 in Poland and the EU) or a doctor straight away.</div>
+ <div class="two">
+  <div class="card">
+   <h2 data-en="New booking" data-pl="Nowa rezerwacja">New booking</h2>
+   <div id="meetMsg" class="msg"></div>
+   <div class="field"><label data-en="Specialist" data-pl="Specjalista">Specialist</label><select id="meetSpec" onchange="onSpecChange()"></select><p class="muted small" id="specInfo"></p></div>
+   <div class="field"><label data-en="Date" data-pl="Data">Date</label><input type="date" id="meetDate" onchange="onDateChange()"></div>
+   <div class="field"><label data-en="Time" data-pl="Godzina">Time</label><div class="slots" id="slotBox"></div></div>
+   <div class="field"><label data-en="Topic" data-pl="Temat">Topic</label><select id="meetTopic"></select></div>
+   <div class="field"><label data-en="Note (optional)" data-pl="Notatka (opcjonalnie)">Note (optional)</label><textarea id="meetNote" maxlength="300"></textarea></div>
+   <button class="primary" onclick="bookMeeting()" data-en="Request meeting" data-pl="Poproś o spotkanie">Request meeting</button>
+  </div>
+  <div class="card">
+   <h2 data-en="My meetings" data-pl="Moje spotkania">My meetings</h2>
+   <div id="myMeetings"></div>
+  </div>
+ </div>
+</section>
+
+<section id="staff" class="page">
+ <h1 data-en="Staff panel" data-pl="Panel personelu">Staff panel</h1>
+ <div class="tabs" id="staffTabs"></div>
+ <div id="staffBody"></div>
+</section>
+
 <section id="profile" class="page">
  <h1 data-en="My profile" data-pl="Mój profil">My profile</h1>
  <p class="muted" data-en="Make MindFocus feel more like your space." data-pl="Dostosuj MindFocus do siebie.">Make MindFocus feel more like your space.</p>
@@ -227,6 +343,17 @@ footer{text-align:center;color:var(--muted);padding:30px;font-size:12px}
   <button class="primary" onclick="saveProfile()" data-en="Save profile" data-pl="Zapisz profil">Save profile</button>
   <span id="profileMessage" class="muted" style="margin-left:10px"></span>
  </div>
+ <div class="card hidden" id="pwCard" style="max-width:750px;margin-top:18px">
+  <h2 data-en="Account & password" data-pl="Konto i hasło">Account & password</h2>
+  <p class="muted" id="accountInfo"></p>
+  <div id="pwMsg" class="msg"></div>
+  <form onsubmit="changePassword(event)">
+   <div class="field"><label data-en="Current password" data-pl="Obecne hasło">Current password</label><input id="pwOld" type="password" autocomplete="current-password" required></div>
+   <div class="field"><label data-en="New password (at least 8 characters)" data-pl="Nowe hasło (co najmniej 8 znaków)">New password (at least 8 characters)</label><input id="pwNew" type="password" autocomplete="new-password" required></div>
+   <div class="field"><label data-en="Confirm new password" data-pl="Powtórz nowe hasło">Confirm new password</label><input id="pwNew2" type="password" autocomplete="new-password" required></div>
+   <button class="primary" type="submit" data-en="Change password" data-pl="Zmień hasło">Change password</button>
+  </form>
+ </div>
  <div class="card" style="max-width:750px;margin-top:18px">
   <h2 data-en="Your privacy" data-pl="Twoja prywatność">Your privacy</h2>
   <p data-en="Your profile, mood entries and assessment history are stored locally in this browser. They are not automatically sent to a server. Clearing browser data may erase them." data-pl="Twój profil, wpisy nastroju i historia testów są przechowywane lokalnie w tej przeglądarce. Nie są automatycznie wysyłane na serwer. Wyczyszczenie danych przeglądarki może je usunąć.">Your profile, mood entries and assessment history are stored locally in this browser. They are not automatically sent to a server. Clearing browser data may erase them.</p>
@@ -237,6 +364,38 @@ footer{text-align:center;color:var(--muted);padding:30px;font-size:12px}
 </div>
 
 <script>
+/* ============ STORAGE / SESSION CORE ============ */
+const RANK={user:0,mod:1,admin:2,owner:3};
+const $=id=>document.getElementById(id);
+const LS={
+ get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
+ set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){alert("Storage error: "+e.message)}}
+};
+let session=LS.get("mf_session",null);
+(function(){ if(session){const u=LS.get("mf_users",[]).find(x=>x.id===session.id); if(!u||u.suspended){session=null;localStorage.removeItem("mf_session")}} })();
+function K(n){return "mf_"+n+(session?"_"+session.id:"")}
+const getUsers=()=>LS.get("mf_users",[]);
+const saveUsers=u=>LS.set("mf_users",u);
+const getBookings=()=>LS.get("mf_bookings",[]);
+const saveBookings=b=>LS.set("mf_bookings",b);
+function me(){return session?getUsers().find(u=>u.id===session.id)||null:null}
+function rank(){const u=me();return u?RANK[u.role]:-1}
+function uid(){return "u"+Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
+function rand(n){const a=new Uint8Array(n);(window.crypto||{getRandomValues:x=>x.forEach((_,i)=>x[i]=Math.random()*256)}).getRandomValues(a);return a}
+function newSalt(){return Array.from(rand(16)).map(b=>b.toString(16).padStart(2,"0")).join("")}
+function genPw(){const c="abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";return Array.from(rand(12)).map(b=>c[b%c.length]).join("")}
+async function hashPw(pw,salt){
+ if(window.crypto&&crypto.subtle){
+  const enc=new TextEncoder();
+  const key=await crypto.subtle.importKey("raw",enc.encode(pw),"PBKDF2",false,["deriveBits"]);
+  const bits=await crypto.subtle.deriveBits({name:"PBKDF2",salt:enc.encode(salt),iterations:150000,hash:"SHA-256"},key,256);
+  return Array.from(new Uint8Array(bits)).map(b=>b.toString(16).padStart(2,"0")).join("");
+ }
+ let h=5381;const s=salt+pw;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return "weak"+h;
+}
+function addAudit(msg){const u=me();const a=LS.get("mf_audit",[]);a.unshift({t:Date.now(),who:u?u.username:"system",role:u?u.role:"",msg});LS.set("mf_audit",a.slice(0,300))}
+
+/* ============ ORIGINAL DATA ============ */
 const tests=[
 {id:"ADHD",icon:"⚡",desc:["Attention, organisation, activity and impulse control.","Uwaga, organizacja, aktywność i kontrola impulsów."],qs:[
 ["I find it difficult to keep my attention on tasks.","Trudno mi utrzymać uwagę podczas wykonywania zadań."],
@@ -486,11 +645,12 @@ let language=localStorage.getItem("mf_language")||"en";
 let currentTest=null,currentQuestion=0,currentAnswers=[];
 let lastResult=null,selectedMood=0;
 let timerSeconds=1500,timerInterval=null,timerRunning=false;
-let history=JSON.parse(localStorage.getItem("mf_history")||"[]");
-let moods=JSON.parse(localStorage.getItem("mf_moods")||"[]");
-let profile=JSON.parse(localStorage.getItem("mf_profile")||"{}");
+let history=LS.get(K("history"),[]);
+let moods=LS.get(K("moods"),[]);
+let profile=LS.get(K("profile"),{});
 let avatarData=profile.avatar||"";
 let timerMode="focus";
+const L=(en,pl)=>language==="pl"?pl:en;
 
 const words={
 en:{
@@ -531,39 +691,45 @@ imageError:"Wybierz plik graficzny.",imageSize:"Wybierz obraz mniejszy niż 2 MB
 }
 };
 function tr(key){return words[language][key]||key}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+const esc=escapeHTML;
+
 function changeLanguage(lang){
  language=lang;
  localStorage.setItem("mf_language",lang);
  document.documentElement.lang=lang;
- document.getElementById("languageSelect").value=lang;
- document.querySelectorAll("[data-en][data-pl]").forEach(el=>{
-  el.textContent=el.getAttribute("data-"+lang);
- });
- document.querySelectorAll("[data-placeholder-en][data-placeholder-pl]").forEach(el=>{
-  el.placeholder=el.getAttribute("data-placeholder-"+lang);
- });
- document.querySelectorAll("option[data-en][data-pl]").forEach(el=>{
-  el.textContent=el.getAttribute("data-"+lang);
- });
- document.getElementById("themeButton").textContent=tr("theme");
+ $("languageSelect").value=lang;
+ document.querySelectorAll("[data-en][data-pl]").forEach(el=>{el.textContent=el.getAttribute("data-"+lang)});
+ document.querySelectorAll("[data-placeholder-en][data-placeholder-pl]").forEach(el=>{el.placeholder=el.getAttribute("data-placeholder-"+lang)});
+ document.querySelectorAll("option[data-en][data-pl]").forEach(el=>{el.textContent=el.getAttribute("data-"+lang)});
+ $("themeButton").textContent=tr("theme");
  updateWelcome();
  renderTests();renderHistory();renderMoods();renderArticles();updateStats();
- if(currentTest&&document.getElementById("takingTest").classList.contains("active"))renderQuestion();
- if(lastResult&&document.getElementById("results").classList.contains("active"))showResult(lastResult,false);
+ if(currentTest&&$("takingTest").classList.contains("active"))renderQuestion();
+ if(lastResult&&$("results").classList.contains("active"))showResult(lastResult,false);
  updateTimerLabels();
+ renderExtra();
 }
 function updateWelcome(){
- document.getElementById("welcomeTitle").textContent=profile.nickname?
- (language==="pl"?"Witaj ponownie, ":"Welcome back, ")+profile.nickname+"! 🧠":tr("welcome");
+ const u=me();
+ const name=profile.nickname||(u?u.username:"");
+ $("welcomeTitle").textContent=name?(language==="pl"?"Witaj ponownie, ":"Welcome back, ")+name+"! 🧠":tr("welcome");
 }
 function page(id){
+ const m=me();
+ if(session&&(!m||m.suspended)){logout(true)}
+ else if(m&&m.mustChange&&id!=="profile"){page("profile");setMsg("pwMsg",L("Please choose a new password before continuing.","Ustaw nowe hasło, zanim przejdziesz dalej."),"err");return}
+ if(id==="staff"&&rank()<1){showAuth("staff");return}
+ if(id==="meetings"&&!session){showAuth("login",L("Please log in to book a meeting.","Zaloguj się, aby umówić spotkanie."));return}
  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- document.getElementById(id).classList.add("active");
+ $(id).classList.add("active");
  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
  if(id==="history")renderHistory();
  if(id==="mood")renderMoods();
  if(id==="profile")loadProfile();
- if(id==="dashboard")updateStats();
+ if(id==="dashboard"){updateStats();renderAnnouncement()}
+ if(id==="meetings")renderMeetings();
+ if(id==="staff")renderStaff();
  window.scrollTo(0,0);
 }
 function toggleTheme(){
@@ -573,7 +739,7 @@ function toggleTheme(){
 if(localStorage.getItem("mf_theme")==="light")document.body.classList.add("light");
 
 function renderTests(){
- const grid=document.getElementById("testGrid");grid.innerHTML="";
+ const grid=$("testGrid");grid.innerHTML="";
  tests.forEach(test=>{
   const card=document.createElement("div");card.className="card test-card";
   const desc=test.desc[language==="pl"?1:0];
@@ -588,11 +754,11 @@ function startTest(id){
 }
 function renderQuestion(){
  const q=currentTest.qs[currentQuestion][language==="pl"?1:0];
- document.getElementById("testName").textContent=currentTest.icon+" "+currentTest.id;
- document.getElementById("questionNumber").textContent=tr("question")+" "+(currentQuestion+1)+" / 30";
- document.getElementById("questionText").textContent=q;
- document.getElementById("testProgress").style.width=((currentQuestion+1)/30*100)+"%";
- const box=document.getElementById("answerOptions");box.innerHTML="";
+ $("testName").textContent=currentTest.icon+" "+currentTest.id;
+ $("questionNumber").textContent=tr("question")+" "+(currentQuestion+1)+" / 30";
+ $("questionText").textContent=q;
+ $("testProgress").style.width=((currentQuestion+1)/30*100)+"%";
+ const box=$("answerOptions");box.innerHTML="";
  answers.forEach(a=>{
   const label=document.createElement("label");
   label.className="answer-option"+(currentAnswers[currentQuestion]===a.v?" selected":"");
@@ -600,9 +766,9 @@ function renderQuestion(){
   label.querySelector("input").onchange=()=>{currentAnswers[currentQuestion]=a.v;renderQuestion()};
   box.appendChild(label);
  });
- document.getElementById("previousButton").textContent=tr("previous");
- document.getElementById("previousButton").disabled=currentQuestion===0;
- document.getElementById("nextButton").textContent=currentQuestion===29?tr("finish"):tr("next");
+ $("previousButton").textContent=tr("previous");
+ $("previousButton").disabled=currentQuestion===0;
+ $("nextButton").textContent=currentQuestion===29?tr("finish"):tr("next");
 }
 function previousQuestion(){if(currentQuestion>0){currentQuestion--;renderQuestion()}}
 function nextQuestion(){
@@ -613,21 +779,21 @@ function nextQuestion(){
 function finishTest(){
  const total=currentAnswers.reduce((a,b)=>a+b,0);
  const result={id:currentTest.id,score:Math.round(total/120*100),total,date:new Date().toLocaleString(),answers:currentAnswers.slice()};
- history.unshift(result);localStorage.setItem("mf_history",JSON.stringify(history));
+ history.unshift(result);LS.set(K("history"),history);
  lastResult=result;showResult(result);updateStats();
 }
 function showResult(result,changePage=true){
- document.getElementById("resultName").textContent=result.id;
- document.getElementById("resultScore").textContent=result.score+"%";
- document.getElementById("resultProgress").style.width=result.score+"%";
- let level,description,advice,prefix;
+ $("resultName").textContent=result.id;
+ $("resultScore").textContent=result.score+"%";
+ $("resultProgress").style.width=result.score+"%";
+ let prefix;
  if(result.score<25)prefix="low";
  else if(result.score<50)prefix="medium";
  else if(result.score<75)prefix="high";
  else prefix="veryHigh";
- document.getElementById("resultLevel").textContent=tr(prefix);
- document.getElementById("resultDescription").textContent=tr(prefix+"Desc");
- document.getElementById("resultAdvice").textContent=tr(prefix+"Advice");
+ $("resultLevel").textContent=tr(prefix);
+ $("resultDescription").textContent=tr(prefix+"Desc");
+ $("resultAdvice").textContent=tr(prefix+"Advice");
  if(changePage)page("results");
 }
 function downloadResult(){
@@ -639,19 +805,19 @@ function downloadResult(){
  a.href=url;a.download="MindFocus-result.txt";a.click();URL.revokeObjectURL(url);
 }
 function renderHistory(){
- const el=document.getElementById("historyList");
+ const el=$("historyList");
  if(!history.length){el.innerHTML='<p class="muted">'+tr("none")+'</p>';return}
- el.innerHTML=history.map((h,i)=>`<div class="history-item"><strong>${h.id}</strong><div class="muted">${h.date}</div><div class="stat">${h.score}%</div><button class="secondary" onclick="deleteHistory(${i})">${tr("historyDelete")}</button></div>`).join("");
+ el.innerHTML=history.map((h,i)=>`<div class="history-item"><strong>${esc(h.id)}</strong><div class="muted">${esc(h.date)}</div><div class="stat">${Number(h.score)}%</div><button class="secondary" onclick="deleteHistory(${i})">${tr("historyDelete")}</button></div>`).join("");
 }
-function deleteHistory(i){history.splice(i,1);localStorage.setItem("mf_history",JSON.stringify(history));renderHistory();updateStats()}
+function deleteHistory(i){history.splice(i,1);LS.set(K("history"),history);renderHistory();updateStats()}
 function clearHistory(){
  if(!confirm(tr("confirmClear")))return;
- history=[];localStorage.setItem("mf_history","[]");renderHistory();updateStats();
+ history=[];LS.set(K("history"),[]);renderHistory();updateStats();
 }
 function updateStats(){
- document.getElementById("statTests").textContent=history.length;
- document.getElementById("statMood").textContent=moods.length;
- document.getElementById("statAverage").textContent=history.length?Math.round(history.reduce((a,b)=>a+b.score,0)/history.length)+"%":"0%";
+ $("statTests").textContent=history.length;
+ $("statMood").textContent=moods.length;
+ $("statAverage").textContent=history.length?Math.round(history.reduce((a,b)=>a+b.score,0)/history.length)+"%":"0%";
 }
 function selectMood(n,btn){
  selectedMood=n;document.querySelectorAll(".mood-btn").forEach(b=>b.classList.remove("selected"));btn.classList.add("selected");
@@ -659,22 +825,19 @@ function selectMood(n,btn){
 function saveMood(){
  if(!selectedMood){alert(tr("chooseMood"));return}
  const emojis=["","😞","😕","😐","🙂","😄"];
- moods.unshift({value:selectedMood,emoji:emojis[selectedMood],note:document.getElementById("moodNote").value,date:new Date().toLocaleString()});
- localStorage.setItem("mf_moods",JSON.stringify(moods));
- document.getElementById("moodNote").value="";selectedMood=0;
+ moods.unshift({value:selectedMood,emoji:emojis[selectedMood],note:$("moodNote").value,date:new Date().toLocaleString()});
+ LS.set(K("moods"),moods);
+ $("moodNote").value="";selectedMood=0;
  document.querySelectorAll(".mood-btn").forEach(b=>b.classList.remove("selected"));
  renderMoods();updateStats();
 }
-function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function renderMoods(){
- const el=document.getElementById("moodHistory");
+ const el=$("moodHistory");
  if(!moods.length){el.innerHTML='<p class="muted">'+tr("none")+'</p>';return}
- el.innerHTML=moods.map(m=>`<div class="history-item"><strong style="font-size:25px">${m.emoji}</strong> <span class="muted">${m.date}</span><p>${escapeHTML(m.note||"")}</p></div>`).join("");
+ el.innerHTML=moods.map(m=>`<div class="history-item"><strong style="font-size:25px">${esc(m.emoji)}</strong> <span class="muted">${esc(m.date)}</span><p>${esc(m.note||"")}</p></div>`).join("");
 }
-function updateTimer(){const m=Math.floor(timerSeconds/60),s=timerSeconds%60;document.getElementById("timerDisplay").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")}
-function updateTimerLabels(){
- document.getElementById("timerMode").textContent=timerMode==="break"?tr("break"):tr("focus");
-}
+function updateTimer(){const m=Math.floor(timerSeconds/60),s=timerSeconds%60;$("timerDisplay").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")}
+function updateTimerLabels(){$("timerMode").textContent=timerMode==="break"?tr("break"):tr("focus")}
 function startTimer(){
  if(timerRunning)return;
  if(timerSeconds<=0)resetTimer();
@@ -683,7 +846,7 @@ function startTimer(){
   timerSeconds--;updateTimer();
   if(timerSeconds<=0){
    clearInterval(timerInterval);timerRunning=false;
-   document.getElementById("timerMessage").textContent=tr("done");
+   $("timerMessage").textContent=tr("done");
    if("Notification" in window&&Notification.permission==="granted")new Notification("MindFocus",{body:tr("done")});
    else if("Notification" in window&&Notification.permission==="default")Notification.requestPermission();
   }
@@ -692,30 +855,31 @@ function startTimer(){
 function pauseTimer(){clearInterval(timerInterval);timerRunning=false}
 function resetTimer(){
  pauseTimer();timerMode="focus";
- timerSeconds=Math.max(1,Math.min(180,Number(document.getElementById("focusMinutes").value)||25))*60;
- document.getElementById("timerMessage").textContent="";
+ timerSeconds=Math.max(1,Math.min(180,Number($("focusMinutes").value)||25))*60;
+ $("timerMessage").textContent="";
  updateTimer();updateTimerLabels();
 }
 function setBreak(){
  pauseTimer();timerMode="break";timerSeconds=300;updateTimer();updateTimerLabels();
- document.getElementById("timerMessage").textContent=tr("rest");
+ $("timerMessage").textContent=tr("rest");
 }
-document.getElementById("focusMinutes").addEventListener("change",resetTimer);
+$("focusMinutes").addEventListener("change",resetTimer);
 
 function renderArticles(){
- document.getElementById("articles").innerHTML=articles.map(a=>`<div class="card article"><div class="card-icon">${a.icon}</div><h3>${a.title[language==="pl"?1:0]}</h3><p class="muted">${a.body[language==="pl"?1:0]}</p></div>`).join("");
+ $("articles").innerHTML=articles.map(a=>`<div class="card article"><div class="card-icon">${a.icon}</div><h3>${a.title[language==="pl"?1:0]}</h3><p class="muted">${a.body[language==="pl"?1:0]}</p></div>`).join("");
 }
 function loadProfile(){
- document.getElementById("nickname").value=profile.nickname||"";
- document.getElementById("bio").value=profile.bio||"";
- document.getElementById("goals").value=profile.goals||"";
- document.getElementById("favourite").value=profile.favourite||"ADHD";
+ $("nickname").value=profile.nickname||"";
+ $("bio").value=profile.bio||"";
+ $("goals").value=profile.goals||"";
+ $("favourite").value=profile.favourite||"ADHD";
  avatarData=profile.avatar||"";updateAvatar();
+ renderAccountCard();
 }
 function updateAvatar(){
- const el=document.getElementById("profileAvatar");
+ const el=$("profileAvatar");
  if(avatarData)el.innerHTML=`<img src="${avatarData}" alt="Profile picture">`;
- else el.textContent=(profile.nickname||"?").trim().charAt(0).toUpperCase()||"?";
+ else el.textContent=((profile.nickname||(me()&&me().username)||"?").trim().charAt(0).toUpperCase())||"?";
 }
 function uploadAvatar(event){
  const file=event.target.files[0];if(!file)return;
@@ -726,14 +890,419 @@ function uploadAvatar(event){
  reader.readAsDataURL(file);
 }
 function saveProfile(){
- profile={nickname:document.getElementById("nickname").value.trim(),bio:document.getElementById("bio").value.trim(),goals:document.getElementById("goals").value.trim(),favourite:document.getElementById("favourite").value,avatar:avatarData};
- localStorage.setItem("mf_profile",JSON.stringify(profile));
+ profile={nickname:$("nickname").value.trim(),bio:$("bio").value.trim(),goals:$("goals").value.trim(),favourite:$("favourite").value,avatar:avatarData};
+ LS.set(K("profile"),profile);
  updateAvatar();updateWelcome();
- document.getElementById("profileMessage").textContent=tr("saved");
- setTimeout(()=>document.getElementById("profileMessage").textContent="",2500);
+ $("profileMessage").textContent=tr("saved");
+ setTimeout(()=>$("profileMessage").textContent="",2500);
 }
+
+/* ============ AUTH ============ */
+let authCurrentTab="login",staffRole="mod";
+function setMsg(id,text,type){const el=$(id);if(!text){el.className="msg";el.textContent="";return}el.className="msg show "+(type||"err");el.textContent=text}
+function showAuth(tab,msg){page("auth");authTab(tab||"login");if(msg)setMsg("authMsg",msg,"err")}
+function authTab(t){
+ authCurrentTab=t;
+ document.querySelectorAll("#authTabs .tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===t));
+ $("loginForm").classList.toggle("hidden",t!=="login");
+ $("signupForm").classList.toggle("hidden",t!=="signup");
+ $("staffPane").classList.toggle("hidden",t!=="staff");
+ const hasOwner=getUsers().some(u=>u.role==="owner");
+ $("staffForm").classList.toggle("hidden",!hasOwner);
+ $("rolePick").classList.toggle("hidden",!hasOwner);
+ $("setupForm").classList.toggle("hidden",hasOwner);
+ setMsg("authMsg","");
+}
+function pickStaffRole(r){staffRole=r;document.querySelectorAll("#rolePick .tab").forEach(b=>b.classList.toggle("active",b.dataset.role===r))}
+function checkNewAccount(username,email,pw,pw2){
+ if(!/^[A-Za-z0-9_.-]{3,20}$/.test(username))return L("Username must be 3–20 characters: letters, numbers, . _ -","Nazwa użytkownika: 3–20 znaków (litery, cyfry, . _ -).");
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return L("Please enter a valid email address.","Podaj prawidłowy adres e-mail.");
+ if(pw.length<8)return L("Password must be at least 8 characters.","Hasło musi mieć co najmniej 8 znaków.");
+ if(pw!==pw2)return L("Passwords do not match.","Hasła nie są takie same.");
+ const us=getUsers();
+ if(us.some(u=>u.username.toLowerCase()===username.toLowerCase()))return L("That username is already taken.","Ta nazwa użytkownika jest zajęta.");
+ if(us.some(u=>u.email.toLowerCase()===email.toLowerCase()))return L("An account with that email already exists.","Konto z tym adresem e-mail już istnieje.");
+ return "";
+}
+async function makeUser(username,email,pw,role,extra){
+ const salt=newSalt();
+ return Object.assign({id:uid(),username,email,salt,hash:await hashPw(pw,salt),role,created:Date.now(),suspended:false,mustChange:false,title:"",bio:"",avail:{days:[1,2,3,4,5],start:9,end:17,accepting:true}},extra||{});
+}
+function lockWait(name){const l=LS.get("mf_lock",{})[name.toLowerCase()];return l&&l.until>Date.now()?Math.ceil((l.until-Date.now())/1000):0}
+function recordFail(name){const all=LS.get("mf_lock",{});const k=name.toLowerCase();const l=all[k]||{n:0,until:0};l.n++;if(l.n>=5){l.until=Date.now()+60000;l.n=0}all[k]=l;LS.set("mf_lock",all)}
+function clearFails(name){const all=LS.get("mf_lock",{});delete all[name.toLowerCase()];LS.set("mf_lock",all)}
+async function authenticate(ident,pw){
+ ident=ident.trim();
+ const w=lockWait(ident);
+ if(w)return {err:L("Too many attempts. Try again in "+w+" seconds.","Zbyt wiele prób. Spróbuj ponownie za "+w+" s.")};
+ const u=getUsers().find(x=>x.username.toLowerCase()===ident.toLowerCase()||x.email.toLowerCase()===ident.toLowerCase());
+ const h=await hashPw(pw,u?u.salt:"none");
+ if(!u||u.hash!==h){recordFail(ident);return {err:L("Incorrect details. Please check and try again.","Nieprawidłowe dane. Sprawdź i spróbuj ponownie.")}}
+ clearFails(ident);
+ if(u.suspended)return {err:L("This account has been suspended. Please contact the team.","To konto zostało zawieszone. Skontaktuj się z zespołem.")};
+ return {user:u};
+}
+async function doLogin(e){
+ e.preventDefault();
+ const r=await authenticate($("liUser").value,$("liPass").value);
+ if(r.err)return setMsg("authMsg",r.err);
+ if(r.user.role!=="user")return setMsg("authMsg",L("Staff accounts must use the Staff login tab.","Konta personelu muszą korzystać z zakładki logowania personelu."));
+ $("liPass").value="";startSession(r.user);
+}
+async function doStaffLogin(e){
+ e.preventDefault();
+ const r=await authenticate($("stUser").value,$("stPass").value);
+ if(r.err)return setMsg("authMsg",r.err);
+ if(r.user.role!==staffRole)return setMsg("authMsg",L("Incorrect details. Please check and try again.","Nieprawidłowe dane. Sprawdź i spróbuj ponownie."));
+ $("stPass").value="";startSession(r.user);
+}
+async function doSignup(e){
+ e.preventDefault();
+ const un=$("suUser").value.trim(),em=$("suEmail").value.trim(),p=$("suPass").value,p2=$("suPass2").value;
+ const err=checkNewAccount(un,em,p,p2);if(err)return setMsg("authMsg",err);
+ const u=await makeUser(un,em,p,"user");
+ const us=getUsers();us.push(u);saveUsers(us);
+ $("suPass").value=$("suPass2").value="";startSession(u);
+}
+async function doOwnerSetup(e){
+ e.preventDefault();
+ if(getUsers().some(u=>u.role==="owner"))return authTab("staff");
+ const un=$("osUser").value.trim(),em=$("osEmail").value.trim(),p=$("osPass").value,p2=$("osPass2").value;
+ const err=checkNewAccount(un,em,p,p2);if(err)return setMsg("authMsg",err);
+ const u=await makeUser(un,em,p,"owner");
+ const us=getUsers();us.push(u);saveUsers(us);
+ $("osPass").value=$("osPass2").value="";startSession(u);addAudit("Owner account created");
+}
+function startSession(u){
+ session={id:u.id};LS.set("mf_session",session);
+ reloadUserData();
+ if(u.role!=="user")addAudit("Logged in");
+ if(u.mustChange){page("profile");setMsg("pwMsg",L("Please choose a new password now.","Ustaw teraz nowe hasło."),"err");return}
+ page(u.role==="user"?"dashboard":"staff");
+}
+function logout(silent){
+ session=null;localStorage.removeItem("mf_session");reloadUserData();
+ if(silent!==true)page("dashboard");
+}
+function reloadUserData(){
+ history=LS.get(K("history"),[]);moods=LS.get(K("moods"),[]);profile=LS.get(K("profile"),{});
+ avatarData=profile.avatar||"";lastResult=null;
+ updateWelcome();renderHistory();renderMoods();updateStats();renderExtra();
+}
+function renderAccountCard(){
+ const u=me();$("pwCard").classList.toggle("hidden",!u);
+ if(u)$("accountInfo").textContent=u.username+" · "+u.email+" · "+roleName(u.role);
+}
+async function changePassword(e){
+ e.preventDefault();const u=me();if(!u)return;
+ const o=$("pwOld").value,n=$("pwNew").value,n2=$("pwNew2").value;
+ if(await hashPw(o,u.salt)!==u.hash)return setMsg("pwMsg",L("Current password is incorrect.","Obecne hasło jest nieprawidłowe."));
+ if(n.length<8)return setMsg("pwMsg",L("Password must be at least 8 characters.","Hasło musi mieć co najmniej 8 znaków."));
+ if(n!==n2)return setMsg("pwMsg",L("Passwords do not match.","Hasła nie są takie same."));
+ const us=getUsers();const t=us.find(x=>x.id===u.id);
+ t.salt=newSalt();t.hash=await hashPw(n,t.salt);t.mustChange=false;saveUsers(us);
+ $("pwOld").value=$("pwNew").value=$("pwNew2").value="";
+ setMsg("pwMsg",L("Password changed.","Hasło zostało zmienione."),"ok");
+}
+
+/* ============ ROLES / HEADER / ANNOUNCEMENT ============ */
+const ROLE_LABEL={user:["Member","Użytkownik"],mod:["Moderator","Moderator"],admin:["Admin","Administrator"],owner:["Owner","Właściciel"]};
+function roleName(r){return ROLE_LABEL[r][language==="pl"?1:0]}
+function renderHeader(){
+ const u=me();
+ $("userChip").innerHTML=u?`<span class="tag">${esc(u.username)} · ${roleName(u.role)}</span>`:"";
+ $("authBtn").textContent=u?L("Log out","Wyloguj"):L("Log in / Sign up","Zaloguj / Załóż konto");
+ $("authBtn").onclick=u?()=>logout():()=>showAuth("login");
+ $("staffLink").classList.toggle("hidden",!!u);
+ $("staffLink").textContent=L("🛡️ Staff","🛡️ Personel");
+ const s=rank()>=1;
+ $("navStaff").classList.toggle("hidden",!s);$("navStaffLabel").classList.toggle("hidden",!s);
+}
+function renderAnnouncement(){
+ const a=LS.get("mf_announcement",null);
+ $("announceCard").classList.toggle("hidden",!(a&&a.text));
+ if(a&&a.text){$("announceText").textContent=a.text;$("announceMeta").textContent=a.by+" · "+new Date(a.t).toLocaleDateString()}
+}
+function renderExtra(){
+ renderHeader();renderAnnouncement();
+ if(session)renderMeetings();
+ if(rank()>=1)renderStaff();
+ renderAccountCard();
+ if($("auth").classList.contains("active"))authTab(authCurrentTab);
+}
+
+/* ============ MEETINGS ============ */
+const TOPICS=[["General wellbeing chat","Rozmowa o samopoczuciu"],["Understanding my results","Omówienie moich wyników"],["Strategies & routines","Strategie i rutyny"],["Using MindFocus","Korzystanie z MindFocus"],["Something else","Coś innego"]];
+const STATUS={pending:["Pending","Oczekuje"],confirmed:["Confirmed","Potwierdzone"],declined:["Declined","Odrzucone"],cancelled:["Cancelled","Anulowane"],completed:["Completed","Zakończone"]};
+const DAYS=[["Sun","Nd"],["Mon","Pn"],["Tue","Wt"],["Wed","Śr"],["Thu","Cz"],["Fri","Pt"],["Sat","Sb"]];
+let selectedSlot="";
+const pad=n=>String(n).padStart(2,"0");
+const fmtDate=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+function parseDT(date,hour){const p=String(date).split("-").map(Number);return new Date(p[0],p[1]-1,p[2],hour||0)}
+function availOf(u){return Object.assign({days:[1,2,3,4,5],start:9,end:17,accepting:true},u.avail||{})}
+function staffList(){return getUsers().filter(u=>u.role!=="user"&&!u.suspended&&availOf(u).accepting!==false)}
+function slotsFor(spec,date){
+ if(!spec||!date)return [];
+ const a=availOf(spec),dt=parseDT(date,0);
+ if(isNaN(dt)||!a.days.includes(dt.getDay()))return [];
+ const taken=getBookings().filter(b=>b.specialistId===spec.id&&b.date===date&&["pending","confirmed"].includes(b.status)).map(b=>b.time);
+ const out=[];
+ for(let h=a.start;h<a.end;h++){const t=pad(h)+":00";out.push({time:t,taken:taken.includes(t),past:parseDT(date,h)<=new Date()})}
+ return out;
+}
+function renderMeetings(){
+ if(!session)return;
+ const specs=staffList().filter(s=>s.id!==session.id);
+ const sel=$("meetSpec"),cur=sel.value;
+ sel.innerHTML=specs.length?specs.map(s=>`<option value="${s.id}">${esc(s.username)} — ${roleName(s.role)}${s.title?" · "+esc(s.title):""}</option>`).join(""):`<option value="">${L("No specialists available yet","Brak dostępnych specjalistów")}</option>`;
+ if(specs.some(s=>s.id===cur))sel.value=cur;
+ const d=$("meetDate"),today=new Date(),max=new Date();max.setDate(max.getDate()+60);
+ d.min=fmtDate(today);d.max=fmtDate(max);
+ const ts=$("meetTopic"),tc=ts.value||"0";
+ ts.innerHTML=TOPICS.map((t,i)=>`<option value="${i}">${t[language==="pl"?1:0]}</option>`).join("");ts.value=tc;
+ onSpecChange(true);renderMyMeetings();
+}
+function onSpecChange(keep){
+ const s=getUsers().find(u=>u.id===$("meetSpec").value);
+ if(s){const a=availOf(s);$("specInfo").textContent=(s.bio?s.bio+" · ":"")+a.days.map(x=>DAYS[x][language==="pl"?1:0]).join(", ")+" · "+pad(a.start)+":00–"+pad(a.end)+":00"}
+ else $("specInfo").textContent="";
+ if(keep!==true)selectedSlot="";
+ renderSlots();
+}
+function onDateChange(){selectedSlot="";renderSlots()}
+function renderSlots(){
+ const box=$("slotBox"),date=$("meetDate").value;
+ const spec=getUsers().find(u=>u.id===$("meetSpec").value);
+ if(!spec){box.innerHTML="";return}
+ if(!date){box.innerHTML=`<span class="muted small">${L("Pick a date first.","Najpierw wybierz datę.")}</span>`;return}
+ const max=new Date();max.setDate(max.getDate()+61);
+ if(parseDT(date,0)>max){box.innerHTML=`<span class="muted small">${L("You can book up to 60 days ahead.","Można rezerwować do 60 dni naprzód.")}</span>`;return}
+ const sl=slotsFor(spec,date);
+ if(!sl.length){box.innerHTML=`<span class="muted small">${L("Not available on this day.","Brak dostępności w tym dniu.")}</span>`;return}
+ box.innerHTML=sl.map(s=>`<button type="button" class="slot${s.time===selectedSlot?" selected":""}" ${s.taken||s.past?"disabled":""} onclick="pickSlot('${s.time}')">${s.time}</button>`).join("");
+}
+function pickSlot(t){selectedSlot=t;renderSlots()}
+function activeBookingsOf(userId){return getBookings().filter(b=>b.userId===userId&&["pending","confirmed"].includes(b.status)&&parseDT(b.date,+b.time.slice(0,2))>new Date())}
+function bookMeeting(){
+ const u=me();if(!u)return;
+ const err=m=>setMsg("meetMsg",m,"err");
+ const spec=getUsers().find(x=>x.id===$("meetSpec").value),date=$("meetDate").value;
+ if(!spec||spec.role==="user"||spec.suspended||spec.id===u.id)return err(L("Please choose a specialist.","Wybierz specjalistę."));
+ if(!date)return err(L("Please choose a date.","Wybierz datę."));
+ if(!selectedSlot)return err(L("Please choose a time.","Wybierz godzinę."));
+ const sl=slotsFor(spec,date).find(s=>s.time===selectedSlot);
+ if(!sl||sl.taken||sl.past)return err(L("That time is no longer available.","Ten termin jest już niedostępny."));
+ const max=new Date();max.setDate(max.getDate()+61);
+ if(parseDT(date,0)>max)return err(L("You can book up to 60 days ahead.","Można rezerwować do 60 dni naprzód."));
+ const mine=activeBookingsOf(u.id);
+ if(mine.length>=5)return err(L("You already have 5 upcoming meetings. Cancel one to book another.","Masz już 5 nadchodzących spotkań. Anuluj jedno, aby umówić kolejne."));
+ if(mine.some(b=>b.date===date&&b.time===selectedSlot))return err(L("You already have a meeting at that time.","Masz już spotkanie w tym terminie."));
+ const all=getBookings();
+ all.push({id:uid(),userId:u.id,userName:u.username,specialistId:spec.id,specialistName:spec.username,specialistRole:spec.role,date,time:selectedSlot,topic:Number($("meetTopic").value)||0,note:$("meetNote").value.trim().slice(0,300),status:"pending",created:Date.now()});
+ saveBookings(all);selectedSlot="";$("meetNote").value="";
+ setMsg("meetMsg",L("Request sent. You will see the status under My meetings.","Prośba wysłana. Status zobaczysz w sekcji Moje spotkania."),"ok");
+ renderSlots();renderMyMeetings();
+}
+function statusBadge(s){return `<span class="badge b-${s}">${STATUS[s][language==="pl"?1:0]}</span>`}
+function renderMyMeetings(){
+ const u=me();if(!u)return;
+ const list=getBookings().filter(b=>b.userId===u.id).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+ $("myMeetings").innerHTML=list.length?list.map(b=>{
+  const can=["pending","confirmed"].includes(b.status)&&parseDT(b.date,+b.time.slice(0,2))>new Date();
+  return `<div class="row"><div><strong>${esc(b.date)} · ${esc(b.time)}</strong> ${statusBadge(b.status)}<div class="muted small">${esc(b.specialistName)} (${roleName(b.specialistRole)}) · ${TOPICS[b.topic]?TOPICS[b.topic][language==="pl"?1:0]:""}</div></div>${can?`<button class="danger mini" onclick="cancelMine('${b.id}')">${L("Cancel","Anuluj")}</button>`:""}</div>`
+ }).join(""):`<p class="muted">${L("No meetings yet.","Brak spotkań.")}</p>`;
+}
+function cancelMine(id){
+ const u=me();const all=getBookings();const b=all.find(x=>x.id===id);
+ if(!u||!b||b.userId!==u.id||!["pending","confirmed"].includes(b.status))return;
+ if(!confirm(L("Cancel this meeting?","Anulować to spotkanie?")))return;
+ b.status="cancelled";saveBookings(all);renderMyMeetings();renderSlots();
+}
+
+/* ============ STAFF PANEL ============ */
+let staffTab="overview",bookView="mine";
+function staffTabsFor(){
+ const r=rank();
+ return [["overview",["Overview","Przegląd"],1],["bookings",["Meetings","Spotkania"],1],["users",["Users","Użytkownicy"],1],["create",["Create staff","Dodaj personel"],2],["me",["My profile & hours","Mój profil i godziny"],1],["announce",["Announcement","Ogłoszenie"],2],["audit",["Audit log","Dziennik zdarzeń"],2],["owner",["Owner tools","Narzędzia właściciela"],3]].filter(t=>r>=t[2]);
+}
+function setStaffTab(t){staffTab=t;renderStaff()}
+function renderStaff(){
+ if(rank()<1){$("staffBody").innerHTML="";$("staffTabs").innerHTML="";return}
+ const tabs=staffTabsFor();
+ if(!tabs.some(t=>t[0]===staffTab))staffTab="overview";
+ $("staffTabs").innerHTML=tabs.map(t=>`<button class="tab${t[0]===staffTab?" active":""}" onclick="setStaffTab('${t[0]}')">${t[1][language==="pl"?1:0]}</button>`).join("");
+ const fn={overview:tabOverview,bookings:tabBookings,users:tabUsers,create:tabCreate,me:tabMe,announce:tabAnnounce,audit:tabAudit,owner:tabOwner}[staffTab];
+ $("staffBody").innerHTML=fn();
+}
+function tabOverview(){
+ const us=getUsers(),bk=getBookings(),u=me(),r=rank();
+ const mineP=bk.filter(b=>b.specialistId===u.id&&b.status==="pending").length;
+ const perms={
+  mod:[L("Review member accounts and suspend or restore members","Przeglądanie kont użytkowników, zawieszanie i przywracanie"),L("Confirm, decline and complete your own meetings","Potwierdzanie, odrzucanie i kończenie własnych spotkań"),L("Set your own profile and available hours","Ustawianie własnego profilu i godzin dostępności")],
+  admin:[L("Everything a moderator can do","Wszystko, co moderator"),L("See all meetings and member emails","Podgląd wszystkich spotkań i e-maili użytkowników"),L("Create moderators, reset passwords, delete accounts","Tworzenie moderatorów, reset haseł, usuwanie kont"),L("Publish announcements and view the audit log","Publikowanie ogłoszeń i dziennik zdarzeń")],
+  owner:[L("Everything an admin can do","Wszystko, co administrator"),L("Create admins and change anyone's role","Tworzenie administratorów i zmiana ról"),L("Export data and reset the whole site","Eksport danych i reset całej strony")]
+ }[u.role];
+ return `<div class="grid"><div class="card"><div class="card-icon">👥</div><div class="muted">${L("Members","Użytkownicy")}</div><div class="stat">${us.filter(x=>x.role==="user").length}</div></div>
+ <div class="card"><div class="card-icon">🛡️</div><div class="muted">${L("Staff","Personel")}</div><div class="stat">${us.filter(x=>x.role!=="user").length}</div></div>
+ <div class="card"><div class="card-icon">📅</div><div class="muted">${L("Your pending requests","Twoje oczekujące prośby")}</div><div class="stat">${mineP}</div></div>
+ ${r>=2?`<div class="card"><div class="card-icon">🗓️</div><div class="muted">${L("All pending requests","Wszystkie oczekujące prośby")}</div><div class="stat">${bk.filter(b=>b.status==="pending").length}</div></div>`:""}</div>
+ <div class="card" style="margin-top:18px"><h3>${L("Your role","Twoja rola")}: ${roleName(u.role)}</h3><ul class="perms">${perms.map(p=>`<li>${esc(p)}</li>`).join("")}</ul></div>`;
+}
+function canActBooking(b){const u=me();return !!u&&rank()>=1&&(b.specialistId===u.id||rank()>=2)}
+function tabBookings(){
+ const u=me(),r=rank();
+ let list=getBookings();
+ if(r<2||bookView==="mine")list=list.filter(b=>b.specialistId===u.id);
+ list.sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+ const toggle=r>=2?`<div class="tabs"><button class="tab${bookView==="mine"?" active":""}" onclick="bookView='mine';renderStaff()">${L("My meetings","Moje spotkania")}</button><button class="tab${bookView==="all"?" active":""}" onclick="bookView='all';renderStaff()">${L("All meetings","Wszystkie spotkania")}</button></div>`:"";
+ return `<div class="card">${toggle}`+(list.length?list.map(b=>{
+  const a=[];
+  if(canActBooking(b)){
+   if(b.status==="pending")a.push(`<button class="primary mini" onclick="setBooking('${b.id}','confirmed')">${L("Confirm","Potwierdź")}</button><button class="danger mini" onclick="setBooking('${b.id}','declined')">${L("Decline","Odrzuć")}</button>`);
+   if(b.status==="confirmed")a.push(`<button class="primary mini" onclick="setBooking('${b.id}','completed')">${L("Mark completed","Zakończ")}</button><button class="danger mini" onclick="setBooking('${b.id}','cancelled')">${L("Cancel","Anuluj")}</button>`);
+  }
+  return `<div class="row"><div><strong>${esc(b.date)} · ${esc(b.time)}</strong> ${statusBadge(b.status)}<div class="muted small">${esc(b.userName)} → ${esc(b.specialistName)} (${roleName(b.specialistRole)}) · ${TOPICS[b.topic]?TOPICS[b.topic][language==="pl"?1:0]:""}</div>${b.note?`<div class="small" style="margin-top:4px">“${esc(b.note)}”</div>`:""}</div><div class="actions">${a.join("")}</div></div>`;
+ }).join(""):`<p class="muted">${L("No meetings to show.","Brak spotkań do wyświetlenia.")}</p>`)+`</div>`;
+}
+function setBooking(id,status){
+ const all=getBookings(),b=all.find(x=>x.id===id);
+ const ok={pending:["confirmed","declined"],confirmed:["completed","cancelled"]};
+ if(!b||!canActBooking(b)||!(ok[b.status]||[]).includes(status))return;
+ b.status=status;saveBookings(all);addAudit("Meeting "+b.date+" "+b.time+" → "+status);renderStaff();
+}
+function tabUsers(){
+ const r=rank();
+ const list=getUsers().slice().sort((a,b)=>RANK[b.role]-RANK[a.role]||a.username.localeCompare(b.username));
+ return `<div class="card"><div class="field"><input placeholder="${L("Search users…","Szukaj użytkowników…")}" oninput="filterUsers(this.value)"></div>`+list.map(t=>{
+  const lower=r>RANK[t.role],a=[];
+  if(lower)a.push(`<button class="secondary mini" onclick="suspendUser('${t.id}')">${t.suspended?L("Restore","Przywróć"):L("Suspend","Zawieś")}</button>`);
+  if(lower&&r>=2)a.push(`<button class="secondary mini" onclick="resetPw('${t.id}')">${L("Reset password","Reset hasła")}</button><button class="danger mini" onclick="deleteUser('${t.id}')">${L("Delete","Usuń")}</button>`);
+  if(r===3&&t.role!=="owner")a.push(`<select class="mini" onchange="setRole('${t.id}',this.value)">${["user","mod","admin"].map(x=>`<option value="${x}"${x===t.role?" selected":""}>${roleName(x)}</option>`).join("")}</select>`);
+  return `<div class="row user-row" data-q="${esc((t.username+" "+(r>=2?t.email:"")).toLowerCase())}"><div><strong>${esc(t.username)}</strong> <span class="tag">${roleName(t.role)}</span>${t.suspended?` <span class="badge b-declined">${L("Suspended","Zawieszony")}</span>`:""}<div class="muted small">${r>=2?esc(t.email)+" · ":""}${L("Joined","Dołączył(a)")} ${new Date(t.created).toLocaleDateString()}</div></div><div class="actions">${a.join("")}</div></div>`;
+ }).join("")+`</div>`;
+}
+function filterUsers(q){q=q.toLowerCase();document.querySelectorAll(".user-row").forEach(r=>r.classList.toggle("hidden",!r.dataset.q.includes(q)))}
+function cancelActiveWith(userId,asSpecialist,why){
+ const all=getBookings();
+ all.forEach(b=>{if((asSpecialist?b.specialistId:b.userId)===userId&&["pending","confirmed"].includes(b.status))b.status="cancelled"});
+ saveBookings(all);
+}
+function suspendUser(id){
+ const us=getUsers(),t=us.find(x=>x.id===id);
+ if(!t||rank()<1||rank()<=RANK[t.role])return;
+ t.suspended=!t.suspended;saveUsers(us);
+ if(t.suspended){cancelActiveWith(id,true);cancelActiveWith(id,false)}
+ addAudit((t.suspended?"Suspended ":"Restored ")+t.username);renderStaff();
+}
+function deleteUser(id){
+ const us=getUsers(),t=us.find(x=>x.id===id);
+ if(!t||rank()<2||rank()<=RANK[t.role]||t.id===session.id)return;
+ if(!confirm(L("Permanently delete ","Trwale usunąć ")+t.username+"?"))return;
+ cancelActiveWith(id,true);cancelActiveWith(id,false);
+ ["history","moods","profile"].forEach(n=>localStorage.removeItem("mf_"+n+"_"+id));
+ saveUsers(us.filter(x=>x.id!==id));addAudit("Deleted "+t.username);renderStaff();
+}
+async function resetPw(id){
+ const us=getUsers(),t=us.find(x=>x.id===id);
+ if(!t||rank()<2||rank()<=RANK[t.role])return;
+ const tmp=genPw();t.salt=newSalt();t.hash=await hashPw(tmp,t.salt);t.mustChange=true;saveUsers(us);
+ addAudit("Reset password for "+t.username);
+ prompt(L("Temporary password for "+t.username+" (shown once, copy it now):","Tymczasowe hasło dla "+t.username+" (pokazane raz, skopiuj je teraz):"),tmp);
+}
+function setRole(id,role){
+ const us=getUsers(),t=us.find(x=>x.id===id);
+ if(rank()!==3||!t||t.role==="owner"||!["user","mod","admin"].includes(role)||t.id===session.id)return renderStaff();
+ const old=t.role;t.role=role;saveUsers(us);
+ if(role==="user")cancelActiveWith(id,true);
+ addAudit("Role of "+t.username+": "+old+" → "+role);renderStaff();
+}
+function tabCreate(){
+ const r=rank();
+ const roles=["mod","admin"].filter(x=>RANK[x]<r);
+ return `<div class="card" style="max-width:600px"><h2>${L("Create a staff account","Utwórz konto personelu")}</h2>
+ <p class="muted small">${L("The person must change the temporary password the first time they log in.","Osoba musi zmienić tymczasowe hasło przy pierwszym logowaniu.")}</p>
+ <div id="createMsg" class="msg"></div>
+ <form onsubmit="createStaff(event)">
+  <div class="field"><label>${L("Username","Nazwa użytkownika")}</label><input id="cUser" maxlength="20" required></div>
+  <div class="field"><label>Email</label><input id="cEmail" type="email" required></div>
+  <div class="field"><label>${L("Role","Rola")}</label><select id="cRole">${roles.map(x=>`<option value="${x}">${roleName(x)}</option>`).join("")}</select></div>
+  <div class="field"><label>${L("Temporary password","Hasło tymczasowe")}</label><input id="cPass" value="${genPw()}" required minlength="8"></div>
+  <button class="primary" type="submit">${L("Create account","Utwórz konto")}</button>
+ </form></div>`;
+}
+async function createStaff(e){
+ e.preventDefault();const r=rank();
+ const un=$("cUser").value.trim(),em=$("cEmail").value.trim(),role=$("cRole").value,pw=$("cPass").value;
+ if(r<2||!["mod","admin"].includes(role)||RANK[role]>=r)return setMsg("createMsg",L("You are not allowed to create that role.","Nie możesz utworzyć tej roli."));
+ const err=checkNewAccount(un,em,pw,pw);if(err)return setMsg("createMsg",err);
+ const u=await makeUser(un,em,pw,role,{mustChange:true});
+ const us=getUsers();us.push(u);saveUsers(us);addAudit("Created "+role+" account "+un);
+ prompt(L("Account created. Give "+un+" this temporary password (shown once):","Konto utworzone. Przekaż "+un+" to hasło tymczasowe (pokazane raz):"),pw);
+ renderStaff();
+}
+function tabMe(){
+ const u=me(),a=availOf(u);
+ const hrs=(sel)=>Array.from({length:17},(_,i)=>i+6).map(h=>`<option value="${h}"${h===sel?" selected":""}>${pad(h)}:00</option>`).join("");
+ return `<div class="card" style="max-width:650px"><h2>${L("My profile & hours","Mój profil i godziny")}</h2><div id="meMsg" class="msg"></div>
+ <form onsubmit="saveMe(event)">
+  <div class="field"><label>${L("Title shown to members","Tytuł widoczny dla użytkowników")}</label><input id="meTitle" maxlength="40" value="${esc(u.title||"")}" placeholder="${L("e.g. Wellbeing coach","np. Doradca ds. samopoczucia")}"></div>
+  <div class="field"><label>${L("Short bio","Krótki opis")}</label><textarea id="meBio" maxlength="200">${esc(u.bio||"")}</textarea></div>
+  <div class="field"><label>${L("Available days","Dni dostępności")}</label><div class="checks">${[1,2,3,4,5,6,0].map(d=>`<label><input type="checkbox" class="meDay" value="${d}"${a.days.includes(d)?" checked":""}> ${DAYS[d][language==="pl"?1:0]}</label>`).join("")}</div></div>
+  <div class="two"><div class="field"><label>${L("From","Od")}</label><select id="meStart">${hrs(a.start)}</select></div><div class="field"><label>${L("Until (last meeting ends)","Do (koniec ostatniego spotkania)")}</label><select id="meEnd">${hrs(a.end)}</select></div></div>
+  <div class="field"><label class="checks"><input type="checkbox" id="meAccept"${a.accepting!==false?" checked":""}> ${L("Accepting new bookings","Przyjmuję nowe rezerwacje")}</label></div>
+  <button class="primary" type="submit">${L("Save","Zapisz")}</button>
+ </form></div>`;
+}
+function saveMe(e){
+ e.preventDefault();
+ const days=Array.from(document.querySelectorAll(".meDay")).filter(c=>c.checked).map(c=>Number(c.value));
+ const start=Number($("meStart").value),end=Number($("meEnd").value);
+ if(end<=start)return setMsg("meMsg",L("End time must be after start time.","Godzina zakończenia musi być późniejsza niż rozpoczęcia."));
+ const us=getUsers(),t=us.find(x=>x.id===session.id);
+ t.title=$("meTitle").value.trim();t.bio=$("meBio").value.trim();t.avail={days,start,end,accepting:$("meAccept").checked};
+ saveUsers(us);setMsg("meMsg",L("Saved.","Zapisano."),"ok");
+}
+function tabAnnounce(){
+ const a=LS.get("mf_announcement",{text:""});
+ return `<div class="card" style="max-width:650px"><h2>${L("Dashboard announcement","Ogłoszenie na stronie głównej")}</h2><div id="annMsg" class="msg"></div>
+ <div class="field"><textarea id="annText" maxlength="300">${esc(a.text||"")}</textarea></div>
+ <div class="actions"><button class="primary" onclick="saveAnnouncement()">${L("Publish","Opublikuj")}</button><button class="secondary" onclick="clearAnnouncement()">${L("Remove","Usuń")}</button></div></div>`;
+}
+function saveAnnouncement(){
+ if(rank()<2)return;const t=$("annText").value.trim().slice(0,300);
+ if(!t)return setMsg("annMsg",L("Write something first.","Najpierw wpisz treść."));
+ LS.set("mf_announcement",{text:t,by:me().username,t:Date.now()});addAudit("Published announcement");setMsg("annMsg",L("Published.","Opublikowano."),"ok");
+}
+function clearAnnouncement(){if(rank()<2)return;localStorage.removeItem("mf_announcement");addAudit("Removed announcement");renderStaff()}
+function tabAudit(){
+ const a=LS.get("mf_audit",[]);
+ return `<div class="card">`+(a.length?a.slice(0,100).map(x=>`<div class="row"><div><strong>${esc(x.who)}</strong> <span class="tag">${x.role?roleName(x.role):"—"}</span> ${esc(x.msg)}</div><div class="muted small">${new Date(x.t).toLocaleString()}</div></div>`).join(""):`<p class="muted">${L("Nothing logged yet.","Brak wpisów.")}</p>`)+`</div>`;
+}
+function tabOwner(){
+ return `<div class="card" style="max-width:650px"><h2>${L("Owner tools","Narzędzia właściciela")}</h2>
+ <h3>${L("Export data","Eksport danych")}</h3><p class="muted small">${L("Downloads accounts (without passwords), meetings and the audit log as JSON.","Pobiera konta (bez haseł), spotkania i dziennik zdarzeń jako JSON.")}</p>
+ <button class="secondary" onclick="exportData()">${L("Download export","Pobierz eksport")}</button>
+ <h3 style="margin-top:28px">${L("Reset the site","Zresetuj stronę")}</h3><p class="muted small">${L("Deletes every account, meeting and saved result in this browser. Type RESET to confirm.","Usuwa wszystkie konta, spotkania i zapisane wyniki w tej przeglądarce. Wpisz RESET, aby potwierdzić.")}</p>
+ <div class="field"><input id="resetConfirm" placeholder="RESET"></div>
+ <button class="danger" onclick="resetSite()">${L("Delete everything","Usuń wszystko")}</button></div>`;
+}
+function exportData(){
+ if(rank()<3)return;
+ const data={exported:new Date().toISOString(),users:getUsers().map(u=>{const c=Object.assign({},u);delete c.hash;delete c.salt;return c}),bookings:getBookings(),audit:LS.get("mf_audit",[])};
+ const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));
+ const a=document.createElement("a");a.href=url;a.download="mindfocus-export.json";a.click();URL.revokeObjectURL(url);
+ addAudit("Exported data");
+}
+function resetSite(){
+ if(rank()<3)return;
+ if($("resetConfirm").value!=="RESET")return alert(L("Type RESET to confirm.","Wpisz RESET, aby potwierdzić."));
+ Object.keys(localStorage).filter(k=>k.startsWith("mf_")&&k!=="mf_language"&&k!=="mf_theme").forEach(k=>localStorage.removeItem(k));
+ location.reload();
+}
+
+/* ============ INIT ============ */
 function initialise(){
- document.getElementById("languageSelect").value=language;
+ $("languageSelect").value=language;
  if(localStorage.getItem("mf_theme")==="light")document.body.classList.add("light");
  renderTests();renderHistory();renderMoods();renderArticles();updateStats();loadProfile();resetTimer();changeLanguage(language);
 }
