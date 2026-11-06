@@ -1998,6 +1998,84 @@ async function mfToggleCloudStaff(id, active) {
     await mfLoadCloudStaff();
   } catch (err) { mfCloudStaffMessage(err.message || "Could not update account."); }
 }
+ /* ============ CLOUD STAFF FOR MEETING BOOKINGS ============ */
+
+async function mfLoadBookingStaff() {
+  const { data, error } = await mfCloud
+    .from("staff_profiles")
+    .select("id, username, role, active")
+    .eq("active", true)
+    .in("role", ["owner", "admin", "mod"]);
+
+  if (error) throw error;
+
+  const users = getUsers().filter(u =>
+    u.role === "user" || (session && u.id === session.id)
+  );
+
+  (data || []).forEach(st => {
+    users.push({
+      id: st.id,
+      username: st.username,
+      role: st.role,
+      suspended: false,
+      cloudManaged: true,
+      title: "",
+      bio: "",
+      avail: {
+        days: [1, 2, 3, 4, 5],
+        start: 9,
+        end: 17,
+        accepting: true
+      }
+    });
+  });
+
+  saveUsers(users);
+}
+
+const mfOriginalRenderMeetings = renderMeetings;
+let mfBookingStaffLastLoaded = 0;
+let mfBookingStaffLoading = false;
+
+renderMeetings = function() {
+  if (!session) return;
+
+  if (!document.getElementById("meetings").classList.contains("active")) {
+    return;
+  }
+
+  if (Date.now() - mfBookingStaffLastLoaded < 60000) {
+    mfOriginalRenderMeetings();
+    return;
+  }
+
+  if (mfBookingStaffLoading) return;
+
+  mfBookingStaffLoading = true;
+
+  $("meetSpec").innerHTML =
+    '<option value="">Loading Cloud Staff...</option>';
+
+  mfLoadBookingStaff()
+    .then(() => {
+      mfBookingStaffLastLoaded = Date.now();
+      mfBookingStaffLoading = false;
+      if (session) mfOriginalRenderMeetings();
+    })
+    .catch(error => {
+      mfBookingStaffLoading = false;
+
+      $("meetSpec").innerHTML =
+        '<option value="">Could not load Cloud Staff</option>';
+
+      setMsg(
+        "meetMsg",
+        "Could not load Cloud Staff: " + error.message,
+        "err"
+      );
+    });
+};
 </script>
 
 </body>
