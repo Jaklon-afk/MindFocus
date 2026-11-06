@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindFocus</title>
+<link rel="icon" href="./Mindfocus.png" type="image/png">
+<link rel="shortcut icon" href="./Mindfocus.png" type="image/png">
+<link rel="apple-touch-icon" href="./Mindfocus.png">
+<style>
+:root{--bg:#0b1020;--panel:#141c31;--panel2:#1b2741;--text:#edf2ff;--muted:#9ba9c5;--accent:#7c6cff;--accent2:#37c9b0;--border:#293653;--danger:#ff647c;--warn:#f5b942}
+body.light{--bg:#f2f5fc;--panel:#fff;--panel2:#edf1fa;--text:#17213a;--muted:#68748c;--accent:#6254e7;--accent2:#149e89;--border:#dce3f0;--warn:#b7791f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+header{position:sticky;top:0;z-index:20;background:var(--panel);border-bottom:1px solid var(--border);padding:13px 5%;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:900}
+.logo{width:39px;height:39px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));font-size:21px}
+.header-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+select,.small-btn{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:9px 12px}
+.layout{display:flex;min-height:calc(100vh - 65px)}
+aside{width:230px;flex-shrink:0;padding:22px 13px;background:var(--panel);border-right:1px solid var(--border)}
+.nav-label{font-size:11px;color:var(--muted);font-weight:bold;letter-spacing:1.5px;padding:12px}
+.nav-btn{width:100%;border:0;background:transparent;color:var(--muted);padding:13px;border-radius:11px;text-align:left;margin:3px 0;display:flex;gap:12px;align-items:center}
+.nav-btn:hover,.nav-btn.active{background:var(--panel2);color:var(--text)}
+main{flex:1;min-width:0;padding:30px;max-width:1400px;margin:auto;width:100%}
+.page{display:none}.page.active{display:block}
+h1{font-size:clamp(27px,4vw,39px);margin:0 0 10px}
+h2{margin-top:0}
+p{line-height:1.6}
+.muted{color:var(--muted)}
+.hero{padding:32px;border-radius:22px;background:linear-gradient(120deg,#6458d9,#278eaa);color:white;margin-bottom:25px}
+.hero h1{max-width:650px}.hero p{max-width:650px;color:#eef2ff}
+.primary,.secondary,.danger{border:0;border-radius:11px;padding:12px 17px;font-weight:bold}
+.primary{background:var(--accent);color:white}.primary:hover{filter:brightness(1.1)}
+.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--border)}
+.danger{background:#ff647c20;color:var(--danger);border:1px solid #ff647c55}
+.mini{padding:7px 11px!important;font-size:13px;border-radius:9px!important}
+button:disabled{opacity:.4;cursor:not-allowed}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.tag{display:inline-block;background:var(--panel2);color:var(--muted);padding:5px 9px;border-radius:30px;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:17px;padding:21px;box-shadow:0 12px 35px #0002}
+.stat{font-size:31px;font-weight:900;margin:10px 0}
+.card-icon{font-size:27px;margin-bottom:10px}
+.test-card{display:flex;flex-direction:column;gap:12px}.test-card .primary{margin-top:auto}
+.progress{height:9px;background:var(--panel2);border-radius:20px;overflow:hidden;margin:15px 0}
+.progress div{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:.2s}
+.question-box{max-width:850px;margin:25px auto}
+.question-number{color:var(--accent2);font-weight:bold}
+.question-text{font-size:24px;line-height:1.4;margin:24px 0}
+.answer-option{display:flex;align-items:center;gap:12px;padding:15px;border:1px solid var(--border);border-radius:12px;margin:10px 0;background:var(--panel);cursor:pointer}
+.answer-option:hover,.answer-option.selected{border-color:var(--accent);background:var(--panel2)}
+.answer-option input{accent-color:var(--accent);width:18px;height:18px}
+.result-score{font-size:54px;font-weight:900;color:var(--accent2)}
+.field{margin:15px 0}.field label{display:block;margin-bottom:7px;font-weight:bold}
+.field input,.field textarea,.field select{width:100%;padding:12px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}
+.field input[type=checkbox]{width:auto}
+.field textarea{min-height:100px;resize:vertical}
+.checks{display:flex;gap:12px;flex-wrap:wrap}.checks label{display:flex;gap:6px;align-items:center;font-weight:normal;margin:0}
+.avatar{width:75px;height:75px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));font-size:30px;font-weight:bold;color:white;margin-bottom:12px;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.history-item{border-bottom:1px solid var(--border);padding:14px 0}
+.mood-btn{font-size:27px;border:1px solid var(--border);background:var(--panel2);border-radius:12px;padding:12px}
+.mood-btn.selected{border:2px solid var(--accent)}
+.timer{font-size:65px;font-weight:900;text-align:center;margin:25px 0}
+.article{margin-bottom:15px}
+footer{text-align:center;color:var(--muted);padding:30px;font-size:12px}
+/* auth, tabs, messages */
+.auth-card{max-width:520px;margin:20px auto}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tab{background:var(--panel2);color:var(--muted);border:1px solid var(--border);border-radius:10px;padding:9px 14px;font-weight:bold}
+.tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.role-pick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:6px 0 12px}
+.msg{display:none;padding:10px 12px;border-radius:10px;margin:10px 0;font-size:14px;line-height:1.5}
+.msg.show{display:block}
+.msg.err{background:#ff647c20;color:var(--danger);border:1px solid #ff647c55}
+.msg.ok{background:#37c9b020;color:var(--accent2);border:1px solid #37c9b055}
+.notice{background:var(--panel2);border-left:4px solid var(--accent2);padding:12px 14px;border-radius:10px;margin:14px 0;font-size:14px;line-height:1.6}
+/* meetings / staff */
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px}
+.slot{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:10px 6px;font-weight:bold}
+.slot.selected{background:var(--accent);border-color:var(--accent);color:#fff}
+.slot:disabled{opacity:.3;text-decoration:line-through}
+.badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:12px;font-weight:bold}
+.b-pending{background:#f5b94233;color:var(--warn)}
+.b-confirmed{background:#37c9b02a;color:var(--accent2)}
+.b-declined,.b-cancelled{background:#ff647c25;color:var(--danger)}
+.b-completed{background:var(--panel2);color:var(--muted)}
+.row{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;border-bottom:1px solid var(--border);padding:13px 0}
+.row:last-child{border-bottom:0}
+.row .actions{margin:0}
+.small{font-size:13px}
+ul.perms{line-height:1.8;padding-left:20px;margin:8px 0}
+.breath{width:150px;height:150px;border-radius:50%;margin:22px auto;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:bold;transition:transform 1s ease-in-out;text-align:center;padding:10px}
+@media(prefers-reduced-motion:reduce){.breath{transition:none!important}}
+body.zoom1{zoom:1.15}body.zoom2{zoom:1.3}
+body.dys{font-family:Verdana,"Comic Sans MS",Tahoma,sans-serif;letter-spacing:.04em;word-spacing:.12em}
+body.nomotion *,body.nomotion *::before{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+body.hc,body.hc.light{--bg:#000;--panel:#000;--panel2:#0d0d0d;--text:#fff;--muted:#e6e6e6;--border:#fff;--accent:#8fa8ff;--accent2:#5ff5dc;--danger:#ff8fa0;--warn:#ffd76a}
+body.hc .primary,body.hc .tab.active,body.hc .slot.selected{color:#000}
+.journal-entry{white-space:pre-wrap;word-break:break-word;margin:6px 0 10px}
+.chart-legend{margin-top:8px;font-size:13px;color:var(--muted)}
+@media(max-width:800px){.layout{display:block}aside{width:100%;display:flex;overflow-x:auto;padding:8px;border-right:0;border-bottom:1px solid var(--border)}.nav-label{display:none}.nav-btn{white-space:nowrap;width:auto;min-width:max-content;margin:0;padding:11px}main{padding:18px}header{padding:12px 15px}}
+@media(max-width:480px){.hero{padding:23px}.question-text{font-size:20px}.timer{font-size:50px}.two{grid-template-columns:1fr}}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<header>
+ <div class="brand"><div class="logo">🧠</div> MindFocus</div>
+ <div class="header-actions">
+  <span id="userChip"></span>
+  <button class="small-btn" id="staffLink" onclick="showAuth('staff')">🛡️ Staff</button>
+  <button class="small-btn" id="authBtn">Log in / Sign up</button>
+  <select id="languageSelect" aria-label="Language" onchange="changeLanguage(this.value)">
+   <option value="en">🇬🇧 English</option>
+   <option value="pl">🇵🇱 Polski</option>
+  </select>
+  <button class="small-btn" id="themeButton" onclick="toggleTheme()">🌙 Theme</button>
+ </div>
+</header>
+<div class="layout">
+<aside>
+ <div class="nav-label" data-en="MAIN MENU" data-pl="MENU GŁÓWNE">MAIN MENU</div>
+ <button class="nav-btn active" data-page="dashboard" onclick="page('dashboard')">🏠 <span data-en="Dashboard" data-pl="Strona główna">Dashboard</span></button>
+ <button class="nav-btn" data-page="tests" onclick="page('tests')">🧠 <span data-en="Assessments" data-pl="Testy">Assessments</span></button>
+ <button class="nav-btn" data-page="history" onclick="page('history')">📊 <span data-en="My results" data-pl="Moje wyniki">My results</span></button>
+ <button class="nav-btn" data-page="mood" onclick="page('mood')">😊 <span data-en="Mood tracker" data-pl="Nastrój">Mood tracker</span></button>
+ <button class="nav-btn" data-page="journal" onclick="page('journal')">📓 <span data-en="Journal" data-pl="Dziennik">Journal</span></button>
+ 
+<button class="nav-btn" data-page="focus" onclick="page('focus')">⏱️ <span data-en="Focus timer" data-pl="Minutnik skupienia">Focus timer</span></button>
+ <button class="nav-btn" data-page="learn" onclick="page('learn')">📚 <span data-en="Learn" data-pl="Wiedza">Learn</span></button>
+ <button class="nav-btn" data-page="meetings" onclick="page('meetings')">📅 <span data-en="Book a meeting" data-pl="Umów spotkanie">Book a meeting</span></button>
+ <button class="nav-btn" data-page="help" onclick="page('help')">🆘 <span data-en="Help and support" data-pl="Pomoc i wsparcie">Help and support</span></button>
+ <div class="nav-label" data-en="PERSONAL" data-pl="OSOBISTE">PERSONAL</div>
+ <button class="nav-btn" data-page="profile" onclick="page('profile')">👤 <span data-en="My profile" data-pl="Mój profil">My profile</span></button>
+ <div class="nav-label hidden" id="navStaffLabel" data-en="STAFF" data-pl="PERSONEL">STAFF</div>
+ <button class="nav-btn hidden" id="navStaff" data-page="staff" onclick="page('staff')">🛡️ <span data-en="Staff panel" data-pl="Panel personelu">Staff panel</span></button>
+</aside>
+<main>
+
+<section id="dashboard" class="page active">
+ <div class="hero">
+  <span class="tag" style="background:#ffffff25;color:white" data-en="YOUR MIND MATTERS" data-pl="TWÓJ UMYSŁ MA ZNACZENIE">YOUR MIND MATTERS</span>
+  <h1 id="welcomeTitle">Welcome to MindFocus 🧠</h1>
+  <p data-en="Explore how you think, feel and focus. Learn about yourself and discover helpful strategies." data-pl="Odkrywaj, jak myślisz, czujesz i koncentrujesz się. Poznawaj siebie i odkrywaj pomocne strategie.">Explore how you think, feel and focus. Learn about yourself and discover helpful strategies.</p>
+  <button class="primary" onclick="page('tests')" data-en="Explore assessments →" data-pl="Odkryj testy →">Explore assessments →</button>
+ </div>
+ <div class="card hidden" id="announceCard" style="margin-bottom:20px"><h3 data-en="📢 Announcement" data-pl="📢 Ogłoszenie">📢 Announcement</h3><p id="announceText"></p><div class="muted small" id="announceMeta"></div></div>
+ <div class="card" style="margin-bottom:20px"><h3 style="margin-top:0" data-en="💡 Tip of the day" data-pl="💡 Wskazówka dnia">💡 Tip of the day</h3><p id="tipText" style="margin-bottom:0"></p></div>
+ 
+<div class="card hidden" id="nextMeetingCard" style="margin-bottom:20px"><h3 data-en="📅 Your next meeting" data-pl="📅 Twoje następne spotkanie">📅 Your next meeting</h3><p id="nextMeetingText"></p><button class="secondary" onclick="page('meetings')" data-en="View meetings" data-pl="Zobacz spotkania">View meetings</button></div>
+ <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr))">
+  <div class="card"><div class="card-icon">🧠</div><div class="muted" data-en="Assessments completed" data-pl="Ukończone testy">Assessments completed</div><div class="stat" id="statTests">0</div></div>
+  <div class="card"><div class="card-icon">📈</div><div class="muted" data-en="Average score" data-pl="Średni wynik">Average score</div><div class="stat" id="statAverage">0%</div></div>
+  <div class="card"><div class="card-icon">😊</div><div class="muted" data-en="Mood entries" data-pl="Wpisy nastroju">Mood entries</div><div class="stat" id="statMood">0</div></div>
+  <div class="card"><div class="card-icon">🔥</div><div class="muted" data-en="Check-in streak" data-pl="Seria wpisów">Check-in streak</div><div class="stat" id="statStreak">0</div></div>
+ </div>
+ <h2 style="margin-top:30px" data-en="Quick access" data-pl="Szybki dostęp">Quick access</h2>
+ <div class="grid">
+  <div class="card"><div class="card-icon">🧩</div><h3 data-en="Explore your mind" data-pl="Poznaj swój umysł">Explore your mind</h3><p class="muted" data-en="Try one of our self-reflection assessments." data-pl="Wypróbuj jeden z testów do autorefleksji.">Try one of our self-reflection assessments.</p><button class="secondary" onclick="page('tests')" data-en="View tests" data-pl="Zobacz testy">View tests</button></div>
+  <div class="card"><div class="card-icon">⏱️</div><h3 data-en="Get focused" data-pl="Skoncentruj się">Get focused</h3><p class="muted" data-en="Use the focus timer to work in short sessions." data-pl="Użyj minutnika, aby pracować w krótkich sesjach.">Use the focus timer to work in short sessions.</p><button class="secondary" onclick="page('focus')" data-en="Start timer" data-pl="Uruchom minutnik">Start timer</button></div>
+  <div class="card"><div class="card-icon">💜</div><h3 data-en="Check in with yourself" data-pl="Sprawdź, jak się czujesz">Check in with yourself</h3><p class="muted" data-en="Record how you are feeling today." data-pl="Zapisz, jak się dzisiaj czujesz.">Record how you are feeling today.</p><button class="secondary" onclick="page('mood')" data-en="Track mood" data-pl="Zapisz nastrój">Track mood</button></div>
+  <div class="card"><div class="card-icon">📅</div><h3 data-en="Talk to someone" data-pl="Porozmawiaj z kimś">Talk to someone</h3><p class="muted" data-en="Book a meeting with a member of our team." data-pl="Umów spotkanie z członkiem naszego zespołu.">Book a meeting with a member of our team.</p><button class="secondary" onclick="page('meetings')" data-en="Book a meeting" data-pl="Umów spotkanie">Book a meeting</button></div>
+ </div>
+ <div class="card" style="margin-top:20px"><h3 data-en="A little reminder" data-pl="Małe przypomnienie">A little reminder</h3><p data-en="You are more than a score. Take breaks, be kind to yourself and remember that asking for help is a strength." data-pl="Jesteś kimś więcej niż wynikiem. Odpoczywaj, bądź dla siebie życzliwy i pamiętaj, że proszenie o pomoc jest oznaką siły.">You are more than a score. Take breaks, be kind to yourself and remember that asking for help is a strength.</p><button class="secondary" onclick="page('help')" data-en="Help and support" data-pl="Pomoc i wsparcie">Help and support</button></div>
+</section>
+
+<section id="auth" class="page">
+ <div class="card auth-card">
+  <div class="tabs" id="authTabs">
+   <button class="tab active" data-tab="login" onclick="authTab('login')" data-en="Log in" data-pl="Zaloguj">Log in</button>
+   <button class="tab" data-tab="signup" onclick="authTab('signup')" data-en="Sign up" data-pl="Załóż konto">Sign up</button>
+   <button class="tab" data-tab="staff" onclick="authTab('staff')" data-en="🛡️ Staff login" data-pl="🛡️ Logowanie personelu">🛡️ Staff login</button>
+  </div>
+  <div id="authMsg" class="msg"></div>
+
+  <form id="loginForm" onsubmit="doLogin(event)">
+   <div class="field"><label data-en="Staff email" data-pl="E-mail personelu">Staff email</label><input id="liUser" autocomplete="username" required></div>
+   <div class="field"><label data-en="Password" data-pl="Hasło">Password</label><input id="liPass" type="password" autocomplete="current-password" required></div>
+   <button class="primary" type="submit" data-en="Log in" data-pl="Zaloguj">Log in</button>
+  </form>
+
+  <form id="signupForm" class="hidden" onsubmit="doSignup(event)">
+   <div class="field"><label data-en="Username (3–20 characters)" data-pl="Nazwa użytkownika (3–20 znaków)">Username (3–20 characters)</label><input id="suUser" autocomplete="username" maxlength="20" required></div>
+   <div class="field"><label data-en="Email" data-pl="E-mail">Email</label><input id="suEmail" type="email" autocomplete="email" required></div>
+   <div class="field"><label data-en="Password (at least 8 characters)" data-pl="Hasło (co najmniej 8 znaków)">Password (at least 8 characters)</label><input id="suPass" type="password" autocomplete="new-password" required></div>
+   <div class="field"><label data-en="Confirm password" data-pl="Powtórz hasło">Confirm password</label><input id="suPass2" type="password" autocomplete="new-password" required></div>
+   <button class="primary" type="submit" data-en="Create account" data-pl="Utwórz konto">Create account</button>
+  </form>
+
+  <div id="staffPane" class="hidden">
+   <p class="muted small" data-en="For MindFocus team members only. Use the staff email and password assigned to you." data-pl="Tylko dla zespołu MindFocus. Użyj przypisanego adresu e-mail i hasła.">For MindFocus team members only. Use the staff email and password assigned to you.</p>
+   <div class="role-pick" id="rolePick">
+    <button type="button" class="tab active" data-role="mod" onclick="pickStaffRole('mod')">🛡️ Moderator</button>
+    <button type="button" class="tab" data-role="admin" onclick="pickStaffRole('admin')">⚙️ Admin</button>
+    <button type="button" class="tab" data-role="owner" onclick="pickStaffRole('owner')">👑 Owner</button>
+   </div>
+   <form id="staffForm" onsubmit="doStaffLogin(event)">
+    <div class="field"><label data-en="Staff email" data-pl="E-mail personelu">Staff email</label><input id="stUser" type="email" autocomplete="username" required></div>
+    <div class="field"><label data-en="Password" data-pl="Hasło">Password</label><input id="stPass" type="password" autocomplete="current-password" required></div>
+    <button class="primary" type="submit" data-en="Staff log in" data-pl="Zaloguj jako personel">Staff log in</button>
+   </form>
+   <form id="setupForm" class="hidden" onsubmit="doOwnerSetup(event)">
+    <div class="notice" data-en="First-time setup: no owner account exists yet. Create it now. The owner can then create admin and moderator accounts." data-pl="Pierwsza konfiguracja: konto właściciela jeszcze nie istnieje. Utwórz je teraz. Właściciel może następnie tworzyć konta administratorów i moderatorów.">First-time setup: no owner account exists yet. Create it now. The owner can then create admin and moderator accounts.</div>
+    <div class="field"><label data-en="Owner username" data-pl="Nazwa użytkownika właściciela">Owner username</label><input id="osUser" maxlength="20" required></div>
+    <div class="field"><label data-en="Email" data-pl="E-mail">Email</label><input id="osEmail" type="email" required></div>
+    <div class="field"><label data-en="Password (at least 8 characters)" data-pl="Hasło (co najmniej 8 znaków)">Password (at least 8 characters)</label><input id="osPass" type="password" autocomplete="new-password" required></div>
+    <div class="field"><label data-en="Confirm password" data-pl="Powtórz hasło">Confirm password</label><input id="osPass2" type="password" autocomplete="new-password" required></div>
+    <button class="primary" type="submit" data-en="Create owner account" data-pl="Utwórz konto właściciela">Create owner account</button>
+   </form>
+  </div>
+
+  <div class="actions"><button class="secondary" onclick="page('dashboard')" data-en="Continue as guest" data-pl="Kontynuuj jako gość">Continue as guest</button></div>
+  <p class="muted small" data-en="Accounts are stored in this browser only. Guests can use assessments, the mood tracker and the timer; booking a meeting needs an account." data-pl="Konta są przechowywane tylko w tej przeglądarce. Goście mogą korzystać z testów, monitora nastroju i minutnika; umówienie spotkania wymaga konta.">Accounts are stored in this browser only. Guests can use assessments, the mood tracker and the timer; booking a meeting needs an account.</p>
+ </div>
+</section>
+
+<section id="tests" class="page">
+ <h1 data-en="Explore assessments" data-pl="Poznaj testy">Explore assessments</h1>
+ <p class="muted" data-en="Choose an area you would like to explore. Each assessment contains 30 questions." data-pl="Wybierz obszar, który chcesz poznać. Każdy test zawiera 30 pytań.">Choose an area you would like to explore. Each assessment contains 30 questions.</p>
+ <div class="grid" id="testGrid"></div>
+</section>
+
+<section id="takingTest" class="page">
+ <button class="secondary" onclick="page('tests')" data-en="← Back to assessments" data-pl="← Wróć do testów">← Back to assessments</button>
+ <div class="question-box card">
+  <div class="muted" id="testName"></div>
+  <div class="progress"><div id="testProgress"></div></div>
+  <div class="question-number" id="questionNumber"></div>
+  <div class="question-text" id="questionText"></div>
+  <div id="answerOptions"></div>
+  <div class="actions" style="justify-content:space-between">
+   <button class="secondary" id="previousButton" onclick="previousQuestion()">← Previous</button>
+   <button class="primary" id="nextButton" onclick="nextQuestion()">Next →</button>
+  </div>
+ </div>
+</section>
+
+<section id="results" class="page">
+ <div class="card" style="max-width:800px;margin:auto">
+  <div class="card-icon">🎉</div>
+  <h1 data-en="Your results" data-pl="Twoje wyniki">Your results</h1>
+  <div id="resultName"></div>
+  <div class="result-score" id="resultScore">0%</div>
+  <div class="progress"><div id="resultProgress"></div></div>
+  <h3 id="resultLevel"></h3>
+  <p id="resultDescription"></p>
+  <p class="muted" id="resultChange"></p>
+  <div class="card" style="background:var(--panel2);box-shadow:none">
+   <h3 data-en="What does this mean?" data-pl="Co to oznacza?">What does this mean?</h3>
+   <p id="resultAdvice"></p>
+  </div>
+  <p class="muted" data-en="This is a self-reflection score, not a diagnosis or a validated clinical screening result. It cannot tell you whether you have a condition." data-pl="To wynik autorefleksji, a nie diagnoza ani zwalidowany wynik badania klinicznego. Nie może określić, czy masz dane zaburzenie.">This is a self-reflection score, not a diagnosis or a validated clinical screening result. It cannot tell you whether you have a condition.</p>
+  <div class="actions">
+   <button class="primary" onclick="page('history')" data-en="View history" data-pl="Zobacz historię">View history</button>
+   <button class="secondary" onclick="page('tests')" data-en="Try another assessment" data-pl="Wypróbuj kolejny test">Try another assessment</button>
+   <button class="secondary" onclick="downloadResult()" data-en="Download result" data-pl="Pobierz wynik">Download result</button>
+  </div>
+ </div>
+</section>
+
+<section id="history" class="page">
+ <h1 data-en="My results" data-pl="Moje wyniki">My results</h1>
+ <p class="muted" data-en="Your completed assessments are saved on this device." data-pl="Ukończone testy są zapisywane na tym urządzeniu.">Your completed assessments are saved on this device.</p>
+ <div class="card hidden" id="scoreChartCard" style="margin-bottom:16px"><h2 data-en="Scores over time" data-pl="Wyniki w czasie">Scores over time</h2><div id="scoreChart"></div><div class="chart-legend" id="scoreLegend"></div></div>
+ <div class="card" id="historyList"></div>
+ <div class="actions"><button class="danger" onclick="clearHistory()" data-en="Clear history" data-pl="Wyczyść historię">Clear history</button></div>
+</section>
+
+<section id="mood" class="page">
+ <h1 data-en="Mood tracker" data-pl="Monitor nastroju">Mood tracker</h1>
+ <p class="muted" data-en="Take a moment to check in with yourself." data-pl="Poświęć chwilę, aby sprawdzić, jak się czujesz.">Take a moment to check in with yourself.</p>
+ <div class="card">
+  <h2 data-en="How are you feeling today?" data-pl="Jak się dzisiaj czujesz?">How are you feeling today?</h2>
+  <div class="actions" id="moodButtons">
+   <button class="mood-btn" onclick="selectMood(1,this)" aria-label="Very sad">😞</button>
+   <button class="mood-btn" onclick="selectMood(2,this)" aria-label="Sad">😕</button>
+   <button class="mood-btn" onclick="selectMood(3,this)" aria-label="Okay">😐</button>
+   <button class="mood-btn" onclick="selectMood(4,this)" aria-label="Happy">🙂</button>
+   <button class="mood-btn" onclick="selectMood(5,this)" aria-label="Very happy">😄</button>
+  </div>
+  <div class="field"><label data-en="Add a note (optional)" data-pl="Dodaj notatkę (opcjonalnie)">Add a note (optional)</label><textarea id="moodNote" data-placeholder-en="What's on your mind?" data-placeholder-pl="Co chodzi Ci po głowie?" placeholder="What's on your mind?"></textarea></div>
+  <button class="primary" onclick="saveMood()" data-en="Save mood" data-pl="Zapisz nastrój">Save mood</button>
+ </div>
+ <div class="card hidden" id="moodChartCard" style="margin-top:18px"><h2 data-en="Mood over time" data-pl="Nastrój w czasie">Mood over time</h2><div id="moodChart"></div></div>
+ <div class="card" style="margin-top:18px"><h2 data-en="Mood history" data-pl="Historia nastroju">Mood history</h2><div id="moodHistory"></div></div>
+</section>
+
+<section id="focus" class="page">
+ <h1 data-en="Focus timer" data-pl="Minutnik skupienia">Focus timer</h1>
+ <p class="muted" data-en="Try a short focus session, followed by a break." data-pl="Wypróbuj krótką sesję skupienia, a następnie przerwę.">Try a short focus session, followed by a break.</p>
+ <div class="card" style="max-width:600px;margin:auto;text-align:center">
+  <span class="tag" id="timerMode">FOCUS SESSION</span>
+  <div class="timer" id="timerDisplay">25:00</div>
+  <div class="field"><label data-en="Session length (minutes)" data-pl="Długość sesji (minuty)">Session length (minutes)</label><input type="number" id="focusMinutes" min="1" max="180" value="25"></div>
+  <div class="actions" style="justify-content:center">
+   <button class="primary" onclick="startTimer()" data-en="Start" data-pl="Start">Start</button>
+   <button class="secondary" onclick="pauseTimer()" data-en="Pause" data-pl="Pauza">Pause</button>
+   <button class="secondary" onclick="resetTimer()" data-en="Reset" data-pl="Reset">Reset</button>
+   <button class="secondary" onclick="setBreak()" data-en="5 min break" data-pl="5 min przerwy">5 min break</button>
+  </div>
+  <p class="muted" id="timerMessage"></p>
+ </div>
+ <div class="card" style="max-width:600px;margin:18px auto 0;text-align:center">
+  <h2 data-en="Breathing exercise" data-pl="Ćwiczenie oddechowe">Breathing exercise</h2>
+  <div class="breath" id="breathCircle" aria-live="polite">Ready</div>
+  <p class="muted" id="breathText"></p>
+  <button class="primary" id="breathBtn" onclick="toggleBreath()">Start</button>
+ </div>
+</section>
+
+<section id="learn" class="page">
+ <h1 data-en="Learn about your mind" data-pl="Poznaj swój umysł">Learn about your mind</h1>
+ <p class="muted" data-en="Helpful information and everyday strategies." data-pl="Przydatne informacje i codzienne strategie.">Helpful information and everyday strategies.</p>
+ <div id="articles"></div>
+</section>
+
+<section id="meetings" class="page">
+ <h1 data-en="Book a meeting" data-pl="Umów spotkanie">Book a meeting</h1>
+ <p class="muted" data-en="Choose a member of the MindFocus team and pick a time that suits you. They will confirm your request." data-pl="Wybierz członka zespołu MindFocus i termin, który Ci odpowiada. Osoba ta potwierdzi Twoją prośbę.">Choose a member of the MindFocus team and pick a time that suits you. They will confirm your request.</p>
+ <div class="notice" data-en="Our team members are not emergency services and a meeting is not a clinical assessment or treatment. If you are in danger or in crisis, contact your local emergency number (for example 112 in Poland and the EU) or a doctor straight away." data-pl="Członkowie naszego zespołu nie są służbami ratunkowymi, a spotkanie nie jest oceną kliniczną ani leczeniem. Jeśli jesteś w niebezpieczeństwie lub kryzysie, natychmiast zadzwoń pod lokalny numer alarmowy (np. 112 w Polsce i UE) lub skontaktuj się z lekarzem.">Our team members are not emergency services and a meeting is not a clinical assessment or treatment. If you are in danger or in crisis, contact your local emergency number (for example 112 in Poland and the EU) or a doctor straight away.</div>
+ <div class="two">
+  <div class="card">
+   <h2 data-en="New booking" data-pl="Nowa rezerwacja">New booking</h2>
+   <div id="meetMsg" class="msg"></div>
+   <div class="field"><label data-en="Specialist" data-pl="Specjalista">Specialist</label><select id="meetSpec" onchange="onSpecChange()"></select><p class="muted small" id="specInfo"></p></div>
+   <div class="field"><label data-en="Date" data-pl="Data">Date</label><input type="date" id="meetDate" onchange="onDateChange()"></div>
+   <div class="field"><label data-en="Time" data-pl="Godzina">Time</label><div class="slots" id="slotBox"></div></div>
+   <div class="field"><label data-en="Topic" data-pl="Temat">Topic</label><select id="meetTopic"></select></div>
+   <div class="field"><label data-en="Note (optional)" data-pl="Notatka (opcjonalnie)">Note (optional)</label><textarea id="meetNote" maxlength="300"></textarea></div>
+   <button class="primary" onclick="bookMeeting()" data-en="Request meeting" data-pl="Poproś o spotkanie">Request meeting</button>
+  </div>
+  <div class="card">
+   <h2 data-en="My meetings" data-pl="Moje spotkania">My meetings</h2>
+   <div id="myMeetings"></div>
+  </div>
+ </div>
+</section>
+
+<section id="help" class="page">
+ <h1 data-en="Help and support" data-pl="Pomoc i wsparcie">Help and support</h1>
+ <div class="notice" data-en="If you or someone else is in immediate danger, call your local emergency number now. MindFocus is not an emergency service." data-pl="Jeśli Ty lub ktoś inny jesteś w bezpośrednim niebezpieczeństwie, natychmiast zadzwoń pod lokalny numer alarmowy. MindFocus nie jest służbą ratunkową.">If you or someone else is in immediate danger, call your local emergency number now. MindFocus is not an emergency service.</div>
+ <div class="grid" id="helpGrid"></div>
+ <p class="muted small" data-en="Numbers and opening hours can change, so please check them locally. These services are separate from MindFocus." data-pl="Numery i godziny pracy mogą się zmieniać, dlatego sprawdź je lokalnie. Te usługi nie są częścią MindFocus.">Numbers and opening hours can change, so please check them locally. These services are separate from MindFocus.</p>
+ <div class="card" style="margin-top:18px"><h3 data-en="Send feedback to the team" data-pl="Wyślij opinię zespołowi">Send feedback to the team</h3>
+  <p class="muted small" data-en="Tell us what works and what does not. Please do not include personal or medical details. This is not monitored for emergencies." data-pl="Napisz, co działa, a co nie. Nie podawaj danych osobowych ani medycznych. Ta wiadomość nie jest monitorowana pod kątem nagłych sytuacji.">Tell us what works and what does not. Please do not include personal or medical details. This is not monitored for emergencies.</p>
+  <div id="fbMsg" class="msg"></div>
+  <div class="field"><textarea id="fbText" maxlength="500"></textarea></div>
+  <button class="primary" onclick="sendFeedback()" data-en="Send feedback" data-pl="Wyślij opinię">Send feedback</button></div>
+ 
+<div class="card" style="margin-top:18px"><h3 data-en="A quick grounding exercise (5-4-3-2-1)" data-pl="Szybkie ćwiczenie uziemiające (5-4-3-2-1)">A quick grounding exercise (5-4-3-2-1)</h3>
+  <p data-en="Slowly name 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell and 1 you can taste." data-pl="Powoli wymień 5 rzeczy, które widzisz, 4, których możesz dotknąć, 3, które słyszysz, 2, które czujesz węchem, i 1, którą czujesz smakiem.">Slowly name 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell and 1 you can taste.</p>
+  <div class="actions"><button class="secondary" onclick="page('meetings')" data-en="Book a meeting" data-pl="Umów spotkanie">Book a meeting</button><button class="secondary" onclick="page('focus')" data-en="Try the breathing exercise" data-pl="Wypróbuj ćwiczenie oddechowe">Try the breathing exercise</button></div></div>
+</section>
+
+<section id="journal" class="page">
+ <h1 data-en="Journal" data-pl="Dziennik">Journal</h1>
+ <p class="muted" data-en="A private space to write. Entries stay on this device." data-pl="Prywatne miejsce do pisania. Wpisy zostają na tym urządzeniu.">A private space to write. Entries stay on this device.</p>
+ <div class="card">
+  <div class="muted small" data-en="Today's prompt" data-pl="Dzisiejsza podpowiedź">Today's prompt</div>
+  <h3 id="journalPrompt"></h3>
+  <div class="field"><textarea id="journalText" maxlength="2000"></textarea></div>
+  <button class="primary" onclick="saveJournal()" data-en="Save entry" data-pl="Zapisz wpis">Save entry</button>
+  <span id="journalMsg" class="muted" style="margin-left:10px"></span>
+ </div>
+ <div class="card" style="margin-top:18px"><h2 data-en="Past entries" data-pl="Dotychczasowe wpisy">Past entries</h2><div id="journalList"></div></div>
+</section>
+
+<section id="staff" class="page">
+
+ <h1 data-en="Staff panel" data-pl="Panel personelu">Staff panel</h1>
+ <div class="tabs" id="staffTabs"></div>
+ <div id="staffBody"></div>
+</section>
+
+<section id="profile" class="page">
+ <h1 data-en="My profile" data-pl="Mój profil">My profile</h1>
+ <p class="muted" data-en="Make MindFocus feel more like your space." data-pl="Dostosuj MindFocus do siebie.">Make MindFocus feel more like your space.</p>
+ <div class="card" style="max-width:750px">
+  <div class="avatar" id="profileAvatar">?</div>
+  <div class="field"><label data-en="Profile picture" data-pl="Zdjęcie profilowe">Profile picture</label><input type="file" id="avatarFile" accept="image/*" onchange="uploadAvatar(event)"></div>
+  <div class="field"><label data-en="Username" data-pl="Nazwa użytkownika">Username</label><input id="nickname" maxlength="30" data-placeholder-en="Your name" data-placeholder-pl="Twoje imię" placeholder="Your name"></div>
+  <div class="field"><label data-en="About me" data-pl="O mnie">About me</label><textarea id="bio" maxlength="300" data-placeholder-en="Tell us a little about yourself..." data-placeholder-pl="Napisz coś o sobie..." placeholder="Tell us a little about yourself..."></textarea></div>
+  <div class="field"><label data-en="My goals" data-pl="Moje cele">My goals</label><textarea id="goals" maxlength="500" data-placeholder-en="What would you like to work on?" data-placeholder-pl="Nad czym chcesz popracować?" placeholder="What would you like to work on?"></textarea></div>
+  <div class="field"><label data-en="Favourite category" data-pl="Ulubiona kategoria">Favourite category</label>
+   <select id="favourite">
+    <option value="ADHD">ADHD</option><option value="Autism" data-en="Autism" data-pl="Autyzm">Autism</option>
+    <option value="Anxiety" data-en="Anxiety" data-pl="Lęk">Anxiety</option>
+    <option value="Mood" data-en="Mood" data-pl="Nastrój">Mood</option>
+    <option value="OCD">OCD</option><option value="Dyslexia" data-en="Dyslexia" data-pl="Dysleksja">Dyslexia</option>
+    <option value="Sensory" data-en="Sensory" data-pl="Sensoryka">Sensory</option>
+   </select>
+  </div>
+  <button class="primary" onclick="saveProfile()" data-en="Save profile" data-pl="Zapisz profil">Save profile</button>
+  <span id="profileMessage" class="muted" style="margin-left:10px"></span>
+ </div>
+ <div class="card hidden" id="pwCard" style="max-width:750px;margin-top:18px">
+  <h2 data-en="Account & password" data-pl="Konto i hasło">Account & password</h2>
+  <p class="muted" id="accountInfo"></p>
+  <div id="pwMsg" class="msg"></div>
+  <form onsubmit="changePassword(event)">
+   <div class="field"><label data-en="Current password" data-pl="Obecne hasło">Current password</label><input id="pwOld" type="password" autocomplete="current-password" required></div>
+   <div class="field"><label data-en="New password (at least 8 characters)" data-pl="Nowe hasło (co najmniej 8 znaków)">New password (at least 8 characters)</label><input id="pwNew" type="password" autocomplete="new-password" required></div>
+   <div class="field"><label data-en="Confirm new password" data-pl="Powtórz nowe hasło">Confirm new password</label><input id="pwNew2" type="password" autocomplete="new-password" required></div>
+   <button class="primary" type="submit" data-en="Change password" data-pl="Zmień hasło">Change password</button>
+  </form>
+ </div>
+ <div class="card" style="max-width:750px;margin-top:18px">
+  <h2 data-en="Accessibility" data-pl="Dostępność">Accessibility</h2>
+  <p class="muted" data-en="Settings are saved on this device." data-pl="Ustawienia są zapisywane na tym urządzeniu.">Settings are saved on this device.</p>
+  <div class="field"><label data-en="Text size" data-pl="Rozmiar tekstu">Text size</label><select id="a11ySize" onchange="setA11y()"><option value="0" data-en="Normal" data-pl="Normalny">Normal</option><option value="1" data-en="Large" data-pl="Duży">Large</option><option value="2" data-en="Extra large" data-pl="Bardzo duży">Extra large</option></select></div>
+  <div class="field"><label class="checks"><input type="checkbox" id="a11yDys" onchange="setA11y()"> <span data-en="Easier-to-read font and spacing" data-pl="Czytelniejsza czcionka i odstępy">Easier-to-read font and spacing</span></label></div>
+  <div class="field"><label class="checks"><input type="checkbox" id="a11yHc" onchange="setA11y()"> <span data-en="High contrast" data-pl="Wysoki kontrast">High contrast</span></label></div>
+  <div class="field"><label class="checks"><input type="checkbox" id="a11yMotion" onchange="setA11y()"> <span data-en="Reduce motion" data-pl="Ogranicz animacje">Reduce motion</span></label></div>
+ </div>
+ 
+ <div class="card" style="max-width:750px;margin-top:18px">
+  <h2 data-en="Your data" data-pl="Twoje dane">Your data</h2>
+  <p class="muted" data-en="Download a backup of your results, moods and profile, or restore one on this device. Restoring replaces your current data." data-pl="Pobierz kopię zapasową wyników, nastroju i profilu lub przywróć ją na tym urządzeniu. Przywrócenie zastępuje obecne dane.">Download a backup of your results, moods and profile, or restore one on this device. Restoring replaces your current data.</p>
+  <div id="dataMsg" class="msg"></div>
+  <input type="file" id="importFile" accept="application/json,.json" class="hidden" onchange="importMyData(event)">
+  <div class="actions"><button class="secondary" onclick="exportMyData()" data-en="Download backup" data-pl="Pobierz kopię">Download backup</button><button class="secondary" onclick="document.getElementById('importFile').click()" data-en="Restore from file" data-pl="Przywróć z pliku">Restore from file</button></div>
+ </div>
+ <div class="card" style="max-width:750px;margin-top:18px">
+  <h2 data-en="Your privacy" data-pl="Twoja prywatność">Your privacy</h2>
+  <p data-en="Your profile, mood entries and assessment history are stored locally in this browser. They are not automatically sent to a server. Clearing browser data may erase them." data-pl="Twój profil, wpisy nastroju i historia testów są przechowywane lokalnie w tej przeglądarce. Nie są automatycznie wysyłane na serwer. Wyczyszczenie danych przeglądarki może je usunąć.">Your profile, mood entries and assessment history are stored locally in this browser. They are not automatically sent to a server. Clearing browser data may erase them.</p>
+ </div>
+</section>
+<footer>MindFocus © 2026 · <span data-en="Understand yourself. Take care of yourself." data-pl="Poznaj siebie. Dbaj o siebie.">Understand yourself. Take care of yourself.</span></footer>
+</main>
+</div>
+
+<script>
+/* ============ STORAGE / SESSION CORE ============ */
+const RANK={user:0,mod:1,admin:2,owner:3};
+const $=id=>document.getElementById(id);
+const LS={
+ get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
+ set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){alert("Storage error: "+e.message)}}
+};
+let session=LS.get("mf_session",null);
+(function(){ if(session){const u=LS.get("mf_users",[]).find(x=>x.id===session.id); if(!u||u.suspended){session=null;localStorage.removeItem("mf_session")}} })();
+function K(n){return "mf_"+n+(session?"_"+session.id:"")}
+const getUsers=()=>LS.get("mf_users",[]);
+const saveUsers=u=>LS.set("mf_users",u);
+const getBookings=()=>LS.get("mf_bookings",[]);
+const saveBookings=b=>LS.set("mf_bookings",b);
+function me(){return session?getUsers().find(u=>u.id===session.id)||null:null}
+function rank(){const u=me();return u?RANK[u.role]:-1}
+function uid(){return "u"+Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
+function rand(n){const a=new Uint8Array(n);(window.crypto||{getRandomValues:x=>x.forEach((_,i)=>x[i]=Math.random()*256)}).getRandomValues(a);return a}
+function newSalt(){return Array.from(rand(16)).map(b=>b.toString(16).padStart(2,"0")).join("")}
+function genPw(){const c="abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";return Array.from(rand(12)).map(b=>c[b%c.length]).join("")}
+async function hashPw(pw,salt){
+ if(window.crypto&&crypto.subtle){
+  const enc=new TextEncoder();
+  const key=await crypto.subtle.importKey("raw",enc.encode(pw),"PBKDF2",false,["deriveBits"]);
+  const bits=await crypto.subtle.deriveBits({name:"PBKDF2",salt:enc.encode(salt),iterations:150000,hash:"SHA-256"},key,256);
+  return Array.from(new Uint8Array(bits)).map(b=>b.toString(16).padStart(2,"0")).join("");
+ }
+ let h=5381;const s=salt+pw;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return "weak"+h;
+}
+function addAudit(msg){const u=me();const a=LS.get("mf_audit",[]);a.unshift({t:Date.now(),who:u?u.username:"system",role:u?u.role:"",msg});LS.set("mf_audit",a.slice(0,300))}
+
+/* ============ ORIGINAL DATA ============ */
+const tests=[
+{id:"ADHD",icon:"⚡",desc:["Attention, organisation, activity and impulse control.","Uwaga, organizacja, aktywność i kontrola impulsów."],qs:[
+["I find it difficult to keep my attention on tasks.","Trudno mi utrzymać uwagę podczas wykonywania zadań."],
+["I get distracted by sounds, movement or things around me.","Rozpraszają mnie dźwięki, ruch lub rzeczy wokół mnie."],
+["I start tasks but struggle to finish them.","Zaczynam zadania, ale trudno mi je ukończyć."],
+["I forget appointments, plans or things I need to do.","Zapominam o spotkaniach, planach lub obowiązkach."],
+["I often lose objects that I need.","Często gubię potrzebne mi przedmioty."],
+["I find it difficult to organise my tasks.","Trudno mi organizować swoje zadania."],
+["I put off tasks that require a lot of concentration.","Odkładam zadania wymagające dużej koncentracji."],
+["I make careless mistakes when doing things.","Podczas wykonywania zadań popełniam nieuważne błędy."],
+["I struggle to listen when someone speaks for a long time.","Trudno mi słuchać, gdy ktoś mówi przez dłuższy czas."],
+["I find it difficult to follow multi-step instructions.","Trudno mi wykonywać instrukcje składające się z wielu kroków."],
+["I feel restless when I have to sit still.","Czuję niepokój, gdy muszę siedzieć nieruchomo."],
+["I often feel like I need to be moving.","Często czuję potrzebę ruchu."],
+["I talk more than I intend to.","Mówię więcej, niż zamierzam."],
+["I sometimes interrupt people.","Czasami przerywam innym."],
+["I find waiting for my turn difficult.","Trudno mi czekać na swoją kolej."],
+["I act before thinking about the consequences.","Działam, zanim pomyślę o konsekwencjach."],
+["I find it hard to relax when I have free time.","Trudno mi się zrelaksować w wolnym czasie."],
+["My mind often jumps quickly between different thoughts.","Moje myśli często szybko przeskakują między tematami."],
+["I underestimate how long tasks will take.","Nie doceniam tego, ile czasu zajmą mi zadania."],
+["I struggle to manage my time.","Trudno mi zarządzać swoim czasem."],
+["I forget what I was about to do.","Zapominam, co miałem lub miałam właśnie zrobić."],
+["I find it difficult to concentrate on reading.","Trudno mi skupić się na czytaniu."],
+["I become distracted during conversations.","Rozpraszam się podczas rozmów."],
+["I sometimes make decisions too quickly.","Czasami podejmuję decyzje zbyt szybko."],
+["I struggle to keep my belongings organised.","Trudno mi utrzymać porządek w swoich rzeczach."],
+["I find repetitive tasks difficult to complete.","Trudno mi kończyć powtarzalne zadania."],
+["I have trouble switching between activities.","Trudno mi przechodzić między różnymi czynnościami."],
+["I feel overwhelmed when I have many tasks.","Czuję przytłoczenie, gdy mam wiele zadań."],
+["I need reminders to complete everyday tasks.","Potrzebuję przypomnień, aby wykonywać codzienne zadania."],
+["These difficulties affect my everyday life.","Te trudności wpływają na moje codzienne życie."]
+]},
+{id:"Autism",icon:"🧩",desc:["Communication, routines, sensory experiences and social situations.","Komunikacja, rutyna, doświadczenia sensoryczne i sytuacje społeczne."],qs:[
+["I find social situations confusing.","Sytuacje społeczne bywają dla mnie niezrozumiałe."],
+["I find it difficult to know when it is my turn to speak.","Trudno mi rozpoznać, kiedy jest moja kolej, aby mówić."],
+["I sometimes struggle to understand sarcasm.","Czasami trudno mi zrozumieć sarkazm."],
+["I prefer clear and direct communication.","Wolę jasną i bezpośrednią komunikację."],
+["I find unexpected changes difficult.","Trudno mi radzić sobie z niespodziewanymi zmianami."],
+["I feel more comfortable when I follow routines.","Czuję się lepiej, gdy mam ustaloną rutynę."],
+["I have interests that I enjoy very deeply.","Mam zainteresowania, które pochłaniają mnie bez reszty."],
+["I can spend a long time learning about one topic.","Mogę spędzać dużo czasu na poznawaniu jednego tematu."],
+["I find small talk difficult.","Trudno mi prowadzić niezobowiązujące rozmowy."],
+["I sometimes need time alone after socialising.","Czasami potrzebuję samotności po spotkaniach z ludźmi."],
+["I find eye contact uncomfortable or distracting.","Kontakt wzrokowy jest dla mnie niekomfortowy lub rozpraszający."],
+["I find it difficult to understand what someone is feeling from their expression.","Trudno mi rozpoznać uczucia innych na podstawie ich mimiki."],
+["I prefer knowing what will happen in advance.","Wolę wiedzieć z wyprzedzeniem, co się wydarzy."],
+["Certain sounds feel much louder to me than to others.","Niektóre dźwięki wydają mi się znacznie głośniejsze niż innym."],
+["Some textures or clothing sensations bother me.","Niektóre faktury lub odczucia związane z ubraniami mi przeszkadzają."],
+["Bright lights can feel uncomfortable.","Jasne światło może być dla mnie nieprzyjemne."],
+["I notice small details that others may miss.","Zauważam drobne szczegóły, które inni mogą przeoczyć."],
+["I sometimes repeat movements when excited or stressed.","Czasami powtarzam ruchy, gdy jestem podekscytowany lub zestresowany."],
+["I find busy places overwhelming.","Zatłoczone miejsca bywają dla mnie przytłaczające."],
+["I prefer familiar foods or routines.","Wolę znane potrawy i sprawdzone rutyny."],
+["I find it difficult to change from one activity to another.","Trudno mi zmieniać jedną czynność na inną."],
+["I sometimes rehearse conversations in my head.","Czasami ćwiczę rozmowy w myślach."],
+["I copy other people's behaviour to fit in.","Naśladuję zachowanie innych, aby się dopasować."],
+["I feel unsure about social rules.","Nie zawsze rozumiem zasady społeczne."],
+["I prefer spending time with a small number of people.","Wolę spędzać czas z niewielką liczbą osób."],
+["I find group conversations difficult to follow.","Trudno mi nadążać za rozmowami w grupie."],
+["I need time to process questions before answering.","Potrzebuję czasu, aby przemyśleć pytania przed odpowiedzią."],
+["I feel overwhelmed by too much information.","Nadmiar informacji mnie przytłacza."],
+["I find it easier to communicate in writing sometimes.","Czasami łatwiej jest mi komunikować się na piśmie."],
+["These experiences affect my everyday life.","Te doświadczenia wpływają na moje codzienne życie."]
+]},
+{id:"Anxiety",icon:"🌧️",desc:["Worry, stress, tension and anxious feelings.","Zmartwienia, stres, napięcie i uczucie niepokoju."],qs:[
+["I worry about things that might happen.","Martwię się o rzeczy, które mogą się wydarzyć."],
+["I find it difficult to stop worrying.","Trudno mi przestać się martwić."],
+["I feel nervous without knowing exactly why.","Czuję zdenerwowanie, choć nie wiem dokładnie dlaczego."],
+["I expect something to go wrong.","Spodziewam się, że coś pójdzie nie tak."],
+["I find uncertainty uncomfortable.","Niepewność jest dla mnie niekomfortowa."],
+["I replay conversations in my head.","Odtwarzam rozmowy w myślach."],
+["I worry about what other people think of me.","Martwię się tym, co myślą o mnie inni."],
+["I avoid situations because they make me anxious.","Unikam sytuacji, które wywołują u mnie niepokój."],
+["I feel tense or on edge.","Czuję napięcie lub zdenerwowanie."],
+["I find it difficult to relax.","Trudno mi się zrelaksować."],
+["I notice my heart beating faster when worried.","Gdy się martwię, zauważam przyspieszone bicie serca."],
+["I get butterflies or discomfort in my stomach.","Czuję ścisk lub dyskomfort w żołądku."],
+["I struggle to fall asleep because of thoughts.","Myśli utrudniają mi zasypianie."],
+["I imagine worst-case scenarios.","Wyobrażam sobie najgorsze możliwe scenariusze."],
+["I worry about making mistakes.","Martwię się popełnianiem błędów."],
+["I feel nervous when meeting new people.","Denerwuję się podczas poznawania nowych osób."],
+["I find it difficult to ask for help.","Trudno mi prosić o pomoc."],
+["I become overwhelmed by everyday responsibilities.","Codzienne obowiązki mnie przytłaczają."],
+["I need reassurance from others.","Potrzebuję zapewnień ze strony innych osób."],
+["I feel uncomfortable when plans change.","Czuję dyskomfort, gdy plany się zmieniają."],
+["I find it difficult to focus when worried.","Trudno mi się skupić, gdy się martwię."],
+["I worry about things I cannot control.","Martwię się rzeczami, na które nie mam wpływu."],
+["I avoid tasks because I fear doing them badly.","Unikam zadań, ponieważ boję się, że wykonam je źle."],
+["I feel restless when waiting for something.","Czuję niepokój, gdy na coś czekam."],
+["I sometimes feel panicky.","Czasami odczuwam panikę."],
+["I worry about the future.","Martwię się o przyszłość."],
+["I find it hard to switch off my thoughts.","Trudno mi wyłączyć natłok myśli."],
+["I feel nervous before ordinary activities.","Denerwuję się przed zwykłymi czynnościami."],
+["My worries affect my sleep or concentration.","Moje zmartwienia wpływają na sen lub koncentrację."],
+["Anxiety makes everyday life more difficult.","Niepokój utrudnia mi codzienne życie."]
+]},
+{id:"Mood",icon:"💜",desc:["Mood, motivation, energy and emotional wellbeing.","Nastrój, motywacja, energia i samopoczucie emocjonalne."],qs:[
+["I have felt down or low in mood.","Mój nastrój był obniżony."],
+["I have found it difficult to enjoy things.","Trudno mi było czerpać radość z różnych rzeczy."],
+["I have had less energy than usual.","Miałem lub miałam mniej energii niż zwykle."],
+["I have struggled to get started with tasks.","Trudno mi było zabrać się do zadań."],
+["I have felt tired even after resting.","Czułem lub czułam zmęczenie nawet po odpoczynku."],
+["I have found it difficult to concentrate.","Trudno mi było się skoncentrować."],
+["I have felt less interested in hobbies.","Moje zainteresowanie hobby było mniejsze."],
+["I have been harder on myself than usual.","Byłem lub byłam dla siebie bardziej krytyczna niż zwykle."],
+["I have felt hopeless about the future.","Czułem lub czułam beznadzieję związaną z przyszłością."],
+["I have struggled with sleep.","Miałem lub miałam problemy ze snem."],
+["I have slept more than I usually do.","Spałem lub spałam więcej niż zwykle."],
+["I have noticed changes in my appetite.","Zauważyłem lub zauważyłam zmiany apetytu."],
+["I have felt isolated from other people.","Czułem lub czułam się odizolowany od innych."],
+["I have found everyday tasks overwhelming.","Codzienne zadania wydawały mi się przytłaczające."],
+["I have felt irritable or frustrated.","Czułem lub czułam rozdrażnienie albo frustrację."],
+["I have found it difficult to make decisions.","Trudno mi było podejmować decyzje."],
+["I have felt that I am not good enough.","Czułem lub czułam, że nie jestem wystarczająco dobry."],
+["I have struggled to feel positive.","Trudno mi było odczuwać pozytywne emocje."],
+["I have avoided spending time with others.","Unikałem lub unikałam spędzania czasu z innymi."],
+["I have felt emotionally exhausted.","Czułem lub czułam wyczerpanie emocjonalne."],
+["I have found it difficult to maintain routines.","Trudno mi było utrzymać codzienną rutynę."],
+["I have felt less motivated.","Miałem lub miałam mniejszą motywację."],
+["I have struggled to look after myself.","Trudno mi było zadbać o siebie."],
+["I have felt overwhelmed by small problems.","Nawet drobne problemy mnie przytłaczały."],
+["I have found it difficult to talk about my feelings.","Trudno mi było rozmawiać o swoich uczuciach."],
+["I have had trouble remembering things.","Miałem lub miałam trudności z zapamiętywaniem."],
+["I have felt disconnected from activities I enjoy.","Czułem lub czułam się oderwany od czynności, które lubię."],
+["I have struggled to imagine things improving.","Trudno mi było wyobrazić sobie poprawę sytuacji."],
+["My mood has affected my everyday activities.","Mój nastrój wpływał na codzienne czynności."],
+["I would like more support with my wellbeing.","Chciałbym lub chciałabym otrzymać większe wsparcie w dbaniu o samopoczucie."]
+]},
+{id:"OCD",icon:"🔁",desc:["Repeated thoughts, checking and routines.","Nawracające myśli, sprawdzanie i rutyna."],qs:[
+["I sometimes have unwanted thoughts that keep returning.","Czasami pojawiają się u mnie niechciane, powracające myśli."],
+["I feel uncomfortable when things seem uneven or incomplete.","Czuję dyskomfort, gdy coś wydaje się nierówne lub niekompletne."],
+["I feel a strong urge to check things repeatedly.","Odczuwam silną potrzebę wielokrotnego sprawdzania rzeczy."],
+["I worry that I may have forgotten something important.","Martwię się, że mogłem lub mogłam zapomnieć o czymś ważnym."],
+["I repeat actions to feel more certain.","Powtarzam czynności, aby poczuć większą pewność."],
+["I find it difficult to ignore certain thoughts.","Trudno mi ignorować niektóre myśli."],
+["I feel that I must do things in a particular order.","Czuję, że muszę wykonywać rzeczy w określonej kolejności."],
+["I spend longer than I want checking things.","Spędzam więcej czasu na sprawdzaniu, niż bym chciał lub chciała."],
+["I feel distressed when I cannot complete a routine.","Odczuwam niepokój, gdy nie mogę wykonać swojej rutyny."],
+["I seek reassurance about things I have already checked.","Szukam potwierdzenia w sprawach, które już sprawdziłem lub sprawdziłam."],
+["I worry about making a serious mistake.","Martwię się, że popełnię poważny błąd."],
+["I sometimes repeat words or phrases in my mind.","Czasami powtarzam w myślach słowa lub zwroty."],
+["I feel uncomfortable when objects are not arranged how I expect.","Czuję dyskomfort, gdy przedmioty nie są ułożone tak, jak oczekuję."],
+["I struggle to move on from a thought.","Trudno mi przestać myśleć o danej rzeczy."],
+["I feel driven to repeat an action until it feels right.","Czuję przymus powtarzania czynności, aż będzie odpowiednia."],
+["I worry about accidentally causing harm.","Martwię się, że przypadkowo mogę komuś zaszkodzić."],
+["I find it hard to tolerate uncertainty.","Trudno mi tolerować niepewność."],
+["I spend time trying to make thoughts feel complete.","Poświęcam czas na próby uporządkowania myśli."],
+["I repeat tasks even when I know they are finished.","Powtarzam zadania, nawet gdy wiem, że są już skończone."],
+["I feel anxious if I cannot follow a personal routine.","Czuję niepokój, gdy nie mogę przestrzegać swojej rutyny."],
+["I find unwanted thoughts distracting.","Niechciane myśli mnie rozpraszają."],
+["I try to avoid things that trigger uncomfortable thoughts.","Staram się unikać rzeczy wywołujących nieprzyjemne myśli."],
+["I spend time mentally reviewing events.","Spędzam czas na analizowaniu wydarzeń w myślach."],
+["I feel a need to make things perfectly correct.","Czuję potrzebę doprowadzania wszystkiego do perfekcji."],
+["I find it difficult to stop checking.","Trudno mi przestać sprawdzać."],
+["My routines take up more time than I would like.","Moje rutyny zajmują więcej czasu, niż bym chciał lub chciała."],
+["I feel upset when I cannot do things my usual way.","Denerwuję się, gdy nie mogę robić rzeczy w zwykły sposób."],
+["I find it difficult to resist repeating certain actions.","Trudno mi powstrzymać się od powtarzania niektórych czynności."],
+["These thoughts or routines interfere with my day.","Te myśli lub rutyny przeszkadzają mi w codziennym życiu."],
+["I would like help understanding these experiences.","Chciałbym lub chciałabym lepiej zrozumieć te doświadczenia."]
+]},
+{id:"Dyslexia",icon:"📖",desc:["Reading, spelling, written information and learning.","Czytanie, pisownia, informacje pisemne i nauka."],qs:[
+["I find reading slower than I would like.","Czytam wolniej, niż bym chciał lub chciała."],
+["I sometimes lose my place while reading.","Czasami gubię miejsce podczas czytania."],
+["I find spelling difficult.","Pisownia sprawia mi trudność."],
+["I mix up letters when writing.","Myli mi się kolejność liter podczas pisania."],
+["I find reading aloud uncomfortable.","Czytanie na głos jest dla mnie niekomfortowe."],
+["I need to read sentences more than once.","Muszę czytać zdania więcej niż raz."],
+["I find long written instructions difficult.","Długie instrukcje pisemne sprawiają mi trudność."],
+["I sometimes confuse similar-looking words.","Czasami mylę podobnie wyglądające słowa."],
+["I find it difficult to remember spellings.","Trudno mi zapamiętywać pisownię."],
+["I struggle to take notes while listening.","Trudno mi robić notatki podczas słuchania."],
+["I find copying information from a board difficult.","Przepisywanie informacji z tablicy sprawia mi trudność."],
+["I find it hard to organise written work.","Trudno mi organizować prace pisemne."],
+["I sometimes read a word incorrectly.","Czasami odczytuję słowo nieprawidłowo."],
+["I find writing essays or long texts challenging.","Pisanie wypracowań lub długich tekstów jest dla mnie wyzwaniem."],
+["I struggle to remember sequences of letters.","Trudno mi zapamiętywać kolejność liter."],
+["I find learning new vocabulary difficult.","Nauka nowego słownictwa sprawia mi trudność."],
+["I prefer listening to information rather than reading it.","Wolę słuchać informacji, niż je czytać."],
+["I need extra time for reading tasks.","Potrzebuję więcej czasu na zadania związane z czytaniem."],
+["I find punctuation difficult to use.","Trudno mi prawidłowo stosować znaki interpunkcyjne."],
+["I sometimes miss words when reading.","Czasami pomijam słowa podczas czytania."],
+["I find it difficult to summarise written information.","Trudno mi streszczać informacje pisemne."],
+["I struggle to remember written instructions.","Trudno mi zapamiętywać instrukcje pisemne."],
+["I find forms with lots of text difficult.","Formularze z dużą ilością tekstu sprawiają mi trudność."],
+["I sometimes reverse the order of letters.","Czasami zapisuję litery w odwrotnej kolejności."],
+["I find proofreading my own writing challenging.","Sprawdzanie własnych tekstów jest dla mnie trudne."],
+["I prefer visual explanations.","Wolę wyjaśnienia przedstawione w formie wizualnej."],
+["I find it difficult to learn from text alone.","Trudno mi uczyć się wyłącznie z tekstu."],
+["Reading can make me feel tired.","Czytanie może powodować u mnie zmęczenie."],
+["These difficulties affect school, work or daily life.","Te trudności wpływają na szkołę, pracę lub codzienne życie."],
+["I would like to explore different learning strategies.","Chciałbym lub chciałabym poznać różne strategie nauki."]
+]},
+{id:"Sensory",icon:"🎧",desc:["Sound, light, touch, taste and sensory comfort.","Dźwięk, światło, dotyk, smak i komfort sensoryczny."],qs:[
+["Loud sounds bother me more than they seem to bother others.","Głośne dźwięki przeszkadzają mi bardziej niż innym osobom."],
+["I notice background noises when trying to concentrate.","Zauważam dźwięki w tle, gdy próbuję się skoncentrować."],
+["Bright lights make me uncomfortable.","Jasne światło powoduje u mnie dyskomfort."],
+["Certain clothing textures bother me.","Niektóre materiały ubrań mi przeszkadzają."],
+["I dislike unexpected physical touch.","Nie lubię niespodziewanego dotyku."],
+["Some food textures are difficult for me.","Niektóre konsystencje jedzenia są dla mnie trudne do zaakceptowania."],
+["Strong smells can overwhelm me.","Intensywne zapachy mogą mnie przytłaczać."],
+["Busy environments make me feel overloaded.","Zatłoczone otoczenie powoduje u mnie przeciążenie."],
+["I prefer quieter places.","Wolę cichsze miejsca."],
+["I sometimes need to cover my ears.","Czasami muszę zasłaniać uszy."],
+["I find crowded spaces uncomfortable.","Zatłoczone przestrzenie są dla mnie niekomfortowe."],
+["I notice small changes in temperature.","Zauważam niewielkie zmiany temperatury."],
+["I dislike certain tags or seams in clothing.","Nie lubię niektórych metek lub szwów w ubraniach."],
+["Some sounds make me feel irritated.","Niektóre dźwięki wywołują u mnie irytację."],
+["I find fluorescent lighting uncomfortable.","Światło fluorescencyjne jest dla mnie nieprzyjemne."],
+["I need breaks after sensory-heavy activities.","Potrzebuję przerw po intensywnych doświadczeniach sensorycznych."],
+["I sometimes seek out particular textures.","Czasami celowo szukam określonych faktur."],
+["I enjoy repetitive sensory activities.","Lubię powtarzalne czynności sensoryczne."],
+["I find multiple people talking at once overwhelming.","Jednoczesne rozmowy wielu osób mnie przytłaczają."],
+["I prefer predictable sensory environments.","Wolę przewidywalne otoczenie pod względem bodźców."],
+["I can become distracted by visual movement.","Ruch w polu widzenia może mnie rozpraszać."],
+["I find certain tastes unusually strong.","Niektóre smaki wydają mi się wyjątkowo intensywne."],
+["I notice smells that other people do not notice.","Zauważam zapachy, których inni nie wyczuwają."],
+["I find sudden noises startling.","Nagłe dźwięki mnie zaskakują."],
+["I sometimes feel overloaded without knowing why.","Czasami czuję przeciążenie, nie wiedząc dlaczego."],
+["I prefer comfortable familiar surroundings.","Wolę wygodne i znane otoczenie."],
+["I find shopping centres or busy streets tiring.","Centra handlowe i ruchliwe ulice są dla mnie męczące."],
+["I use music or headphones to manage noise.","Używam muzyki lub słuchawek, aby radzić sobie z hałasem."],
+["Sensory experiences affect my daily activities.","Doświadczenia sensoryczne wpływają na moje codzienne czynności."],
+["I would like to understand my sensory preferences better.","Chciałbym lub chciałabym lepiej zrozumieć swoje preferencje sensoryczne."]
+]}
+];
+
+const answers=[
+{en:"Never",pl:"Nigdy",v:0},
+{en:"Rarely",pl:"Rzadko",v:1},
+{en:"Sometimes",pl:"Czasami",v:2},
+{en:"Often",pl:"Często",v:3},
+{en:"Very often",pl:"Bardzo często",v:4}
+];
+
+const articles=[
+{icon:"⚡",title:["Understanding attention","Zrozumienie uwagi"],body:["Attention can vary from day to day. Try breaking larger tasks into small steps, using reminders and reducing distractions.","Uwaga może się zmieniać z dnia na dzień. Spróbuj dzielić większe zadania na małe kroki, korzystać z przypomnień i ograniczać rozpraszacze."]},
+{icon:"🧩",title:["Understanding different minds","Różne sposoby myślenia"],body:["People experience communication, routines and sensory information differently. There is no single correct way to experience the world.","Ludzie różnie doświadczają komunikacji, rutyny i bodźców sensorycznych. Nie istnieje jeden właściwy sposób odbierania świata."]},
+{icon:"🌧️",title:["Managing worry","Radzenie sobie ze zmartwieniami"],body:["Try writing down worries, identifying what you can control and using slow breathing to settle your body.","Spróbuj zapisywać swoje zmartwienia, określać, na co masz wpływ, i stosować powolne oddychanie, aby się uspokoić."]},
+{icon:"💜",title:["Looking after your mood","Dbanie o nastrój"],body:["Small routines can help: regular meals, sleep, gentle movement and staying connected with people you trust.","Pomocne mogą być drobne rutyny: regularne posiłki, sen, łagodna aktywność i kontakt z zaufanymi osobami."]},
+{icon:"🎧",title:["Sensory breaks","Przerwy sensoryczne"],body:["A quieter room, comfortable clothing, headphones or a short break may help when your surroundings feel overwhelming.","Cichszy pokój, wygodne ubrania, słuchawki lub krótka przerwa mogą pomóc, gdy otoczenie staje się przytłaczające."]},
+{icon:"📚",title:["Learning strategies","Strategie uczenia się"],body:["Try audio, diagrams, short reading sessions and extra time. Different approaches work for different people.","Wypróbuj nagrania audio, diagramy, krótkie sesje czytania i dodatkowy czas. Różne metody sprawdzają się u różnych osób."]},
+{icon:"⏱️",title:["Getting started","Jak zacząć"],body:["Choose one tiny first step. Work for a short period, take a break and celebrate progress rather than perfection.","Wybierz jeden mały pierwszy krok. Pracuj przez krótki czas, zrób przerwę i doceniaj postępy zamiast dążyć do perfekcji."]},
+{icon:"😴",title:["Sleep and rest","Sen i odpoczynek"],body:["A regular bedtime, less screen time before sleep and a calm wind-down routine can make rest easier for many people.","Stała pora snu, mniej ekranów przed snem i spokojna rutyna wieczorna mogą ułatwić odpoczynek wielu osobom."]},
+{icon:"🗣️",title:["Talking to someone you trust","Rozmowa z zaufaną osobą"],body:["You do not need perfect words. Saying \"I have been finding things hard lately\" is a good start.","Nie potrzebujesz idealnych słów. Powiedzenie „ostatnio jest mi trudno” to dobry początek."]},
+{icon:"🚶",title:["Gentle movement","Łagodny ruch"],body:["A short walk, stretching or dancing to one song can lift energy and help you reset between tasks.","Krótki spacer, rozciąganie lub taniec do jednej piosenki mogą dodać energii i pomóc się zresetować między zadaniami."]}
+];
+
+let language=localStorage.getItem("mf_language")||"en";
+let currentTest=null,currentQuestion=0,currentAnswers=[];
+let lastResult=null,selectedMood=0;
+let timerSeconds=1500,timerInterval=null,timerRunning=false;
+let history=LS.get(K("history"),[]);
+let moods=LS.get(K("moods"),[]);
+let profile=LS.get(K("profile"),{});
+let journal=LS.get(K("journal"),[]);
+let avatarData=profile.avatar||"";
+let timerMode="focus";
+const L=(en,pl)=>language==="pl"?pl:en;
+
+const words={
+en:{
+theme:"🌙 Theme",welcome:"Welcome to MindFocus 🧠",back:"← Back to assessments",previous:"← Previous",next:"Next →",finish:"Finish assessment",
+question:"QUESTION",required:"Please choose an answer first.",start:"Start assessment",none:"No entries yet.",
+historyDelete:"Delete",confirmClear:"Delete all assessment history?",saved:"Profile saved!",chooseMood:"Choose a mood first.",
+emptyName:"Your name",verySad:"Very sad",sad:"Sad",okay:"Okay",happy:"Happy",veryHappy:"Very happy",
+focus:"FOCUS SESSION",break:"BREAK TIME",done:"Great work! Your session is complete!",rest:"Time to relax!",
+low:"Lower self-reflection score",medium:"Moderate self-reflection score",high:"Higher self-reflection score",veryHigh:"High self-reflection score",
+lowDesc:"Your answers suggest these experiences occur less frequently for you.",
+mediumDesc:"Some of the experiences described may sometimes occur in your life.",
+highDesc:"Many of the experiences described may feel familiar to you.",
+veryHighDesc:"Your answers suggest many of the experiences described occur frequently.",
+lowAdvice:"You can still use helpful wellbeing strategies and revisit this assessment if your experiences change.",
+mediumAdvice:"Notice when these experiences occur. Breaks, routines and talking with someone you trust may help.",
+highAdvice:"It may help to note specific situations and how they affect everyday life. If they concern you, consider speaking with a qualified professional.",
+veryHighAdvice:"If these experiences make everyday life difficult, consider speaking with a doctor, psychologist or another qualified professional.",
+score:"Score",date:"Date",downloadTitle:"MINDFOCUS SELF-REFLECTION RESULT",downloadDisclaimer:"This is not a diagnosis or a validated clinical screening result.",
+imageError:"Please choose an image.",imageSize:"Please choose an image smaller than 2 MB."
+},
+pl:{
+theme:"🌙 Motyw",welcome:"Witaj w MindFocus 🧠",back:"← Wróć do testów",previous:"← Wstecz",next:"Dalej →",finish:"Zakończ test",
+question:"PYTANIE",required:"Najpierw wybierz odpowiedź.",start:"Rozpocznij test",none:"Brak wpisów.",
+historyDelete:"Usuń",confirmClear:"Usunąć całą historię testów?",saved:"Profil zapisany!",chooseMood:"Najpierw wybierz nastrój.",
+emptyName:"Twoje imię",verySad:"Bardzo źle",sad:"Źle",okay:"Tak sobie",happy:"Dobrze",veryHappy:"Bardzo dobrze",
+focus:"SESJA SKUPIENIA",break:"CZAS NA PRZERWĘ",done:"Świetna robota! Sesja została zakończona!",rest:"Czas odpocząć!",
+low:"Niski wynik autorefleksji",medium:"Umiarkowany wynik autorefleksji",high:"Podwyższony wynik autorefleksji",veryHigh:"Wysoki wynik autorefleksji",
+lowDesc:"Twoje odpowiedzi wskazują, że opisane doświadczenia występują u Ciebie rzadziej.",
+mediumDesc:"Niektóre opisane doświadczenia mogą czasami pojawiać się w Twoim życiu.",
+highDesc:"Wiele opisanych doświadczeń może być Ci znajomych.",
+veryHighDesc:"Twoje odpowiedzi wskazują, że wiele z opisanych doświadczeń występuje często.",
+lowAdvice:"Możesz nadal korzystać ze strategii dbania o siebie i wrócić do testu, jeśli Twoje doświadczenia się zmienią.",
+mediumAdvice:"Zwróć uwagę, kiedy pojawiają się te doświadczenia. Pomocne mogą być przerwy, rutyny i rozmowa z zaufaną osobą.",
+highAdvice:"Warto zapisywać konkretne sytuacje i ich wpływ na codzienne życie. Jeśli Cię martwią, porozmawiaj ze specjalistą.",
+veryHighAdvice:"Jeśli te doświadczenia utrudniają codzienne życie, rozważ rozmowę z lekarzem, psychologiem lub innym wykwalifikowanym specjalistą.",
+score:"Wynik",date:"Data",downloadTitle:"WYNIK AUTOREFLEKSJI MINDFOCUS",downloadDisclaimer:"To nie jest diagnoza ani zwalidowany wynik badania klinicznego.",
+imageError:"Wybierz plik graficzny.",imageSize:"Wybierz obraz mniejszy niż 2 MB."
+}
+};
+function tr(key){return words[language][key]||key}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+const esc=escapeHTML;
+
+function changeLanguage(lang){
+ language=lang;
+ localStorage.setItem("mf_language",lang);
+ document.documentElement.lang=lang;
+ $("languageSelect").value=lang;
+ document.querySelectorAll("[data-en][data-pl]").forEach(el=>{el.textContent=el.getAttribute("data-"+lang)});
+ document.querySelectorAll("[data-placeholder-en][data-placeholder-pl]").forEach(el=>{el.placeholder=el.getAttribute("data-placeholder-"+lang)});
+ document.querySelectorAll("option[data-en][data-pl]").forEach(el=>{el.textContent=el.getAttribute("data-"+lang)});
+ $("themeButton").textContent=tr("theme");
+ updateWelcome();
+ renderTests();renderHistory();renderMoods();renderArticles();updateStats();
+ if(currentTest&&$("takingTest").classList.contains("active"))renderQuestion();
+ if(lastResult&&$("results").classList.contains("active"))showResult(lastResult,false);
+ updateTimerLabels();
+ renderExtra();
+}
+function updateWelcome(){
+ const u=me();
+ const name=profile.nickname||(u?u.username:"");
+ $("welcomeTitle").textContent=name?(language==="pl"?"Witaj ponownie, ":"Welcome back, ")+name+"! 🧠":tr("welcome");
+}
+function page(id){
+ if(id!=="focus"&&breathOn)toggleBreath();
+ const m=me();
+ if(session&&(!m||m.suspended)){logout(true)}
+ else if(m&&m.mustChange&&id!=="profile"){page("profile");setMsg("pwMsg",L("Please choose a new password before continuing.","Ustaw nowe hasło, zanim przejdziesz dalej."),"err");return}
+ if(id==="staff"&&rank()<1){showAuth("staff");return}
+ if(id==="meetings"&&!session){showAuth("login",L("Please log in to book a meeting.","Zaloguj się, aby umówić spotkanie."));return}
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ $(id).classList.add("active");
+ document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+ if(id==="history")renderHistory();
+ if(id==="mood")renderMoods();
+ if(id==="journal")renderJournal();
+ if(id==="profile")loadProfile();
+ if(id==="dashboard"){updateStats();renderAnnouncement();renderNextMeeting()}
+ if(id==="meetings")renderMeetings();
+ if(id==="staff")renderStaff();
+ window.scrollTo(0,0);
+}
+function toggleTheme(){
+ document.body.classList.toggle("light");
+ localStorage.setItem("mf_theme",document.body.classList.contains("light")?"light":"dark");
+}
+if(localStorage.getItem("mf_theme")==="light")document.body.classList.add("light");
+
+function renderTests(){
+ const grid=$("testGrid");grid.innerHTML="";
+ tests.forEach(test=>{
+  const card=document.createElement("div");card.className="card test-card";
+  const desc=test.desc[language==="pl"?1:0];
+  card.innerHTML=`<div class="card-icon">${test.icon}</div><h2>${test.id}</h2><p class="muted">${desc}</p><span class="tag">${language==="pl"?"30 pytań":"30 questions"}</span><button class="primary">${tr("start")} →</button>`;
+  card.querySelector("button").onclick=()=>startTest(test.id);
+  grid.appendChild(card);
+ });
+}
+function startTest(id){
+ currentTest=tests.find(x=>x.id===id);currentQuestion=0;currentAnswers=Array(30).fill(null);
+ page("takingTest");renderQuestion();
+}
+function renderQuestion(){
+ const q=currentTest.qs[currentQuestion][language==="pl"?1:0];
+ $("testName").textContent=currentTest.icon+" "+currentTest.id;
+ $("questionNumber").textContent=tr("question")+" "+(currentQuestion+1)+" / 30";
+ $("questionText").textContent=q;
+ $("testProgress").style.width=((currentQuestion+1)/30*100)+"%";
+ const box=$("answerOptions");box.innerHTML="";
+ answers.forEach(a=>{
+  const label=document.createElement("label");
+  label.className="answer-option"+(currentAnswers[currentQuestion]===a.v?" selected":"");
+  label.innerHTML=`<input type="radio" name="answer" value="${a.v}" ${currentAnswers[currentQuestion]===a.v?"checked":""}><span>${a[language]}</span>`;
+  label.querySelector("input").onchange=()=>{currentAnswers[currentQuestion]=a.v;renderQuestion()};
+  box.appendChild(label);
+ });
+ $("previousButton").textContent=tr("previous");
+ $("previousButton").disabled=currentQuestion===0;
+ $("nextButton").textContent=currentQuestion===29?tr("finish"):tr("next");
+}
+function previousQuestion(){if(currentQuestion>0){currentQuestion--;renderQuestion()}}
+function nextQuestion(){
+ if(currentAnswers[currentQuestion]===null){alert(tr("required"));return}
+ if(currentQuestion<29){currentQuestion++;renderQuestion();return}
+ finishTest();
+}
+function finishTest(){
+ const total=currentAnswers.reduce((a,b)=>a+b,0);
+ const result={id:currentTest.id,score:Math.round(total/120*100),total,date:new Date().toLocaleString(),answers:currentAnswers.slice()};
+ history.unshift(result);LS.set(K("history"),history);
+ lastResult=result;showResult(result);updateStats();
+}
+function showResult(result,changePage=true){
+ $("resultName").textContent=result.id;
+ $("resultScore").textContent=result.score+"%";
+ $("resultProgress").style.width=result.score+"%";
+ let prefix;
+ if(result.score<25)prefix="low";
+ else if(result.score<50)prefix="medium";
+ else if(result.score<75)prefix="high";
+ else prefix="veryHigh";
+ $("resultLevel").textContent=tr(prefix);
+ $("resultDescription").textContent=tr(prefix+"Desc");
+ $("resultAdvice").textContent=tr(prefix+"Advice");
+ $("resultChange").textContent=previousNote(result);
+ if(changePage)page("results");
+}
+function downloadResult(){
+ if(!lastResult)return;
+ const test=tests.find(t=>t.id===lastResult.id);
+ const content=[tr("downloadTitle"),"Assessment: "+lastResult.id,tr("score")+": "+lastResult.score+"%",tr("date")+": "+lastResult.date,"","Answers:",...lastResult.answers.map((v,i)=>`${i+1}. ${test.qs[i][language==="pl"?1:0]} — ${answers[v][language]}`),"",tr("downloadDisclaimer")].join("\n");
+ const blob=new Blob([content],{type:"text/plain;charset=utf-8"});
+ const url=URL.createObjectURL(blob);const a=document.createElement("a");
+ a.href=url;a.download="MindFocus-result.txt";a.click();URL.revokeObjectURL(url);
+}
+function renderHistory(){
+ renderScoreChart();
+ const el=$("historyList");
+ if(!history.length){el.innerHTML='<p class="muted">'+tr("none")+'</p>';return}
+ el.innerHTML=history.map((h,i)=>`<div class="history-item"><strong>${esc(h.id)}</strong><div class="muted">${esc(h.date)}</div><div class="stat">${Number(h.score)}%</div><button class="secondary" onclick="deleteHistory(${i})">${tr("historyDelete")}</button></div>`).join("");
+}
+function deleteHistory(i){history.splice(i,1);LS.set(K("history"),history);renderHistory();updateStats()}
+function clearHistory(){
+ if(!confirm(tr("confirmClear")))return;
+ history=[];LS.set(K("history"),[]);renderHistory();updateStats();
+}
+function updateStats(){
+ $("statTests").textContent=history.length;
+ $("statMood").textContent=moods.length;
+ if($("statStreak")){const n=moodStreak();$("statStreak").textContent=L(n+(n===1?" day":" days"),n+(n===1?" dzień":" dni"))}
+ $("statAverage").textContent=history.length?Math.round(history.reduce((a,b)=>a+b.score,0)/history.length)+"%":"0%";
+}
+function selectMood(n,btn){
+ selectedMood=n;document.querySelectorAll(".mood-btn").forEach(b=>b.classList.remove("selected"));btn.classList.add("selected");
+}
+function saveMood(){
+ if(!selectedMood){alert(tr("chooseMood"));return}
+ const emojis=["","😞","😕","😐","🙂","😄"];
+ moods.unshift({value:selectedMood,emoji:emojis[selectedMood],note:$("moodNote").value,date:new Date().toLocaleString(),day:fmtDate(new Date())});
+ LS.set(K("moods"),moods);
+ $("moodNote").value="";selectedMood=0;
+ document.querySelectorAll(".mood-btn").forEach(b=>b.classList.remove("selected"));
+ renderMoods();updateStats();
+}
+function renderMoods(){
+ renderMoodChart();
+ const el=$("moodHistory");
+ if(!moods.length){el.innerHTML='<p class="muted">'+tr("none")+'</p>';return}
+ el.innerHTML=moods.map(m=>`<div class="history-item"><strong style="font-size:25px">${esc(m.emoji)}</strong> <span class="muted">${esc(m.date)}</span><p>${esc(m.note||"")}</p></div>`).join("");
+}
+function updateTimer(){const m=Math.floor(timerSeconds/60),s=timerSeconds%60;$("timerDisplay").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")}
+function updateTimerLabels(){$("timerMode").textContent=timerMode==="break"?tr("break"):tr("focus")}
+function startTimer(){
+ if(timerRunning)return;
+ if(timerSeconds<=0)resetTimer();
+ timerRunning=true;
+ timerInterval=setInterval(()=>{
+  timerSeconds--;updateTimer();
+  if(timerSeconds<=0){
+   clearInterval(timerInterval);timerRunning=false;
+   $("timerMessage").textContent=tr("done");
+   if("Notification" in window&&Notification.permission==="granted")new Notification("MindFocus",{body:tr("done")});
+   else if("Notification" in window&&Notification.permission==="default")Notification.requestPermission();
+  }
+ },1000);
+}
+function pauseTimer(){clearInterval(timerInterval);timerRunning=false}
+function resetTimer(){
+ pauseTimer();timerMode="focus";
+ timerSeconds=Math.max(1,Math.min(180,Number($("focusMinutes").value)||25))*60;
+ $("timerMessage").textContent="";
+ updateTimer();updateTimerLabels();
+}
+function setBreak(){
+ pauseTimer();timerMode="break";timerSeconds=300;updateTimer();updateTimerLabels();
+ $("timerMessage").textContent=tr("rest");
+}
+$("focusMinutes").addEventListener("change",resetTimer);
+
+function renderArticles(){
+ $("articles").innerHTML=articles.map(a=>`<div class="card article"><div class="card-icon">${a.icon}</div><h3>${a.title[language==="pl"?1:0]}</h3><p class="muted">${a.body[language==="pl"?1:0]}</p></div>`).join("");
+}
+function loadProfile(){
+ $("nickname").value=profile.nickname||"";
+ $("bio").value=profile.bio||"";
+ $("goals").value=profile.goals||"";
+ $("favourite").value=profile.favourite||"ADHD";
+ avatarData=profile.avatar||"";updateAvatar();
+ renderAccountCard();
+}
+function updateAvatar(){
+ const el=$("profileAvatar");
+ if(avatarData)el.innerHTML=`<img src="${avatarData}" alt="Profile picture">`;
+ else el.textContent=((profile.nickname||(me()&&me().username)||"?").trim().charAt(0).toUpperCase())||"?";
+}
+function uploadAvatar(event){
+ const file=event.target.files[0];if(!file)return;
+ if(!file.type.startsWith("image/")){alert(tr("imageError"));return}
+ if(file.size>2*1024*1024){alert(tr("imageSize"));return}
+ const reader=new FileReader();
+ reader.onload=()=>{avatarData=reader.result;updateAvatar()};
+ reader.readAsDataURL(file);
+}
+function saveProfile(){
+ profile={nickname:$("nickname").value.trim(),bio:$("bio").value.trim(),goals:$("goals").value.trim(),favourite:$("favourite").value,avatar:avatarData};
+ LS.set(K("profile"),profile);
+ updateAvatar();updateWelcome();
+ $("profileMessage").textContent=tr("saved");
+ setTimeout(()=>$("profileMessage").textContent="",2500);
+}
+
+/* ============ AUTH ============ */
+let authCurrentTab="login",staffRole="mod";
+function setMsg(id,text,type){const el=$(id);if(!text){el.className="msg";el.textContent="";return}el.className="msg show "+(type||"err");el.textContent=text}
+function showAuth(tab,msg){page("auth");authTab(tab||"login");if(msg)setMsg("authMsg",msg,"err")}
+function authTab(t){
+ authCurrentTab=t;
+ document.querySelectorAll("#authTabs .tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===t));
+ $("loginForm").classList.toggle("hidden",t!=="login");
+ $("signupForm").classList.toggle("hidden",t!=="signup");
+ $("staffPane").classList.toggle("hidden",t!=="staff");
+ const hasOwner=getUsers().some(u=>u.role==="owner");
+ $("staffForm").classList.toggle("hidden",!hasOwner);
+ $("rolePick").classList.toggle("hidden",!hasOwner);
+ $("setupForm").classList.toggle("hidden",hasOwner);
+ setMsg("authMsg","");
+}
+function pickStaffRole(r){staffRole=r;document.querySelectorAll("#rolePick .tab").forEach(b=>b.classList.toggle("active",b.dataset.role===r))}
+function checkNewAccount(username,email,pw,pw2){
+ if(!/^[A-Za-z0-9_.-]{3,20}$/.test(username))return L("Username must be 3–20 characters: letters, numbers, . _ -","Nazwa użytkownika: 3–20 znaków (litery, cyfry, . _ -).");
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return L("Please enter a valid email address.","Podaj prawidłowy adres e-mail.");
+ if(pw.length<8)return L("Password must be at least 8 characters.","Hasło musi mieć co najmniej 8 znaków.");
+ if(pw!==pw2)return L("Passwords do not match.","Hasła nie są takie same.");
+ const us=getUsers();
+ if(us.some(u=>u.username.toLowerCase()===username.toLowerCase()))return L("That username is already taken.","Ta nazwa użytkownika jest zajęta.");
+ if(us.some(u=>u.email.toLowerCase()===email.toLowerCase()))return L("An account with that email already exists.","Konto z tym adresem e-mail już istnieje.");
+ return "";
+}
+async function makeUser(username,email,pw,role,extra){
+ const salt=newSalt();
+ return Object.assign({id:uid(),username,email,salt,hash:await hashPw(pw,salt),role,created:Date.now(),suspended:false,mustChange:false,title:"",bio:"",avail:{days:[1,2,3,4,5],start:9,end:17,accepting:true}},extra||{});
+}
+function lockWait(name){const l=LS.get("mf_lock",{})[name.toLowerCase()];return l&&l.until>Date.now()?Math.ceil((l.until-Date.now())/1000):0}
+function recordFail(name){const all=LS.get("mf_lock",{});const k=name.toLowerCase();const l=all[k]||{n:0,until:0};l.n++;if(l.n>=5){l.until=Date.now()+60000;l.n=0}all[k]=l;LS.set("mf_lock",all)}
+function clearFails(name){const all=LS.get("mf_lock",{});delete all[name.toLowerCase()];LS.set("mf_lock",all)}
+async function authenticate(ident,pw){
+ ident=ident.trim();
+ const w=lockWait(ident);
+ if(w)return {err:L("Too many attempts. Try again in "+w+" seconds.","Zbyt wiele prób. Spróbuj ponownie za "+w+" s.")};
+ const u=getUsers().find(x=>x.username.toLowerCase()===ident.toLowerCase()||x.email.toLowerCase()===ident.toLowerCase());
+ const h=await hashPw(pw,u?u.salt:"none");
+ if(!u||u.hash!==h){recordFail(ident);return {err:L("Incorrect details. Please check and try again.","Nieprawidłowe dane. Sprawdź i spróbuj ponownie.")}}
+ clearFails(ident);
+ if(u.suspended)return {err:L("This account has been suspended. Please contact the team.","To konto zostało zawieszone. Skontaktuj się z zespołem.")};
+ return {user:u};
+}
+async function doLogin(e){
+ e.preventDefault();
+ const r=await authenticate($("liUser").value,$("liPass").value);
+ if(r.err)return setMsg("authMsg",r.err);
+ if(r.user.role!=="user")return setMsg("authMsg",L("Staff accounts must use the Staff login tab.","Konta personelu muszą korzystać z zakładki logowania personelu."));
+ $("liPass").value="";startSession(r.user);
+}
+async function doStaffLogin(e){
+ e.preventDefault();
+ const r=await authenticate($("stUser").value,$("stPass").value);
+ if(r.err)return setMsg("authMsg",r.err);
+ if(r.user.role!==staffRole)return setMsg("authMsg",L("Incorrect details. Please check and try again.","Nieprawidłowe dane. Sprawdź i spróbuj ponownie."));
+ $("stPass").value="";startSession(r.user);
+}
+async function doSignup(e){
+ e.preventDefault();
+ const un=$("suUser").value.trim(),em=$("suEmail").value.trim(),p=$("suPass").value,p2=$("suPass2").value;
+ const err=checkNewAccount(un,em,p,p2);if(err)return setMsg("authMsg",err);
+ const u=await makeUser(un,em,p,"user");
+ const us=getUsers();us.push(u);saveUsers(us);
+ $("suPass").value=$("suPass2").value="";startSession(u);
+}
+async function doOwnerSetup(e){
+ e.preventDefault();
+ if(getUsers().some(u=>u.role==="owner"))return authTab("staff");
+ const un=$("osUser").value.trim(),em=$("osEmail").value.trim(),p=$("osPass").value,p2=$("osPass2").value;
+ const err=checkNewAccount(un,em,p,p2);if(err)return setMsg("authMsg",err);
+ const u=await makeUser(un,em,p,"owner");
+ const us=getUsers();us.push(u);saveUsers(us);
+ $("osPass").value=$("osPass2").value="";startSession(u);addAudit("Owner account created");
+}
+function startSession(u){
+ session={id:u.id};LS.set("mf_session",session);
+ reloadUserData();
+ if(u.role!=="user")addAudit("Logged in");
+ if(u.mustChange){page("profile");setMsg("pwMsg",L("Please choose a new password now.","Ustaw teraz nowe hasło."),"err");return}
+ page(u.role==="user"?"dashboard":"staff");
+}
+function logout(silent){
+ session=null;localStorage.removeItem("mf_session");reloadUserData();
+ if(silent!==true)page("dashboard");
+}
+function reloadUserData(){
+ history=LS.get(K("history"),[]);moods=LS.get(K("moods"),[]);profile=LS.get(K("profile"),{});journal=LS.get(K("journal"),[]);
+ avatarData=profile.avatar||"";lastResult=null;
+ updateWelcome();renderHistory();renderMoods();updateStats();renderExtra();
+}
+function renderAccountCard(){
+ const u=me();$("pwCard").classList.toggle("hidden",!u);
+ if(u)$("accountInfo").textContent=u.username+" · "+u.email+" · "+roleName(u.role);
+}
+async function changePassword(e){
+ e.preventDefault();const u=me();if(!u)return;
+ const o=$("pwOld").value,n=$("pwNew").value,n2=$("pwNew2").value;
+ if(await hashPw(o,u.salt)!==u.hash)return setMsg("pwMsg",L("Current password is incorrect.","Obecne hasło jest nieprawidłowe."));
+ if(n.length<8)return setMsg("pwMsg",L("Password must be at least 8 characters.","Hasło musi mieć co najmniej 8 znaków."));
+ if(n!==n2)return setMsg("pwMsg",L("Passwords do not match.","Hasła nie są takie same."));
+ const us=getUsers();const t=us.find(x=>x.id===u.id);
+ t.salt=newSalt();t.hash=await hashPw(n,t.salt);t.mustChange=false;saveUsers(us);
+ $("pwOld").value=$("pwNew").value=$("pwNew2").value="";
+ setMsg("pwMsg",L("Password changed.","Hasło zostało zmienione."),"ok");
+}
+
+/* ============ ROLES / HEADER / ANNOUNCEMENT ============ */
+const ROLE_LABEL={user:["Member","Użytkownik"],mod:["Moderator","Moderator"],admin:["Admin","Administrator"],owner:["Owner","Właściciel"]};
+function roleName(r){return ROLE_LABEL[r][language==="pl"?1:0]}
+function renderHeader(){
+ const u=me();
+ $("userChip").innerHTML=u?`<span class="tag">${esc(u.username)} · ${roleName(u.role)}</span>`:"";
+ $("authBtn").textContent=u?L("Log out","Wyloguj"):L("Log in / Sign up","Zaloguj / Załóż konto");
+ $("authBtn").onclick=u?()=>logout():()=>showAuth("login");
+ $("staffLink").classList.toggle("hidden",!!u);
+ $("staffLink").textContent=L("🛡️ Staff","🛡️ Personel");
+ const s=rank()>=1;
+ $("navStaff").classList.toggle("hidden",!s);$("navStaffLabel").classList.toggle("hidden",!s);
+}
+function renderAnnouncement(){
+ const a=LS.get("mf_announcement",null);
+ $("announceCard").classList.toggle("hidden",!(a&&a.text));
+ if(a&&a.text){$("announceText").textContent=a.text;$("announceMeta").textContent=a.by+" · "+new Date(a.t).toLocaleDateString()}
+}
+function renderExtra(){
+ renderHeader();renderAnnouncement();renderNextMeeting();renderHelp();updateBreathUI();renderTip();renderJournal();
+ if(session)renderMeetings();
+ if(rank()>=1)renderStaff();
+ renderAccountCard();
+ if($("auth").classList.contains("active"))authTab(authCurrentTab);
+}
+
+/* ============ MEETINGS ============ */
+const TOPICS=[["General wellbeing chat","Rozmowa o samopoczuciu"],["Understanding my results","Omówienie moich wyników"],["Strategies & routines","Strategie i rutyny"],["Using MindFocus","Korzystanie z MindFocus"],["Something else","Coś innego"]];
+const STATUS={pending:["Pending","Oczekuje"],confirmed:["Confirmed","Potwierdzone"],declined:["Declined","Odrzucone"],cancelled:["Cancelled","Anulowane"],completed:["Completed","Zakończone"]};
+const DAYS=[["Sun","Nd"],["Mon","Pn"],["Tue","Wt"],["Wed","Śr"],["Thu","Cz"],["Fri","Pt"],["Sat","Sb"]];
+let selectedSlot="";
+const pad=n=>String(n).padStart(2,"0");
+const fmtDate=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+function parseDT(date,hour){const p=String(date).split("-").map(Number);return new Date(p[0],p[1]-1,p[2],hour||0)}
+function availOf(u){return Object.assign({days:[1,2,3,4,5],start:9,end:17,accepting:true},u.avail||{})}
+function staffList(){return getUsers().filter(u=>u.role!=="user"&&!u.suspended&&availOf(u).accepting!==false)}
+function slotsFor(spec,date){
+ if(!spec||!date)return [];
+ const a=availOf(spec),dt=parseDT(date,0);
+ if(isNaN(dt)||!a.days.includes(dt.getDay()))return [];
+ const taken=getBookings().filter(b=>b.specialistId===spec.id&&b.date===date&&["pending","confirmed"].includes(b.status)).map(b=>b.time);
+ const out=[];
+ for(let h=a.start;h<a.end;h++){const t=pad(h)+":00";out.push({time:t,taken:taken.includes(t),past:parseDT(date,h)<=new Date()})}
+ return out;
+}
+function renderMeetings(){
+ if(!session)return;
+ const specs=staffList().filter(s=>s.id!==session.id);
+ const sel=$("meetSpec"),cur=sel.value;
+ sel.innerHTML=specs.length?specs.map(s=>`<option value="${s.id}">${esc(s.username)} — ${roleName(s.role)}${s.title?" · "+esc(s.title):""}</option>`).join(""):`<option value="">${L("No specialists available yet","Brak dostępnych specjalistów")}</option>`;
+ if(specs.some(s=>s.id===cur))sel.value=cur;
+ const d=$("meetDate"),today=new Date(),max=new Date();max.setDate(max.getDate()+60);
+ d.min=fmtDate(today);d.max=fmtDate(max);
+ const ts=$("meetTopic"),tc=ts.value||"0";
+ ts.innerHTML=TOPICS.map((t,i)=>`<option value="${i}">${t[language==="pl"?1:0]}</option>`).join("");ts.value=tc;
+ onSpecChange(true);renderMyMeetings();
+}
+function onSpecChange(keep){
+ const s=getUsers().find(u=>u.id===$("meetSpec").value);
+ if(s){const a=availOf(s);$("specInfo").textContent=(s.bio?s.bio+" · ":"")+a.days.map(x=>DAYS[x][language==="pl"?1:0]).join(", ")+" · "+pad(a.start)+":00–"+pad(a.end)+":00"}
+ else $("specInfo").textContent="";
+ if(keep!==true)selectedSlot="";
+ renderSlots();
+}
+function onDateChange(){selectedSlot="";renderSlots()}
+function renderSlots(){
+ const box=$("slotBox"),date=$("meetDate").value;
+ const spec=getUsers().find(u=>u.id===$("meetSpec").value);
+ if(!spec){box.innerHTML="";return}
+ if(!date){box.innerHTML=`<span class="muted small">${L("Pick a date first.","Najpierw wybierz datę.")}</span>`;return}
+ const max=new Date();max.setDate(max.getDate()+61);
+ if(parseDT(date,0)>max){box.innerHTML=`<span class="muted small">${L("You can book up to 60 days ahead.","Można rezerwować do 60 dni naprzód.")}</span>`;return}
+ const sl=slotsFor(spec,date);
+ if(!sl.length){box.innerHTML=`<span class="muted small">${L("Not available on this day.","Brak dostępności w tym dniu.")}</span>`;return}
+ box.innerHTML=sl.map(s=>`<button type="button" class="slot${s.time===selectedSlot?" selected":""}" ${s.taken||s.past?"disabled":""} onclick="pickSlot('${s.time}')">${s.time}</button>`).join("");
+}
+function pickSlot(t){selectedSlot=t;renderSlots()}
+function activeBookingsOf(userId){return getBookings().filter(b=>b.userId===userId&&["pending","confirmed"].includes(b.status)&&parseDT(b.date,+b.time.slice(0,2))>new Date())}
+function bookMeeting(){
+ const u=me();if(!u)return;
+ const err=m=>setMsg("meetMsg",m,"err");
+ const spec=getUsers().find(x=>x.id===$("meetSpec").value),date=$("meetDate").value;
+ if(!spec||spec.role==="user"||spec.suspended||spec.id===u.id)return err(L("Please choose a specialist.","Wybierz specjalistę."));
+ if(!date)return err(L("Please choose a date.","Wybierz datę."));
+ if(!selectedSlot)return err(L("Please choose a time.","Wybierz godzinę."));
+ const sl=slotsFor(spec,date).find(s=>s.time===selectedSlot);
+ if(!sl||sl.taken||sl.past)return err(L("That time is no longer available.","Ten termin jest już niedostępny."));
+ const max=new Date();max.setDate(max.getDate()+61);
+ if(parseDT(date,0)>max)return err(L("You can book up to 60 days ahead.","Można rezerwować do 60 dni naprzód."));
+ const mine=activeBookingsOf(u.id);
+ if(mine.length>=5)return err(L("You already have 5 upcoming meetings. Cancel one to book another.","Masz już 5 nadchodzących spotkań. Anuluj jedno, aby umówić kolejne."));
+ if(mine.some(b=>b.date===date&&b.time===selectedSlot))return err(L("You already have a meeting at that time.","Masz już spotkanie w tym terminie."));
+ const all=getBookings();
+ all.push({id:uid(),userId:u.id,userName:u.username,specialistId:spec.id,specialistName:spec.username,specialistRole:spec.role,date,time:selectedSlot,topic:Number($("meetTopic").value)||0,note:$("meetNote").value.trim().slice(0,300),status:"pending",created:Date.now()});
+ saveBookings(all);selectedSlot="";$("meetNote").value="";
+ setMsg("meetMsg",L("Request sent. You will see the status under My meetings.","Prośba wysłana. Status zobaczysz w sekcji Moje spotkania."),"ok");
+ renderSlots();renderMyMeetings();
+}
+function statusBadge(s){return `<span class="badge b-${s}">${STATUS[s][language==="pl"?1:0]}</span>`}
+function renderMyMeetings(){
+ const u=me();if(!u)return;
+ const list=getBookings().filter(b=>b.userId===u.id).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+ $("myMeetings").innerHTML=list.length?list.map(b=>{
+  const can=["pending","confirmed"].includes(b.status)&&parseDT(b.date,+b.time.slice(0,2))>new Date();
+  return `<div class="row"><div><strong>${esc(b.date)} · ${esc(b.time)}</strong> ${statusBadge(b.status)}<div class="muted small">${esc(b.specialistName)} (${roleName(b.specialistRole)}) · ${TOPICS[b.topic]?TOPICS[b.topic][language==="pl"?1:0]:""}</div></div><div class="actions">${b.status==="confirmed"?`<button class="secondary mini" onclick="downloadIcs('${b.id}')">📅 ${L("Add to calendar","Dodaj do kalendarza")}</button>`:""}${can?`<button class="danger mini" onclick="cancelMine('${b.id}')">${L("Cancel","Anuluj")}</button>`:""}</div></div>`
+ }).join(""):`<p class="muted">${L("No meetings yet.","Brak spotkań.")}</p>`;
+}
+function cancelMine(id){
+ const u=me();const all=getBookings();const b=all.find(x=>x.id===id);
+ if(!u||!b||b.userId!==u.id||!["pending","confirmed"].includes(b.status))return;
+ if(!confirm(L("Cancel this meeting?","Anulować to spotkanie?")))return;
+ b.status="cancelled";saveBookings(all);renderMyMeetings();renderSlots();
+}
+
+/* ============ STAFF PANEL ============ */
+let staffTab="overview",bookView="mine";
+function staffTabsFor(){
+ const r=rank();
+ return [["overview",["Overview","Przegląd"],1],["bookings",["Meetings","Spotkania"],1],["users",["Users","Użytkownicy"],1],["create",["Create staff","Dodaj personel"],2],["me",["My profile & hours","Mój profil i godziny"],1],["announce",["Announcement","Ogłoszenie"],2],["feedback",["Feedback","Opinie"],2],["audit",["Audit log","Dziennik zdarzeń"],2],["owner",["Owner tools","Narzędzia właściciela"],3]].filter(t=>r>=t[2]);
+}
+function setStaffTab(t){staffTab=t;renderStaff()}
+function renderStaff(){
+ if(rank()<1){$("staffBody").innerHTML="";$("staffTabs").innerHTML="";return}
+ const tabs=staffTabsFor();
+ if(!tabs.some(t=>t[0]===staffTab))staffTab="overview";
+ $("staffTabs").innerHTML=tabs.map(t=>`<button class="tab${t[0]===staffTab?" active":""}" onclick="setStaffTab('${t[0]}')">${t[1][language==="pl"?1:0]}</button>`).join("");
+ const fn={overview:tabOverview,bookings:tabBookings,users:tabUsers,create:tabCreate,me:tabMe,announce:tabAnnounce,audit:tabAudit,feedback:tabFeedback,owner:tabOwner}[staffTab];
+ $("staffBody").innerHTML=fn();
+}
+function tabOverview(){
+ const us=getUsers(),bk=getBookings(),u=me(),r=rank();
+ const mineP=bk.filter(b=>b.specialistId===u.id&&b.status==="pending").length;
+ const perms={
+  mod:[L("Review member accounts and suspend or restore members","Przeglądanie kont użytkowników, zawieszanie i przywracanie"),L("Confirm, decline and complete your own meetings","Potwierdzanie, odrzucanie i kończenie własnych spotkań"),L("Set your own profile and available hours","Ustawianie własnego profilu i godzin dostępności")],
+  admin:[L("Everything a moderator can do","Wszystko, co moderator"),L("See all meetings and member emails","Podgląd wszystkich spotkań i e-maili użytkowników"),L("Create moderators, reset passwords, delete accounts","Tworzenie moderatorów, reset haseł, usuwanie kont"),L("Publish announcements and view the audit log","Publikowanie ogłoszeń i dziennik zdarzeń")],
+  owner:[L("Everything an admin can do","Wszystko, co administrator"),L("Create admins and change anyone's role","Tworzenie administratorów i zmiana ról"),L("Export data and reset the whole site","Eksport danych i reset całej strony")]
+ }[u.role];
+ return `<div class="grid"><div class="card"><div class="card-icon">👥</div><div class="muted">${L("Members","Użytkownicy")}</div><div class="stat">${us.filter(x=>x.role==="user").length}</div></div>
+ <div class="card"><div class="card-icon">🛡️</div><div class="muted">${L("Staff","Personel")}</div><div class="stat">${us.filter(x=>x.role!=="user").length}</div></div>
+ <div class="card"><div class="card-icon">📅</div><div class="muted">${L("Your pending requests","Twoje oczekujące prośby")}</div><div class="stat">${mineP}</div></div>
+ ${r>=2?`<div class="card"><div class="card-icon">🗓️</div><div class="muted">${L("All pending requests","Wszystkie oczekujące prośby")}</div><div class="stat">${bk.filter(b=>b.status==="pending").length}</div></div>`:""}</div>
+ <div class="card" style="margin-top:18px"><h3>${L("Your role","Twoja rola")}: ${roleName(u.role)}</h3><ul class="perms">${perms.map(p=>`<li>${esc(p)}</li>`).join("")}</ul></div>`;
+}
+function canActBooking(b){const u=me();return !!u&&rank()>=1&&(b.specialistId===u.id||rank()>=2)}
+function tabBookings(){
+ const u=me(),r=rank();
+ let list=getBookings();
+ if(r<2||bookView==="mine")list=list.filter(b=>b.specialistId===u.id);
+ list.sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+ const toggle=r>=2?`<div class="tabs"><button class="tab${bookView==="mine"?" active":""}" onclick="bookView='mine';renderStaff()">${L("My meetings","Moje spotkania")}</button><button class="tab${bookView==="all"?" active":""}" onclick="bookView='all';renderStaff()">${L("All meetings","Wszystkie spotkania")}</button></div>`:"";
+ return `<div class="card">${toggle}`+(list.length?list.map(b=>{
+  const a=[];
+  if(canActBooking(b)){
+   if(b.status==="pending")a.push(`<button class="primary mini" onclick="setBooking('${b.id}','confirmed')">${L("Confirm","Potwierdź")}</button><button class="danger mini" onclick="setBooking('${b.id}','declined')">${L("Decline","Odrzuć")}</button>`);
+   if(b.status==="confirmed")a.push(`<button class="primary mini" onclick="setBooking('${b.id}','completed')">${L("Mark completed","Zakończ")}</button><button class="danger mini" onclick="setBooking('${b.id}','cancelled')">${L("Cancel","Anuluj")}</button>${b.specialistId===u.id?`<button class="secondary mini" onclick="downloadIcs('${b.id}')">📅 .ics</button>`:""}`);
+  }
+  return `<div class="row"><div><strong>${esc(b.date)} · ${esc(b.time)}</strong> ${statusBadge(b.status)}<div class="muted small">${esc(b.userName)} → ${esc(b.specialistName)} (${roleName(b.specialistRole)}) · ${TOPICS[b.topic]?TOPICS[b.topic][language==="pl"?1:0]:""}</div>${b.note?`<div class="small" style="margin-top:4px">“${esc(b.note)}”</div>`:""}</div><div class="actions">${a.join("")}</div></div>`;
+ }).join(""):`<p class="muted">${L("No meetings to show.","Brak spotkań do wyświetlenia.")}</p>`)+`</div>`;
+}
+function setBooking(id,status){
+ const all=getBookings(),b=all.find(x=>x.id===id);
+ const ok={pending:["confirmed","declined"],confirmed:["completed","cancelled"]};
+ if(!b||!canActBooking(b)||!(ok[b.status]||[]).includes(status))return;
+ b.status=status;saveBookings(all);addAudit("Meeting "+b.date+" "+b.time+" → "+status);renderStaff();
+}
+function tabUsers(){
+ const r=rank();
+ const list=getUsers().slice().sort((a,b)=>RANK[b.role]-RANK[a.role]||a.username.localeCompare(b.username));
+ return `<div class="card"><div class="field"><input placeholder="${L("Search users…","Szukaj użytkowników…")}" oninput="filterUsers(this.value)"></div>`+list.map(t=>{
+  const lower=r>RANK[t.role],a=[];
+  if(lower)a.push(`<button class="secondary mini" onclick="suspendUser('${t.id}')">${t.suspended?L("Restore","Przywróć"):L("Suspend","Zawieś")}</button>`);
+  if(lower&&r>=2)a.push(`<button class="secondary mini" onclick="resetPw('${t.id}')">${L("Reset password","Reset hasła")}</button><button class="danger mini" onclick="deleteUser('${t.id}')">${L("Delete","Usuń")}</button>`);
+  if(r===3&&t.role!=="owner")a.push(`<select class="mini" onchange="setRole('${t.id}',this.value)">${["user","mod","admin"].map(x=>`<option value="${x}"${x===t.role?" selected":""}>${roleName(x)}</option>`).join("")}</select>`);
+  return `<div class="row user-row" data-q="${esc((t.username+" "+(r>=2?t.email:"")).toLowerCase())}"><div><strong>${esc(t.username)}</strong> <span class="tag">${roleName(t.role)}</span>${t.suspended?` <span class="badge b-declined">${L("Suspended","Zawieszony")}</span>`:""}<div class="muted small">${r>=2?esc(t.email)+" · ":""}${L("Joined","Dołączył(a)")} ${new Date(t.created).toLocaleDateString()}</div></div><div class="actions">${a.join("")}</div></div>`;
+ }).join("")+`</div>`;
+}
+function filterUsers(q){q=q.toLowerCase();document.querySelectorAll(".user-row").forEach(r=>r.classList.toggle("hidden",!r.dataset.q.includes(q)))}
+function cancelActiveWith(userId,asSpecialist,why){
+ const all=getBookings();
+ all.forEach(b=>{if((asSpecialist?b.specialistId:b.userId)===userId&&["pending","confirmed"].includes(b.status))b.status="cancelled"});
+ saveBookings(all);
+}
+function suspendUser(id){
+ const us=getUsers(),t=us.find(x=>x.id===id);
+ if(!t||rank()<1||rank()<=RANK[t.role])return;
+ t.suspended=!t.suspended;saveUsers(us);
+ if(t.suspended){cancelActiveWith(id,true);cancelActiveWith(id,false)}
+ addAudit((t.suspended?"Suspended ":"Restored ")+t.username);renderStaff();
+}
+function deleteUser(id){
+ const us=getUsers(),t=us.find(x=>x.id===id);
+ if(!t||rank()<2||rank()<=RANK[t.role]||t.id===session.id)return;
+ if(!confirm(L("Permanently delete ","Trwale usunąć ")+t.username+"?"))return;
+ cancelActiveWith(id,true);cancelActiveWith(id,false);
+ ["history","moods","profile","journal"].forEach(n=>localStorage.removeItem("mf_"+n+"_"+id));
+ saveUsers(us.filter(x=>x.id!==id));addAudit("Deleted "+t.username);renderStaff();
+}
+async function resetPw(id){
+ const us=getUsers(),t=us.find(x=>x.id===id);
+ if(!t||rank()<2||rank()<=RANK[t.role])return;
+ const tmp=genPw();t.salt=newSalt();t.hash=await hashPw(tmp,t.salt);t.mustChange=true;saveUsers(us);
+ addAudit("Reset password for "+t.username);
+ prompt(L("Temporary password for "+t.username+" (shown once, copy it now):","Tymczasowe hasło dla "+t.username+" (pokazane raz, skopiuj je teraz):"),tmp);
+}
+function setRole(id,role){
+ const us=getUsers(),t=us.find(x=>x.id===id);
+ if(rank()!==3||!t||t.role==="owner"||!["user","mod","admin"].includes(role)||t.id===session.id)return renderStaff();
+ const old=t.role;t.role=role;saveUsers(us);
+ if(role==="user")cancelActiveWith(id,true);
+ addAudit("Role of "+t.username+": "+old+" → "+role);renderStaff();
+}
+function tabCreate(){
+ const r=rank();
+ const roles=["mod","admin"].filter(x=>RANK[x]<r);
+ return `<div class="card" style="max-width:600px"><h2>${L("Create a staff account","Utwórz konto personelu")}</h2>
+ <p class="muted small">${L("The person must change the temporary password the first time they log in.","Osoba musi zmienić tymczasowe hasło przy pierwszym logowaniu.")}</p>
+ <div id="createMsg" class="msg"></div>
+ <form onsubmit="createStaff(event)">
+  <div class="field"><label>${L("Username","Nazwa użytkownika")}</label><input id="cUser" maxlength="20" required></div>
+  <div class="field"><label>Email</label><input id="cEmail" type="email" required></div>
+  <div class="field"><label>${L("Role","Rola")}</label><select id="cRole">${roles.map(x=>`<option value="${x}">${roleName(x)}</option>`).join("")}</select></div>
+  <div class="field"><label>${L("Temporary password","Hasło tymczasowe")}</label><input id="cPass" value="${genPw()}" required minlength="8"></div>
+  <button class="primary" type="submit">${L("Create account","Utwórz konto")}</button>
+ </form></div>`;
+}
+async function createStaff(e){
+ e.preventDefault();const r=rank();
+ const un=$("cUser").value.trim(),em=$("cEmail").value.trim(),role=$("cRole").value,pw=$("cPass").value;
+ if(r<2||!["mod","admin"].includes(role)||RANK[role]>=r)return setMsg("createMsg",L("You are not allowed to create that role.","Nie możesz utworzyć tej roli."));
+ const err=checkNewAccount(un,em,pw,pw);if(err)return setMsg("createMsg",err);
+ const u=await makeUser(un,em,pw,role,{mustChange:true});
+ const us=getUsers();us.push(u);saveUsers(us);addAudit("Created "+role+" account "+un);
+ prompt(L("Account created. Give "+un+" this temporary password (shown once):","Konto utworzone. Przekaż "+un+" to hasło tymczasowe (pokazane raz):"),pw);
+ renderStaff();
+}
+function tabMe(){
+ const u=me(),a=availOf(u);
+ const hrs=(sel)=>Array.from({length:17},(_,i)=>i+6).map(h=>`<option value="${h}"${h===sel?" selected":""}>${pad(h)}:00</option>`).join("");
+ return `<div class="card" style="max-width:650px"><h2>${L("My profile & hours","Mój profil i godziny")}</h2><div id="meMsg" class="msg"></div>
+ <form onsubmit="saveMe(event)">
+  <div class="field"><label>${L("Title shown to members","Tytuł widoczny dla użytkowników")}</label><input id="meTitle" maxlength="40" value="${esc(u.title||"")}" placeholder="${L("e.g. Wellbeing coach","np. Doradca ds. samopoczucia")}"></div>
+  <div class="field"><label>${L("Short bio","Krótki opis")}</label><textarea id="meBio" maxlength="200">${esc(u.bio||"")}</textarea></div>
+  <div class="field"><label>${L("Available days","Dni dostępności")}</label><div class="checks">${[1,2,3,4,5,6,0].map(d=>`<label><input type="checkbox" class="meDay" value="${d}"${a.days.includes(d)?" checked":""}> ${DAYS[d][language==="pl"?1:0]}</label>`).join("")}</div></div>
+  <div class="two"><div class="field"><label>${L("From","Od")}</label><select id="meStart">${hrs(a.start)}</select></div><div class="field"><label>${L("Until (last meeting ends)","Do (koniec ostatniego spotkania)")}</label><select id="meEnd">${hrs(a.end)}</select></div></div>
+  <div class="field"><label class="checks"><input type="checkbox" id="meAccept"${a.accepting!==false?" checked":""}> ${L("Accepting new bookings","Przyjmuję nowe rezerwacje")}</label></div>
+  <button class="primary" type="submit">${L("Save","Zapisz")}</button>
+ </form></div>`;
+}
+function saveMe(e){
+ e.preventDefault();
+ const days=Array.from(document.querySelectorAll(".meDay")).filter(c=>c.checked).map(c=>Number(c.value));
+ const start=Number($("meStart").value),end=Number($("meEnd").value);
+ if(end<=start)return setMsg("meMsg",L("End time must be after start time.","Godzina zakończenia musi być późniejsza niż rozpoczęcia."));
+ const us=getUsers(),t=us.find(x=>x.id===session.id);
+ t.title=$("meTitle").value.trim();t.bio=$("meBio").value.trim();t.avail={days,start,end,accepting:$("meAccept").checked};
+ saveUsers(us);setMsg("meMsg",L("Saved.","Zapisano."),"ok");
+}
+function tabAnnounce(){
+ const a=LS.get("mf_announcement",{text:""});
+ return `<div class="card" style="max-width:650px"><h2>${L("Dashboard announcement","Ogłoszenie na stronie głównej")}</h2><div id="annMsg" class="msg"></div>
+ <div class="field"><textarea id="annText" maxlength="300">${esc(a.text||"")}</textarea></div>
+ <div class="actions"><button class="primary" onclick="saveAnnouncement()">${L("Publish","Opublikuj")}</button><button class="secondary" onclick="clearAnnouncement()">${L("Remove","Usuń")}</button></div></div>`;
+}
+function saveAnnouncement(){
+ if(rank()<2)return;const t=$("annText").value.trim().slice(0,300);
+ if(!t)return setMsg("annMsg",L("Write something first.","Najpierw wpisz treść."));
+ LS.set("mf_announcement",{text:t,by:me().username,t:Date.now()});addAudit("Published announcement");setMsg("annMsg",L("Published.","Opublikowano."),"ok");
+}
+function clearAnnouncement(){if(rank()<2)return;localStorage.removeItem("mf_announcement");addAudit("Removed announcement");renderStaff()}
+function tabAudit(){
+ const a=LS.get("mf_audit",[]);
+ return `<div class="card">`+(a.length?a.slice(0,100).map(x=>`<div class="row"><div><strong>${esc(x.who)}</strong> <span class="tag">${x.role?roleName(x.role):"—"}</span> ${esc(x.msg)}</div><div class="muted small">${new Date(x.t).toLocaleString()}</div></div>`).join(""):`<p class="muted">${L("Nothing logged yet.","Brak wpisów.")}</p>`)+`</div>`;
+}
+function tabOwner(){
+ return `<div class="card" style="max-width:650px"><h2>${L("Owner tools","Narzędzia właściciela")}</h2>
+ <h3>${L("Export data","Eksport danych")}</h3><p class="muted small">${L("Downloads accounts (without passwords), meetings and the audit log as JSON.","Pobiera konta (bez haseł), spotkania i dziennik zdarzeń jako JSON.")}</p>
+ <button class="secondary" onclick="exportData()">${L("Download export","Pobierz eksport")}</button>
+ <h3 style="margin-top:28px">${L("Reset the site","Zresetuj stronę")}</h3><p class="muted small">${L("Deletes every account, meeting and saved result in this browser. Type RESET to confirm.","Usuwa wszystkie konta, spotkania i zapisane wyniki w tej przeglądarce. Wpisz RESET, aby potwierdzić.")}</p>
+ <div class="field"><input id="resetConfirm" placeholder="RESET"></div>
+ <button class="danger" onclick="resetSite()">${L("Delete everything","Usuń wszystko")}</button></div>`;
+}
+function exportData(){
+ if(rank()<3)return;
+ const data={exported:new Date().toISOString(),users:getUsers().map(u=>{const c=Object.assign({},u);delete c.hash;delete c.salt;return c}),bookings:getBookings(),audit:LS.get("mf_audit",[])};
+ const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));
+ const a=document.createElement("a");a.href=url;a.download="mindfocus-export.json";a.click();URL.revokeObjectURL(url);
+ addAudit("Exported data");
+}
+function resetSite(){
+ if(rank()<3)return;
+ if($("resetConfirm").value!=="RESET")return alert(L("Type RESET to confirm.","Wpisz RESET, aby potwierdzić."));
+ Object.keys(localStorage).filter(k=>k.startsWith("mf_")&&k!=="mf_language"&&k!=="mf_theme").forEach(k=>localStorage.removeItem(k));
+ location.reload();
+}
+
+/* ============ EXTRAS ============ */
+const CHART_COLORS=["#7c6cff","#37c9b0","#f5b942","#ff647c","#4aa3ff","#c77dff","#8bd450"];
+function saveBlob(text,type,name){const u=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement("a");a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+function lineChart(series,o){
+ const w=640,h=230,pl=48,pr=16,pt=16,pb=28,iw=w-pl-pr,ih=h-pt-pb;
+ const n=Math.max(2,...series.map(s=>s.pts.length));
+ const x=i=>pl+i*iw/(n-1),y=v=>pt+ih-(v-o.min)/(o.max-o.min)*ih;
+ let g=o.ticks.map(t=>`<line x1="${pl}" x2="${w-pr}" y1="${y(t)}" y2="${y(t)}" stroke="var(--border)"/><text x="${pl-8}" y="${y(t)+4}" text-anchor="end" fill="var(--muted)" font-size="12">${esc(o.fmt(t))}</text>`).join("");
+ series.forEach(s=>{
+  const pts=s.pts.map((v,i)=>[x(i),y(v)]);
+  if(pts.length>1)g+=`<polyline fill="none" stroke="${s.color}" stroke-width="2.5" stroke-linejoin="round" points="${pts.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ")}"/>`;
+  g+=pts.map(p=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="4.5" fill="${s.color}" stroke="var(--panel)" stroke-width="1.5"/>`).join("");
+ });
+ return `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(o.label)}" style="width:100%;height:auto">${g}</svg>`;
+}
+function renderScoreChart(){
+ const card=$("scoreChartCard");if(!card)return;
+ const by={};history.slice().reverse().forEach(h=>{(by[h.id]=by[h.id]||[]).push(Number(h.score)||0)});
+ const ids=Object.keys(by);
+ card.classList.toggle("hidden",!ids.length);
+ if(!ids.length)return;
+ const series=ids.map(id=>{const i=tests.findIndex(t=>t.id===id);return {id,color:CHART_COLORS[(i<0?0:i)%CHART_COLORS.length],pts:by[id]}});
+ $("scoreChart").innerHTML=lineChart(series,{min:0,max:100,ticks:[0,25,50,75,100],fmt:v=>v+"%",label:L("Assessment scores over time","Wyniki testów w czasie")});
+ $("scoreLegend").innerHTML=series.map(s=>`<span style="margin-right:14px;white-space:nowrap"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${s.color};margin-right:5px"></span>${esc(s.id)}</span>`).join("")+`<div>${L("Each point is one attempt.","Każdy punkt to jedno podejście.")}</div>`;
+}
+function renderMoodChart(){
+ const card=$("moodChartCard");if(!card)return;
+ const pts=moods.slice(0,14).reverse().map(m=>Math.min(5,Math.max(1,Number(m.value)||3)));
+ card.classList.toggle("hidden",!pts.length);
+ if(!pts.length)return;
+ const e=["","😞","😕","😐","🙂","😄"];
+ $("moodChart").innerHTML=lineChart([{color:"#37c9b0",pts}],{min:1,max:5,ticks:[1,2,3,4,5],fmt:v=>e[v],label:L("Mood over your latest entries","Nastrój w ostatnich wpisach")});
+}
+function moodStreak(){
+ const days=new Set(moods.map(m=>m.day).filter(Boolean));
+ const d=new Date();let n=0;
+ if(!days.has(fmtDate(d)))d.setDate(d.getDate()-1);
+ while(days.has(fmtDate(d))){n++;d.setDate(d.getDate()-1)}
+ return n;
+}
+/* breathing */
+let breathOn=false,breathTimer=null;
+const BREATH=[{s:4,en:"Breathe in",pl:"Wdech",sc:1.45,anim:true},{s:4,en:"Hold",pl:"Zatrzymaj",sc:1.45,anim:false},{s:6,en:"Breathe out",pl:"Wydech",sc:1,anim:true}];
+function breathStep(i){
+ if(!breathOn)return;
+ const p=BREATH[i],c=$("breathCircle");
+ c.style.transitionDuration=(p.anim?p.s:0)+"s";c.style.transform="scale("+p.sc+")";c.textContent=L(p.en,p.pl);
+ breathTimer=setTimeout(()=>breathStep((i+1)%3),p.s*1000);
+}
+function toggleBreath(){
+ breathOn=!breathOn;
+ if(breathOn)breathStep(0);
+ else{clearTimeout(breathTimer);const c=$("breathCircle");c.style.transitionDuration="1s";c.style.transform="scale(1)"}
+ updateBreathUI();
+}
+function updateBreathUI(){
+ const b=$("breathBtn");if(!b)return;
+ b.textContent=breathOn?L("Stop","Zatrzymaj"):L("Start","Start");
+ $("breathText").textContent=L("Breathe in for 4 seconds, hold for 4, breathe out for 6. Stop any time.","Wdech przez 4 sekundy, zatrzymanie przez 4, wydech przez 6. Możesz przerwać w każdej chwili.");
+ if(!breathOn)$("breathCircle").textContent=L("Ready","Gotowe");
+}
+/* help page */
+function renderHelp(){
+ const card=(flag,name,rows)=>`<div class="card"><h3>${flag} ${name}</h3>${rows.map(r=>`<div class="row"><span>${r[0]}</span><strong>${esc(r[1])}</strong></div>`).join("")}</div>`;
+ $("helpGrid").innerHTML=
+  card("🇵🇱",L("Poland","Polska"),[[L("Emergency number","Numer alarmowy"),"112"],[L("Crisis support line for adults","Telefon zaufania dla dorosłych w kryzysie"),"116 123"],[L("Children and young people","Dzieci i młodzież"),"116 111"],[L("Crisis support centre","Centrum Wsparcia w kryzysie psychicznym"),"800 70 2222"]])+
+  card("🇬🇧",L("United Kingdom","Wielka Brytania"),[[L("Emergency number","Numer alarmowy"),"999"],[L("Samaritans (24/7, free)","Samaritans (całodobowo, bezpłatnie)"),"116 123"],[L("NHS non-emergency (England)","NHS, pomoc nienagła (Anglia)"),"111"]])+
+  card("🇺🇸",L("United States","Stany Zjednoczone"),[[L("Emergency number","Numer alarmowy"),"911"],[L("Suicide and Crisis Lifeline (call or text)","Linia kryzysowa (połączenie lub SMS)"),"988"]]);
+}
+/* next meeting */
+function renderNextMeeting(){
+ const u=me(),el=$("nextMeetingCard");if(!el)return;
+ const list=u?activeBookingsOf(u.id).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)):[];
+ el.classList.toggle("hidden",!list.length);
+ if(list.length){const b=list[0];$("nextMeetingText").textContent=b.date+" · "+b.time+" — "+b.specialistName+" ("+STATUS[b.status][language==="pl"?1:0]+")"}
+}
+/* calendar file */
+function icsEscape(s){return String(s).replace(/\\/g,"\\\\").replace(/;/g,"\;").replace(/,/g,"\\,").replace(/\r?\n/g,"\\n")}
+function downloadIcs(id){
+ const b=getBookings().find(x=>x.id===id),u=me();
+ if(!b||!u||(b.userId!==u.id&&b.specialistId!==u.id)||b.status!=="confirmed")return;
+ const h=Number(b.time.slice(0,2)),d=b.date.replace(/-/g,"");
+ const now=new Date().toISOString().replace(/[-:]/g,"").replace(/\.\d+/,"");
+ const who=u.id===b.userId?b.specialistName:b.userName;
+ const lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//MindFocus//EN","BEGIN:VEVENT","UID:"+b.id+"@mindfocus","DTSTAMP:"+now,"DTSTART:"+d+"T"+pad(h)+"0000","DTEND:"+d+"T"+pad(h+1)+"0000","SUMMARY:"+icsEscape("MindFocus meeting with "+who),"DESCRIPTION:"+icsEscape(TOPICS[b.topic]?TOPICS[b.topic][0]:"MindFocus meeting"),"END:VEVENT","END:VCALENDAR"];
+ saveBlob(lines.join("\r\n")+"\r\n","text/calendar;charset=utf-8","mindfocus-meeting.ics");
+}
+/* personal data backup */
+function exportMyData(){
+ saveBlob(JSON.stringify({app:"mindfocus",version:1,exported:new Date().toISOString(),history,moods,profile,journal},null,2),"application/json","mindfocus-backup.json");
+}
+function importMyData(ev){
+ const f=ev.target.files[0];ev.target.value="";if(!f)return;
+ if(f.size>6*1024*1024)return setMsg("dataMsg",L("That file is too large.","Ten plik jest za duży."));
+ const r=new FileReader();
+ r.onload=()=>{
+  try{
+   const d=JSON.parse(r.result);if(!d||d.app!=="mindfocus")throw new Error("format");
+   const ids=tests.map(t=>t.id),emo=["","😞","😕","😐","🙂","😄"];
+   const h=(Array.isArray(d.history)?d.history:[]).filter(x=>x&&ids.includes(x.id)&&Number.isFinite(x.score)&&x.score>=0&&x.score<=100&&Array.isArray(x.answers)).slice(0,500).map(x=>({id:x.id,score:Math.round(x.score),total:Number(x.total)||0,date:String(x.date||"").slice(0,40),answers:x.answers.slice(0,30).map(v=>Math.max(0,Math.min(4,Math.round(Number(v))||0)))}));
+   const m=(Array.isArray(d.moods)?d.moods:[]).filter(x=>x&&Number.isInteger(x.value)&&x.value>=1&&x.value<=5).slice(0,1000).map(x=>({value:x.value,emoji:emo[x.value],note:String(x.note||"").slice(0,500),date:String(x.date||"").slice(0,40),day:/^\d{4}-\d{2}-\d{2}$/.test(String(x.day||""))?x.day:""}));
+   const jn=(Array.isArray(d.journal)?d.journal:[]).filter(x=>x&&typeof x.text==="string"&&x.text.trim()).slice(0,300).map(x=>({date:String(x.date||"").slice(0,40),day:/^\d{4}-\d{2}-\d{2}$/.test(String(x.day||""))?x.day:"",p:Math.abs(Math.round(Number(x.p)||0))%JPROMPTS.length,text:x.text.slice(0,2000)}));
+   const p=d.profile&&typeof d.profile==="object"?d.profile:{};
+   const pr={nickname:String(p.nickname||"").slice(0,30),bio:String(p.bio||"").slice(0,300),goals:String(p.goals||"").slice(0,500),favourite:ids.includes(p.favourite)?p.favourite:"ADHD",avatar:(typeof p.avatar==="string"&&/^data:image\/(png|jpeg|gif|webp);base64,[A-Za-z0-9+\/=]+$/.test(p.avatar)&&p.avatar.length<3000000)?p.avatar:""};
+   if(!confirm(L("Replace your current results, moods and profile with this backup? ("+h.length+" results, "+m.length+" mood entries)","Zastąpić obecne wyniki, nastroje i profil tą kopią? ("+h.length+" wyników, "+m.length+" wpisów nastroju)")))return;
+   history=h;moods=m;profile=pr;journal=jn;LS.set(K("journal"),jn);
+   LS.set(K("history"),h);LS.set(K("moods"),m);LS.set(K("profile"),pr);
+   loadProfile();updateWelcome();renderHistory();renderMoods();updateStats();
+   setMsg("dataMsg",L("Backup restored.","Kopia przywrócona."),"ok");
+  }catch(e){setMsg("dataMsg",L("That file is not a valid MindFocus backup.","To nie jest prawidłowa kopia MindFocus."))}
+ };
+ r.readAsText(f);
+}
+
+/* ============ EXTRAS 2 ============ */
+const TIPS=[["Break a big task into the smallest first step you can imagine, then do just that.","Podziel duże zadanie na najmniejszy możliwy pierwszy krok i zrób tylko ten krok."],["Drink some water and stretch for a minute. Small resets add up.","Napij się wody i rozciągnij się przez minutę. Małe resety się sumują."],["Notice three things that went okay today, however small.","Zauważ trzy rzeczy, które dziś poszły dobrze, nawet drobne."],["If a worry keeps looping, write it down and choose one thing you can do about it.","Jeśli zmartwienie ciągle wraca, zapisz je i wybierz jedną rzecz, którą możesz zrobić."],["Try a 25-minute focus session, then a real 5-minute break away from screens.","Spróbuj 25-minutowej sesji skupienia, a potem prawdziwej 5-minutowej przerwy od ekranów."],["Rest is productive. Your brain needs downtime to work well.","Odpoczynek jest produktywny. Twój mózg potrzebuje przerw, by dobrze działać."],["Reaching out to someone you trust is a strength, not a burden.","Zwrócenie się do zaufanej osoby to siła, a nie ciężar."]];
+const JPROMPTS=[["What is one thing that went well today?","Co jednego dobrego wydarzyło się dziś?"],["What is taking up most of your mind right now?","Co zajmuje teraz najwięcej miejsca w Twoich myślach?"],["What would make tomorrow a little easier?","Co mogłoby ułatwić jutro?"],["Who or what helped you recently?","Kto lub co pomogło Ci ostatnio?"],["Describe how your body feels right now.","Opisz, jak teraz czuje się Twoje ciało."],["What are you proud of this week, however small?","Z czego jesteś dumny lub dumna w tym tygodniu, nawet z drobiazgu?"],["What do you need more of, and less of, right now?","Czego potrzebujesz teraz więcej, a czego mniej?"]];
+function dayNo(){const d=new Date();return Math.floor((d-new Date(d.getFullYear(),0,0))/864e5)}
+function renderTip(){const el=$("tipText");if(el)el.textContent=TIPS[dayNo()%TIPS.length][language==="pl"?1:0]}
+function renderJournal(){
+ const pe=$("journalPrompt");if(!pe)return;
+ pe.textContent=JPROMPTS[dayNo()%JPROMPTS.length][language==="pl"?1:0];
+ $("journalList").innerHTML=journal.length?journal.map((j,i)=>`<div class="history-item"><strong>${esc(JPROMPTS[(Number(j.p)||0)%JPROMPTS.length][language==="pl"?1:0])}</strong><div class="muted small">${esc(j.date)}</div><div class="journal-entry">${esc(j.text)}</div><button class="danger mini" onclick="deleteJournal(${i})">${L("Delete","Usuń")}</button></div>`).join(""):`<p class="muted">${L("No entries yet.","Brak wpisów.")}</p>`;
+}
+function saveJournal(){
+ const t=$("journalText").value.trim().slice(0,2000);
+ if(!t)return;
+ journal.unshift({date:new Date().toLocaleString(),day:fmtDate(new Date()),p:dayNo()%JPROMPTS.length,text:t});
+ journal=journal.slice(0,300);LS.set(K("journal"),journal);
+ $("journalText").value="";renderJournal();
+ $("journalMsg").textContent=L("Saved.","Zapisano.");setTimeout(()=>$("journalMsg").textContent="",2000);
+}
+function deleteJournal(i){
+ if(!confirm(L("Delete this entry?","Usunąć ten wpis?")))return;
+ journal.splice(i,1);LS.set(K("journal"),journal);renderJournal();
+}
+/* accessibility */
+let a11y=LS.get("mf_a11y",{size:0,dys:false,hc:false,motion:false});
+function applyA11y(){
+ const b=document.body;
+ b.classList.toggle("zoom1",a11y.size===1);b.classList.toggle("zoom2",a11y.size===2);
+ b.classList.toggle("dys",!!a11y.dys);b.classList.toggle("hc",!!a11y.hc);b.classList.toggle("nomotion",!!a11y.motion);
+ if($("a11ySize")){$("a11ySize").value=String(a11y.size||0);$("a11yDys").checked=!!a11y.dys;$("a11yHc").checked=!!a11y.hc;$("a11yMotion").checked=!!a11y.motion}
+}
+function setA11y(){
+ a11y={size:Number($("a11ySize").value)||0,dys:$("a11yDys").checked,hc:$("a11yHc").checked,motion:$("a11yMotion").checked};
+ LS.set("mf_a11y",a11y);applyA11y();
+}
+/* feedback */
+let lastFb=0;
+function sendFeedback(){
+ const t=$("fbText").value.trim().slice(0,500);
+ if(t.length<5)return setMsg("fbMsg",L("Please write a little more.","Napisz trochę więcej."));
+ if(Date.now()-lastFb<30000)return setMsg("fbMsg",L("Please wait a moment before sending another.","Poczekaj chwilę przed wysłaniem kolejnej opinii."));
+ const u=me(),all=LS.get("mf_feedback",[]);
+ all.unshift({id:uid(),t:Date.now(),from:u?u.username:"guest",text:t,read:false});
+ LS.set("mf_feedback",all.slice(0,200));lastFb=Date.now();$("fbText").value="";
+ setMsg("fbMsg",L("Thank you, your feedback was sent.","Dziękujemy, opinia została wysłana."),"ok");
+}
+function tabFeedback(){
+ const a=LS.get("mf_feedback",[]);
+ return `<div class="card">`+(a.length?a.map(f=>`<div class="row"><div><strong>${esc(f.from)}</strong> ${f.read?"":`<span class="badge b-pending">${L("New","Nowe")}</span>`}<div class="muted small">${new Date(f.t).toLocaleString()}</div><div class="journal-entry">${esc(f.text)}</div></div><div class="actions">${f.read?"":`<button class="secondary mini" onclick="markFeedback('${f.id}')">${L("Mark read","Oznacz jako przeczytane")}</button>`}<button class="danger mini" onclick="deleteFeedback('${f.id}')">${L("Delete","Usuń")}</button></div></div>`).join(""):`<p class="muted">${L("No feedback yet.","Brak opinii.")}</p>`)+`</div>`;
+}
+function markFeedback(id){if(rank()<2)return;const a=LS.get("mf_feedback",[]),f=a.find(x=>x.id===id);if(f){f.read=true;LS.set("mf_feedback",a);renderStaff()}}
+function deleteFeedback(id){if(rank()<2)return;LS.set("mf_feedback",LS.get("mf_feedback",[]).filter(x=>x.id!==id));renderStaff()}
+/* previous attempt */
+function previousNote(result){
+ const i=history.indexOf(result);if(i<0)return "";
+ const prev=history.slice(i+1).find(h=>h.id===result.id);if(!prev)return "";
+ const d=result.score-prev.score;
+ return L("Your previous "+result.id+" score was "+prev.score+"% ("+(d===0?"the same":Math.abs(d)+" points "+(d>0?"higher":"lower")+" now")+"). Scores can vary with mood, sleep and circumstances, so treat this as a snapshot.","Twój poprzedni wynik "+result.id+" to "+prev.score+"% ("+(d===0?"taki sam":"teraz o "+Math.abs(d)+" pkt "+(d>0?"wyżej":"niżej"))+"). Wyniki zmieniają się z nastrojem, snem i okolicznościami, więc traktuj to jako chwilowy obraz.");
+}
+/* ============ INIT ============ */
+function initialise(){
+ applyA11y();
+ $("languageSelect").value=language;
+ if(localStorage.getItem("mf_theme")==="light")document.body.classList.add("light");
+ renderTests();renderHistory();renderMoods();renderArticles();updateStats();loadProfile();resetTimer();changeLanguage(language);
+}
+initialise();
+</script>
+
+<style>
+/* MindFocus feature pack */
+.feature-card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px;margin:18px 0}
+.feature-list{display:grid;gap:9px}
+.feature-item{display:flex;align-items:center;gap:10px;padding:10px;background:var(--panel2);border-radius:10px}
+.feature-item input{accent-color:var(--accent);width:18px;height:18px}
+.pill-tags{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.mood-tag{border:1px solid var(--border);background:var(--panel2);color:var(--text);border-radius:30px;padding:8px 12px}
+.mood-tag.selected{border-color:var(--accent);background:var(--accent);color:white}
+.bar-chart{display:flex;align-items:end;gap:10px;height:145px;padding:12px 4px 0;border-bottom:1px solid var(--border)}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:end;height:100%;gap:6px;min-width:0}
+.bar{width:min(34px,80%);min-height:3px;background:linear-gradient(180deg,var(--accent2),var(--accent));border-radius:7px 7px 2px 2px}
+.bar-label{font-size:11px;color:var(--muted)}
+.achievement{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--panel2)}
+.achievement.locked{opacity:.45;filter:grayscale(1)}
+.achievement-icon{font-size:25px}
+.sound-controls{display:flex;gap:8px;flex-wrap:wrap}
+.sound-controls button.active{background:var(--accent);color:#fff}
+@media(max-width:480px){.feature-card{padding:14px}}
+</style>
+<script>
+/* ===== MindFocus requested feature pack ===== */
+const MF_HABITS=[
+ {id:"water",en:"Drink water",pl:"Wypij wodę",icon:"💧"},
+ {id:"break",en:"Take a proper break",pl:"Zrób porządną przerwę",icon:"🌿"},
+ {id:"move",en:"Move or stretch",pl:"Poruszaj się lub rozciągnij",icon:"🚶"},
+ {id:"sleep",en:"Keep a sleep routine",pl:"Zadbaj o rutynę snu",icon:"🌙"},
+ {id:"task",en:"Complete one small task",pl:"Wykonaj jedno małe zadanie",icon:"✅"}
+];
+let mfMoodTags=[];
+let mfAudio=null,mfNoiseSource=null,mfNoiseGain=null,mfNoiseBuffer=null;
+const mfToday=()=>fmtDate(new Date());
+const mfGet=(key,def)=>LS.get(K("feature_"+key),def);
+const mfSet=(key,val)=>LS.set(K("feature_"+key),val);
+function mfText(en,pl){return language==="pl"?pl:en}
+function mfEnsureUI(){
+ const focus=$("focus");
+ if(focus&&!$("habitTracker")){
+  focus.insertAdjacentHTML("beforeend",`
+   <div class="feature-card" id="habitTracker"><h2>🔥 <span data-en="Habit tracker" data-pl="Monitor nawyków">Habit tracker</span></h2><p class="muted" data-en="Small steps count. Tick each habit when you complete it today." data-pl="Małe kroki mają znaczenie. Zaznacz nawyk po wykonaniu go dzisiaj.">Small steps count. Tick each habit when you complete it today.</p><div id="habitList" class="feature-list"></div><p id="habitStreak" class="muted"></p></div>
+   <div class="feature-card"><h2>📈 <span data-en="Your focus sessions" data-pl="Twoje sesje skupienia">Your focus sessions</span></h2><p class="muted" data-en="Completed focus sessions from the last 7 days." data-pl="Ukończone sesje skupienia z ostatnich 7 dni.">Completed focus sessions from the last 7 days.</p><div id="focusWeekChart"></div><div id="focusLogList"></div></div>
+   <div class="feature-card"><h2>🎧 <span data-en="Calm sounds" data-pl="Spokojne dźwięki">Calm sounds</span></h2><p class="muted" data-en="Use gentle generated noise for focus or relaxation. Audio starts only when you press play." data-pl="Użyj delikatnego szumu do skupienia lub relaksu. Dźwięk uruchamia się dopiero po naciśnięciu przycisku.">Use gentle generated noise for focus or relaxation. Audio starts only when you press play.</p><div class="sound-controls"><button class="secondary" onclick="mfPlayNoise('brown',this)">🤎 Brown</button><button class="secondary" onclick="mfPlayNoise('pink',this)">🌸 Pink</button><button class="secondary" onclick="mfPlayNoise('white',this)">⚪ White</button><button class="danger" onclick="mfStopNoise()">■ Stop</button></div><div class="field"><label data-en="Volume" data-pl="Głośność">Volume</label><input id="mfSoundVolume" type="range" min="0" max="0.25" step="0.01" value="0.06" oninput="if(mfNoiseGain)mfNoiseGain.gain.value=this.value"></div><p class="muted small" id="mfSoundStatus"></p></div>
+  `);
+ }
+ const mood=$("mood");
+ if(mood&&!$("mfMoodTags")){
+  const anchor=$("moodNote").parentElement;
+  anchor.insertAdjacentHTML("beforebegin",`<div class="field" id="mfMoodTags"><label data-en="What may be affecting your mood?" data-pl="Co może wpływać na Twój nastrój?">What may be affecting your mood?</label><div class="pill-tags" id="mfMoodTagButtons"></div></div>`);
+  $("moodChartCard").insertAdjacentHTML("afterend",`<div class="feature-card"><h2 data-en="Mood insight" data-pl="Wgląd w nastrój">Mood insight</h2><p id="mfMoodInsight" class="muted"></p></div>`);
+ }
+ const learn=$("learn");
+ if(learn&&!$("mfArticleSearch")){
+  $("articles").insertAdjacentHTML("beforebegin",`<div class="field"><label data-en="Search articles" data-pl="Szukaj artykułów">Search articles</label><input id="mfArticleSearch" type="search" placeholder="Search by topic or keyword..." oninput="renderArticles()"></div>`);
+ }
+ const help=$("help");
+ if(help&&!$("mfCopingToolbox")){
+  $("helpGrid").insertAdjacentHTML("afterend",`<div class="feature-card" id="mfCopingToolbox"><h2>🧰 <span data-en="Coping toolbox" data-pl="Zestaw narzędzi radzenia sobie">Coping toolbox</span></h2><p class="muted" data-en="Choose one small strategy to try. You do not need to do them all." data-pl="Wybierz jedną małą strategię. Nie musisz robić wszystkiego.">Choose one small strategy to try. You do not need to do them all.</p><div id="mfCopingList" class="feature-list"></div></div>`);
+ }
+ const dash=$("dashboard");
+ if(dash&&!$("mfAchievements")){
+  dash.insertAdjacentHTML("beforeend",`<div class="feature-card" id="mfAchievements"><h2>🏆 <span data-en="Achievements" data-pl="Osiągnięcia">Achievements</span></h2><div id="mfAchievementList" class="grid"></div></div>`);
+ }
+}
+function mfHabitData(){return mfGet("habits",{})}
+function mfRenderHabits(){
+ const el=$("habitList");if(!el)return;
+ const data=mfHabitData(),today=mfToday();
+ el.innerHTML=MF_HABITS.map(h=>`<label class="feature-item"><input type="checkbox" ${data[today]?.includes(h.id)?"checked":""} onchange="mfToggleHabit('${h.id}',this.checked)"><span>${h.icon} ${mfText(h.en,h.pl)}</span></label>`).join("");
+ const days=Object.keys(data).sort().reverse();let streak=0,d=new Date();
+ for(let i=0;i<366;i++){const key=fmtDate(d);if((data[key]||[]).length>=3)streak++;else if(i>0)break;d.setDate(d.getDate()-1)}
+ $("habitStreak").textContent=mfText("🔥 "+streak+" day habit streak (3 habits completed per day).","🔥 Seria "+streak+" dni (co najmniej 3 nawyki dziennie).");
+}
+function mfToggleHabit(id,checked){
+ const d=mfHabitData(),day=mfToday(),a=d[day]||[];
+ d[day]=checked?[...new Set([...a,id])]:a.filter(x=>x!==id);mfSet("habits",d);mfRenderHabits();mfRenderAchievements();
+}
+function mfFocusLog(){return mfGet("focusLog",[])}
+function mfLogFocus(minutes){
+ const a=mfFocusLog();a.unshift({day:mfToday(),minutes:Math.max(1,Math.round(minutes)),at:new Date().toLocaleString()});mfSet("focusLog",a.slice(0,300));mfRenderFocusLog();mfRenderAchievements();
+}
+function mfRenderFocusLog(){
+ const a=mfFocusLog(),el=$("focusWeekChart");if(!el)return;
+ const days=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const key=fmtDate(d);days.push({key,label:d.toLocaleDateString(language==="pl"?"pl-PL":"en-US",{weekday:"short"}),minutes:a.filter(x=>x.day===key).reduce((n,x)=>n+x.minutes,0)})}
+ const max=Math.max(25,...days.map(x=>x.minutes));
+ el.innerHTML=`<div class="bar-chart">${days.map(x=>`<div class="bar-col" title="${x.minutes} min"><strong class="small">${x.minutes}</strong><div class="bar" style="height:${Math.max(3,x.minutes/max*100)}%"></div><span class="bar-label">${x.label}</span></div>`).join("")}</div>`;
+ $("focusLogList").innerHTML=a.length?`<h3>${mfText("Recent sessions","Ostatnie sesje")}</h3>`+a.slice(0,8).map(x=>`<div class="row"><span>⏱️ ${x.minutes} min</span><span class="muted small">${esc(x.day)} · ${esc(x.at)}</span></div>`).join(""):`<p class="muted">${mfText("No completed focus sessions yet.","Brak ukończonych sesji skupienia.")}</p>`;
+}
+function mfPlayNoise(type,btn){
+ try{
+  mfStopNoise();const C=window.AudioContext||window.webkitAudioContext;if(!C)throw Error("Audio unavailable");
+  mfAudio=new C();const size=mfAudio.sampleRate*2;mfNoiseBuffer=mfAudio.createBuffer(1,size,mfAudio.sampleRate);const data=mfNoiseBuffer.getChannelData(0);
+  let last=0;
+  for(let i=0;i<size;i++){const white=Math.random()*2-1;if(type==="white")data[i]=white;else if(type==="pink"){last=.98*last+.02*white;data[i]=last*3.5}else{last=.995*last+.005*white;data[i]=last*8}}
+  mfNoiseSource=mfAudio.createBufferSource();mfNoiseSource.buffer=mfNoiseBuffer;mfNoiseSource.loop=true;mfNoiseGain=mfAudio.createGain();mfNoiseGain.gain.value=Number($("mfSoundVolume").value)||.06;mfNoiseSource.connect(mfNoiseGain);mfNoiseGain.connect(mfAudio.destination);mfNoiseSource.start();
+  $("mfSoundStatus").textContent=mfText("Playing "+type+" noise. Keep the volume comfortable.","Odtwarzanie szumu "+type+". Ustaw komfortową głośność.");
+ }catch(e){$("mfSoundStatus").textContent=mfText("Audio could not start in this browser.","Nie udało się uruchomić dźwięku w tej przeglądarce.")}
+}
+function mfStopNoise(){
+ try{if(mfNoiseSource){mfNoiseSource.stop();mfNoiseSource.disconnect()}if(mfAudio)mfAudio.close()}catch(e){}
+ mfNoiseSource=null;mfNoiseGain=null;mfAudio=null;
+ if($("mfSoundStatus"))$("mfSoundStatus").textContent=mfText("Sound stopped.","Dźwięk zatrzymany.");
+}
+const MF_MOOD_TAGS=[["sleep","😴","Poor sleep","Słaby sen"],["school","📚","School / work","Szkoła / praca"],["people","👥","People / relationships","Ludzie / relacje"],["noise","🔊","Noise / sensory overload","Hałas / przeciążenie sensoryczne"],["health","🩺","Physical wellbeing","Samopoczucie fizyczne"],["fun","🎨","Hobbies / fun","Zainteresowania / zabawa"],["rest","🛋️","Rest","Odpoczynek"],["unknown","❔","Not sure","Nie wiem"]];
+function mfRenderMoodTags(){
+ const el=$("mfMoodTagButtons");if(!el)return;
+ el.innerHTML=MF_MOOD_TAGS.map(t=>`<button type="button" class="mood-tag ${mfMoodTags.includes(t[0])?"selected":""}" onclick="mfToggleMoodTag('${t[0]}')">${t[1]} ${mfText(t[2],t[3])}</button>`).join("");
+}
+function mfToggleMoodTag(id){mfMoodTags=mfMoodTags.includes(id)?mfMoodTags.filter(x=>x!==id):[...mfMoodTags,id];mfRenderMoodTags()}
+function mfMoodInsight(){
+ const el=$("mfMoodInsight");if(!el)return;
+ const counts={};moods.forEach(m=>(m.tags||[]).forEach(t=>counts[t]=(counts[t]||0)+1));
+ const sorted=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+ if(!sorted.length){el.textContent=mfText("Add mood tags to entries to see which factors appear most often. This is a pattern in your check-ins, not proof of cause.","Dodawaj tagi do wpisów, aby zobaczyć, które czynniki pojawiają się najczęściej. To wzorzec we wpisach, a nie dowód przyczyny.");return}
+ const t=MF_MOOD_TAGS.find(x=>x[0]===sorted[0][0]);
+ el.textContent=mfText("Most often tagged: "+t[2]+" ("+sorted[0][1]+" entries). This may be worth noticing; it does not prove that it caused a mood change.","Najczęściej oznaczany czynnik: "+t[3]+" ("+sorted[0][1]+" wpisów). Warto to zauważyć, ale nie dowodzi to przyczyny zmiany nastroju.");
+}
+const MF_ACHIEVEMENTS=[
+ ["firstMood","🌱","First check-in","Pierwszy wpis",()=>moods.length>=1],
+ ["fiveMoods","😊","Five check-ins","Pięć wpisów",()=>moods.length>=5],
+ ["firstFocus","🎯","First focus session","Pierwsza sesja skupienia",()=>mfFocusLog().length>=1],
+ ["focusHour","⏳","One hour focused","Godzina skupienia",()=>mfFocusLog().reduce((n,x)=>n+x.minutes,0)>=60],
+ ["habit3","🔥","Habit builder","Budowanie nawyków",()=>Object.values(mfHabitData()).some(x=>x.length>=3)],
+ ["journal","📓","Reflective","Refleksja",()=>journal.length>=1],
+ ["fiveTests","🧠","Curious mind","Ciekawy umysł",()=>history.length>=5]
+];
+function mfRenderAchievements(){
+ const el=$("mfAchievementList");if(!el)return;
+ el.innerHTML=MF_ACHIEVEMENTS.map(a=>`<div class="achievement ${a[4]()?"":"locked"}"><span class="achievement-icon">${a[1]}</span><div><strong>${mfText(a[2],a[3])}</strong><div class="muted small">${a[4]()?mfText("Unlocked!","Odblokowano!"):mfText("Keep going","Działaj dalej")}</div></div></div>`).join("");
+}
+const MF_COPING=[
+ ["🌬️","Slow breathing","Powolny oddech","Breathe in gently for 4, out for 6. Repeat a few times without forcing it." ,"Oddychaj spokojnie: wdech przez 4, wydech przez 6. Powtórz kilka razy bez forsowania."],
+ ["🧊","Ground through your senses","Uziemienie zmysłami","Name 5 things you see, 4 you feel, 3 you hear, 2 you smell and 1 you taste.","Wymień 5 rzeczy, które widzisz, 4, które czujesz dotykiem, 3, które słyszysz, 2, które czujesz węchem i 1, którą czujesz smakiem."],
+ ["📝","Brain dump","Zapisz myśli","Write every thought down for two minutes. You do not need to organise it.","Przez dwie minuty zapisuj wszystkie myśli. Nie musisz ich porządkować."],
+ ["🪜","Make it smaller","Zmniejsz zadanie","Choose the next action that takes less than two minutes.","Wybierz następny krok, który zajmie mniej niż dwie minuty."],
+ ["🤝","Reach out","Skontaktuj się z kimś","Send a simple message to someone you trust: “Could you keep me company for a bit?”","Napisz do zaufanej osoby: „Czy możesz chwilę ze mną pobyć?”"]
+];
+function mfRenderCoping(){const el=$("mfCopingList");if(el)el.innerHTML=MF_COPING.map(x=>`<div class="feature-item"><span>${x[0]}</span><div><strong>${mfText(x[1],x[2])}</strong><div class="muted small">${mfText(x[3],x[4])}</div></div></div>`).join("")}
+const mfOriginalRenderArticles=renderArticles;
+renderArticles=function(){
+ const q=($("mfArticleSearch")?.value||"").trim().toLowerCase();
+ $("articles").innerHTML=articles.filter(a=>!q||(a.title.join(" ")+" "+a.body.join(" ")).toLowerCase().includes(q)).map(a=>`<div class="card article"><div class="card-icon">${a.icon}</div><h3>${a.title[language==="pl"?1:0]}</h3><p class="muted">${a.body[language==="pl"?1:0]}</p></div>`).join("")||`<p class="muted">${mfText("No articles match your search.","Brak artykułów pasujących do wyszukiwania.")}</p>`;
+};
+const mfOriginalSaveMood=saveMood;
+saveMood=function(){
+ if(!selectedMood){alert(tr("chooseMood"));return}
+ const before=moods.length;mfOriginalSaveMood();
+ if(moods.length>before){moods[0].tags=[...mfMoodTags];LS.set(K("moods"),moods);mfMoodTags=[];mfRenderMoodTags();mfMoodInsight();mfRenderAchievements()}
+};
+const mfOriginalRenderMoods=renderMoods;
+renderMoods=function(){mfOriginalRenderMoods();mfMoodInsight()};
+const mfOriginalUpdateStats=updateStats;
+updateStats=function(){mfOriginalUpdateStats();mfRenderAchievements()};
+const mfOriginalSaveJournal=saveJournal;
+saveJournal=function(){const before=journal.length;mfOriginalSaveJournal();if(journal.length>before)mfRenderAchievements()};
+const mfOriginalStartTimer=startTimer;
+startTimer=function(){
+ if(timerMode!=="focus"){mfOriginalStartTimer();return}
+ if(timerRunning)return;
+ const planned=Math.max(1,Math.min(180,Number($("focusMinutes").value)||25));
+ let logged=false;
+ const checker=setInterval(()=>{if(!timerRunning&&timerSeconds<=0&&!logged){logged=true;clearInterval(checker);mfLogFocus(planned)}else if(!timerRunning&&timerSeconds>0){}},500);
+ mfOriginalStartTimer();
+ const oldPause=pauseTimer;
+};
+function mfCsvExport(){
+ if(rank()<1)return;
+ const rows=getBookings(),cols=["id","date","time","userName","specialistName","topic","status","note"];
+ const quote=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
+ const csv=[cols.join(","),...rows.map(r=>cols.map(c=>quote(r[c])).join(","))].join("\r\n");
+ saveBlob("\ufeff"+csv,"text/csv;charset=utf-8","mindfocus-meetings.csv");
+}
+function mfMeetingsStats(){
+ const rows=getBookings(),statuses=["pending","confirmed","declined","cancelled","completed"];
+ const counts=statuses.map(s=>({s,n:rows.filter(x=>x.status===s).length}));
+ return `<div class="feature-card"><div class="row"><h3>${mfText("Meetings by status","Spotkania według statusu")}</h3><button class="secondary mini" onclick="mfCsvExport()">⬇ ${mfText("Export CSV","Eksport CSV")}</button></div><div class="bar-chart">${counts.map(x=>`<div class="bar-col"><strong>${x.n}</strong><div class="bar" style="height:${Math.max(3,x.n/Math.max(1,...counts.map(y=>y.n))*100)}%"></div><span class="bar-label">${mfText(STATUS[x.s][0],STATUS[x.s][1])}</span></div>`).join("")}</div><p class="muted small">${mfText("Includes all meetings stored in this browser.","Obejmuje wszystkie spotkania zapisane w tej przeglądarce.")}</p></div>`;
+}
+const mfOriginalRenderStaff=renderStaff;
+renderStaff=function(){mfOriginalRenderStaff();if(rank()>=1&&staffTab==="bookings")$("staffBody").insertAdjacentHTML("afterbegin",mfMeetingsStats())};
+function mfRefresh(){
+ mfEnsureUI();mfRenderHabits();mfRenderFocusLog();mfRenderMoodTags();mfMoodInsight();mfRenderAchievements();mfRenderCoping();
+}
+document.addEventListener("DOMContentLoaded",mfRefresh);
+mfRefresh();
+const mfOriginalChangeLanguage=changeLanguage;
+changeLanguage=function(lang){mfOriginalChangeLanguage(lang);mfRefresh();if($("mfArticleSearch"))renderArticles();if(rank()>=1&&staffTab==="bookings")renderStaff()};
+</script>
+
+
+<script>
+/* ============ SUPABASE STAFF AUTH + SHARED LOGIN AUDIT ============
+   Public/publishable key only. Never put a service_role key in this file.
+*/
+const MF_SUPABASE_URL = "https://oilemvworajsgpkbdhda.supabase.co";
+const MF_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_1RhWqHu2Qq4aA2nydzg_Kg_EecumDEC";
+const mfCloud = window.supabase.createClient(MF_SUPABASE_URL, MF_SUPABASE_PUBLISHABLE_KEY, {
+  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+});
+// Reject any old browser-only staff session; staff access now requires Supabase Auth.
+if (session && me() && me().role !== "user") { session = null; localStorage.removeItem("mf_session"); }
+
+function mfCacheCloudStaff(profile, authUser) {
+  const u = {
+    id: profile.id,
+    username: profile.username,
+    email: authUser.email || "",
+    role: profile.role,
+    created: profile.created_at ? new Date(profile.created_at).getTime() : Date.now(),
+    suspended: !profile.active,
+    mustChange: false,
+    title: "", bio: "",
+    avail: { days: [1,2,3,4,5], start: 9, end: 17, accepting: true },
+    cloudManaged: true
+  };
+  const users = getUsers().filter(x => x.id !== u.id);
+  users.push(u);
+  saveUsers(users);
+  return u;
+}
+
+async function mfGetMyCloudProfile(authUser) {
+  const { data, error } = await mfCloud.from("staff_profiles")
+    .select("id, username, role, active, created_at")
+    .eq("id", authUser.id).maybeSingle();
+  if (error) throw error;
+  if (!data || !data.active) throw new Error("This account is not enabled as MindFocus staff. Contact the owner.");
+  return data;
+}
+
+async function mfRecordCloudLogin(profile) {
+  const { error } = await mfCloud.from("staff_login_events").insert({
+    staff_id: profile.id,
+    username: profile.username,
+    role: profile.role,
+    user_agent: navigator.userAgent.slice(0, 500)
+  });
+  if (error) console.error("Could not save cloud login event:", error.message);
+}
+
+// Replace the old browser-only staff login with Supabase Auth.
+doStaffLogin = async function(e) {
+  e.preventDefault();
+  const email = $("stUser").value.trim().toLowerCase();
+  const password = $("stPass").value;
+  const { data, error } = await mfCloud.auth.signInWithPassword({ email, password });
+  if (error) return setMsg("authMsg", error.message || L("Could not sign in.", "Nie udało się zalogować."));
+  try {
+    const profile = await mfGetMyCloudProfile(data.user);
+    if (profile.role !== staffRole) {
+      await mfCloud.auth.signOut();
+      return setMsg("authMsg", L("Incorrect role selected. Please choose your assigned role.", "Wybrano niewłaściwą rolę. Wybierz przypisaną rolę."));
+    }
+    const u = mfCacheCloudStaff(profile, data.user);
+    $("stPass").value = "";
+    await mfRecordCloudLogin(profile);
+    startSession(u);
+  } catch (err) {
+    await mfCloud.auth.signOut();
+    setMsg("authMsg", err.message || L("Staff profile could not be loaded.", "Nie można wczytać profilu personelu."));
+  }
+};
+
+// Cloud staff accounts are provisioned in Supabase Auth + staff_profiles.
+// The old first-owner form must not create a local-only owner account.
+const mfOldAuthTab = authTab;
+authTab = function(t) {
+  mfOldAuthTab(t);
+  if (t === "staff") {
+    $("setupForm").classList.add("hidden");
+    $("staffForm").classList.remove("hidden");
+    $("rolePick").classList.remove("hidden");
+  }
+};
+
+// Keep Supabase session active across reloads and devices; rebuild the app's
+// in-memory staff context from the authenticated cloud profile.
+(async function mfRestoreCloudStaffSession() {
+  try {
+    const { data } = await mfCloud.auth.getSession();
+    const authUser = data && data.session && data.session.user;
+    if (!authUser) return;
+    const profile = await mfGetMyCloudProfile(authUser);
+    const u = mfCacheCloudStaff(profile, authUser);
+    session = { id: u.id };
+    LS.set("mf_session", session);
+    reloadUserData();
+    page("staff");
+  } catch (err) {
+    console.warn("MindFocus cloud session restore:", err.message);
+    await mfCloud.auth.signOut();
+    session = null;
+    localStorage.removeItem("mf_session");
+  }
+})();
+
+// Sign out of Supabase as well as clearing the local UI session.
+const mfOldLogout = logout;
+logout = async function(silent) {
+  try { await mfCloud.auth.signOut(); } catch (e) { console.error(e); }
+  mfOldLogout(silent);
+};
+
+// Shared login history is visible to staff with admin/owner permission.
+async function mfRenderCloudLoginHistory() {
+  const host = $("staffBody");
+  if (!host || rank() < 2) return;
+  let section = $("mfCloudLoginHistory");
+  if (!section) {
+    section = document.createElement("div");
+    section.id = "mfCloudLoginHistory";
+    section.className = "card";
+    section.style.marginTop = "16px";
+    host.appendChild(section);
+  }
+  section.innerHTML = `<h3>${mfText("Shared staff login history", "Wspólna historia logowań personelu")}</h3><p class="muted small">${mfText("Loading…", "Wczytywanie…")}</p>`;
+  const { data, error } = await mfCloud.from("staff_login_events")
+    .select("username, role, logged_in_at, user_agent")
+    .order("logged_in_at", { ascending: false }).limit(100);
+  if (error) {
+    section.innerHTML = `<h3>${mfText("Shared staff login history", "Wspólna historia logowań personelu")}</h3><p class="muted">${esc(error.message)}</p>`;
+    return;
+  }
+  section.innerHTML = `<h3>${mfText("Shared staff login history", "Wspólna historia logowań personelu")}</h3>` +
+    (data.length ? `<div style="overflow:auto"><table style="width:100%;border-collapse:collapse"><thead><tr><th align="left">${mfText("Staff", "Personel")}</th><th align="left">${mfText("Role", "Rola")}</th><th align="left">${mfText("Time", "Czas")}</th><th align="left">${mfText("Device / browser", "Urządzenie / przeglądarka")}</th></tr></thead><tbody>` +
+      data.map(x => `<tr><td>${esc(x.username)}</td><td>${esc(x.role)}</td><td>${esc(new Date(x.logged_in_at).toLocaleString())}</td><td class="muted small">${esc(x.user_agent || "")}</td></tr>`).join("") + `</tbody></table></div>`
+      : `<p class="muted">${mfText("No staff logins recorded yet.", "Nie zapisano jeszcze logowań personelu.")}</p>`);
+}
+const mfRenderStaffBeforeCloudHistory = renderStaff;
+renderStaff = function() {
+  mfRenderStaffBeforeCloudHistory();
+  if (rank() >= 2 && staffTab === "audit") mfRenderCloudLoginHistory();
+};
+</script>
+
+
+
+<script>
+/* ============ CLOUD STAFF MANAGEMENT (OWNER ONLY) ============
+   Calls the deployed Supabase Edge Function. No service-role key is stored here.
+*/
+const MF_STAFF_ADMIN_ENDPOINT = MF_SUPABASE_URL + "/functions/v1/staff-admin";
+async function mfStaffAdminCall(payload) {
+  const { data, error } = await mfCloud.functions.invoke("staff-admin", { body: payload });
+  if (error) {
+    let message = error.message || "Request failed.";
+    try { if (error.context && typeof error.context.json === "function") { const body = await error.context.json(); if (body.error) message = body.error; } } catch (_) {}
+    throw new Error(message);
+  }
+  if (data && data.error) throw new Error(data.error);
+  return data;
+}
+const mfPreviousStaffTabsFor = staffTabsFor;
+staffTabsFor = function() {
+  const tabs = mfPreviousStaffTabsFor();
+  if (rank() >= 3) tabs.push(["cloudstaff", ["Cloud staff", "Personel w chmurze"], 3]);
+  return tabs;
+};
+const mfPreviousRenderStaff = renderStaff;
+renderStaff = function() {
+  if (staffTab !== "cloudstaff") return mfPreviousRenderStaff();
+  if (rank() < 3) { staffTab = "overview"; return mfPreviousRenderStaff(); }
+  const tabs = staffTabsFor();
+  $("staffTabs").innerHTML = tabs.map(t => `<button class="tab${t[0] === staffTab ? " active" : ""}" onclick="setStaffTab('${t[0]}')">${t[1][language === "pl" ? 1 : 0]}</button>`).join("");
+  $("staffBody").innerHTML = mfCloudStaffPanelMarkup();
+  mfLoadCloudStaff();
+};
+function mfCloudStaffPanelMarkup() {
+  return `<div class="card">
+    <h2>${mfText("Cloud staff accounts", "Konta personelu w chmurze")}</h2>
+    <p class="muted small">${mfText("Create staff accounts that work across browsers and devices. New accounts can be Moderators or Admins.", "Twórz konta personelu działające w różnych przeglądarkach i urządzeniach. Nowe konta mogą być Moderatorami lub Administratorami.")}</p>
+    <div id="mfCloudStaffMsg" class="msg"></div>
+    <h3>${mfText("Create staff account", "Utwórz konto personelu")}</h3>
+    <form id="mfCloudStaffCreate" onsubmit="mfCreateCloudStaff(event)">
+      <div class="field"><label>${mfText("Username", "Nazwa użytkownika")}</label><input id="mfCloudStaffUsername" minlength="2" maxlength="30" required></div>
+      <div class="field"><label>Email</label><input id="mfCloudStaffEmail" type="email" required></div>
+      <div class="field"><label>${mfText("Temporary password (at least 8 characters)", "Hasło tymczasowe (co najmniej 8 znaków)")}</label><input id="mfCloudStaffPassword" type="password" minlength="8" required></div>
+      <div class="field"><label>${mfText("Role", "Rola")}</label><select id="mfCloudStaffRole"><option value="mod">Moderator</option><option value="admin">Admin</option></select></div>
+      <button class="primary" type="submit">＋ ${mfText("Create account", "Utwórz konto")}</button>
+    </form>
+  </div>
+  <div class="card" style="margin-top:18px">
+    <div class="row" style="justify-content:space-between;align-items:center"><h3>${mfText("Staff accounts", "Konta personelu")}</h3><button class="secondary mini" onclick="mfLoadCloudStaff()">↻ ${mfText("Refresh", "Odśwież")}</button></div>
+    <div id="mfCloudStaffList"><p class="muted">${mfText("Loading staff accounts…", "Wczytywanie kont personelu…")}</p></div>
+  </div>`;
+}
+function mfCloudStaffMessage(message, type) {
+  const el = $("mfCloudStaffMsg"); if (!el) return;
+  el.className = "msg show " + (type || "err"); el.textContent = message;
+}
+async function mfLoadCloudStaff() {
+  const host = $("mfCloudStaffList"); if (!host || rank() < 3) return;
+  host.innerHTML = `<p class="muted">${mfText("Loading…", "Wczytywanie…")}</p>`;
+  try {
+    const result = await mfStaffAdminCall({ action: "list" });
+    const rows = result.staff || [];
+    host.innerHTML = rows.length ? `<div style="overflow:auto"><table style="width:100%;border-collapse:collapse;min-width:650px"><thead><tr><th align="left">${mfText("Username", "Nazwa")}</th><th align="left">Email</th><th align="left">${mfText("Role", "Rola")}</th><th align="left">${mfText("Status", "Status")}</th><th align="left">${mfText("Last login", "Ostatnie logowanie")}</th><th align="left">${mfText("Actions", "Akcje")}</th></tr></thead><tbody>` + rows.map(st => {
+      const disabled = st.role === "owner" || st.id === me().id;
+      const last = st.last_login ? new Date(st.last_login).toLocaleString() : mfText("Never", "Nigdy");
+      return `<tr><td>${esc(st.username)}</td><td>${esc(st.email || "")}</td><td>${st.role === "owner" ? "Owner" : `<select id="mfRole_${esc(st.id)}" ${disabled ? "disabled" : ""}><option value="mod" ${st.role === "mod" ? "selected" : ""}>Moderator</option><option value="admin" ${st.role === "admin" ? "selected" : ""}>Admin</option></select>`}</td><td>${st.active ? mfText("Active", "Aktywne") : mfText("Suspended", "Zawieszone")}</td><td>${esc(last)}</td><td>${disabled ? `<span class="muted small">—</span>` : `<button class="secondary mini" onclick="mfSaveCloudStaff('${esc(st.id)}')">${mfText("Save role", "Zapisz rolę")}</button> <button class="${st.active ? "danger" : "primary"} mini" onclick="mfToggleCloudStaff('${esc(st.id)}',${!st.active})">${st.active ? mfText("Suspend", "Zawieś") : mfText("Activate", "Aktywuj")}</button>`}</td></tr>`;
+    }).join("") + `</tbody></table></div>` : `<p class="muted">${mfText("No cloud staff accounts found.", "Nie znaleziono kont personelu w chmurze.")}</p>`;
+  } catch (err) {
+    host.innerHTML = `<p class="msg show err">${esc(err.message || "Could not load staff accounts.")}</p>`;
+  }
+}
+async function mfCreateCloudStaff(e) {
+  e.preventDefault();
+  const username = $("mfCloudStaffUsername").value.trim();
+  const email = $("mfCloudStaffEmail").value.trim();
+  const password = $("mfCloudStaffPassword").value;
+  const role = $("mfCloudStaffRole").value;
+  try {
+    await mfStaffAdminCall({ action: "create", username, email, password, role });
+    $("mfCloudStaffCreate").reset();
+    mfCloudStaffMessage(mfText("Staff account created successfully!", "Konto personelu zostało utworzone!"), "ok");
+    await mfLoadCloudStaff();
+  } catch (err) { mfCloudStaffMessage(err.message || "Could not create account."); }
+}
+async function mfSaveCloudStaff(id) {
+  const select = $("mfRole_" + id); if (!select) return;
+  try {
+    await mfStaffAdminCall({ action: "update", id, role: select.value });
+    mfCloudStaffMessage(mfText("Role updated.", "Rola została zaktualizowana."), "ok");
+    await mfLoadCloudStaff();
+  } catch (err) { mfCloudStaffMessage(err.message || "Could not update role."); }
+}
+async function mfToggleCloudStaff(id, active) {
+  const promptText = active ? mfText("Activate this staff account?", "Aktywować to konto personelu?") : mfText("Suspend this staff account?", "Zawiesić to konto personelu?");
+  if (!confirm(promptText)) return;
+  try {
+    await mfStaffAdminCall({ action: "update", id, active });
+    mfCloudStaffMessage(mfText("Staff account status updated.", "Status konta personelu został zaktualizowany."), "ok");
+    await mfLoadCloudStaff();
+  } catch (err) { mfCloudStaffMessage(err.message || "Could not update account."); }
+}
+</script>
+
+</body>
+</html>
